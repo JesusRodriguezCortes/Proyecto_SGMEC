@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLAdministradorController">
+   <children>
+      <AnchorPane layoutX="41.0" layoutY="26.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane id="AnchorPane" layoutX="-41.0" layoutY="-25.0" prefHeight="400.0" prefWidth="601.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#88a2ed" height="33.0" layoutY="36.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+                  <Text fill="WHITE" layoutX="39.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SGEMEC" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="49.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+                  <Text fill="WHITE" layoutX="504.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SGEMEC">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="28.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Administrador - Menu Principal">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
