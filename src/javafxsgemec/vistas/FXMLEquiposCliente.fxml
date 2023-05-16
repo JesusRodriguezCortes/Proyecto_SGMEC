@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLEquiposClienteController">
+   <children>
+      <AnchorPane layoutY="-1.0" prefHeight="113.0" prefWidth="1537.0" style="-fx-background-color: #3366FF;" />
+      <AnchorPane layoutY="73.0" prefHeight="47.0" prefWidth="1504.0" style="-fx-background-color: #3366;" />
+      <Label layoutX="1235.0" layoutY="177.0" prefHeight="84.0" prefWidth="87.0" text="Sistema SGEMEC">
+         <font>
+            <Font size="57.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
