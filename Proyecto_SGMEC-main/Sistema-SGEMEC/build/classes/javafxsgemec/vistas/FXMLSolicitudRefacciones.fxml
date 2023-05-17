@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #66CCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLSolicitudRefaccionesController">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="556.0" prefWidth="222.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="11.0" layoutY="6.0" prefHeight="19.0" prefWidth="200.0" text="Información del provedor">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="6.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione al proveedor" />
+            <Label layoutX="11.0" layoutY="83.0" text="Nombre:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="11.0" layoutY="100.0" text="______" />
+            <Label layoutX="7.0" layoutY="176.0" text="______" />
+            <Label layoutX="7.0" layoutY="159.0" text="Correo electronico:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="9.0" layoutY="244.0" text="Telefono:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="9.0" layoutY="261.0" text="______" />
+            <Label layoutX="7.0" layoutY="312.0" prefHeight="41.0" prefWidth="141.0" text="Ingrese la direccion de entrega:" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <TextArea layoutX="6.0" layoutY="363.0" prefHeight="121.0" prefWidth="209.0" />
+         </children></Pane>
+      <Pane layoutX="263.0" layoutY="18.0" prefHeight="497.0" prefWidth="509.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="248.0" text="Información de las refacciones">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione la refacción" />
+            <TableView layoutX="14.0" layoutY="134.0" prefHeight="313.0" prefWidth="482.0">
+              <columns>
+                <TableColumn prefWidth="155.0" text="Nombre" />
+                <TableColumn prefWidth="116.0" text="Tipo de refacción" />
+                  <TableColumn prefWidth="63.0" text="Precio" />
+                  <TableColumn prefWidth="61.0" text="Cantidad" />
+                  <TableColumn prefWidth="85.0" text="Precio neto" />
+              </columns>
+            </TableView>
+            <Button layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
+            <Button layoutX="330.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
+            <Label layoutX="291.0" layoutY="456.0" text="Total:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="346.0" layoutY="456.0" prefHeight="27.0" prefWidth="98.0" text="______">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="70.0" text="Nombre:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="70.0" text="Tipo:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="214.0" layoutY="70.0" text="Precio:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="288.0" layoutY="70.0" prefHeight="20.0" prefWidth="111.0" text="Pzas disponibles:" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="415.0" layoutY="70.0" text="Cantidad:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="90.0" text="________">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="90.0" text="________">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="214.0" layoutY="90.0" text="________">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="290.0" layoutY="90.0" text="________">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="461.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnAumentarCantidadRefacciones" text="+" />
+            <Label fx:id="lbCantidad" alignment="CENTER" layoutX="419.0" layoutY="90.0" prefHeight="20.0" prefWidth="41.0" text="0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="399.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnReducirCantidadRefacciones" text="-" />
+         </children></Pane>
+      <Button layoutX="601.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnRealizarPedido" text="Realizar pedido" />
+      <Button layoutX="710.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+   </children>
+</AnchorPane>
