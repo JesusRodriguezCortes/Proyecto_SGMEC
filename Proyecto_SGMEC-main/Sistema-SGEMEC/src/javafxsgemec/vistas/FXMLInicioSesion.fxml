@@ -23,8 +23,8 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="279.0" layoutY="136.0" />
-      <PasswordField layoutX="279.0" layoutY="200.0" />
+      <TextField fx:id="tfUsuario" layoutX="279.0" layoutY="136.0" />
+      <PasswordField fx:id="tfContrasenia" layoutX="279.0" layoutY="200.0" />
       <Text fill="WHITE" layoutX="212.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario">
          <font>
             <Font size="14.0" />

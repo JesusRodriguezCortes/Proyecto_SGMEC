@@ -2,6 +2,9 @@ package javafxsgemec.pojo;
 
 public class Usuario {
     private int idUsuario;
+    private String usuario;
+    private String contrasenia;
+    private String nivelDeAcceso;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -14,6 +17,11 @@ public class Usuario {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public Usuario(String usuario, String contrasenia) {
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
     }
 
     public int getIdUsuario() {
@@ -51,5 +59,29 @@ public class Usuario {
     @Override
     public String toString() {
         return nombre + " "+ apellidoPaterno + " " + apellidoMaterno;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public void setNivelDeAcceso(String nivelDeAcceso) {
+        this.nivelDeAcceso = nivelDeAcceso;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public String getNivelDeAcceso() {
+        return nivelDeAcceso;
     }
 }

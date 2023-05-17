@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class OpenConnection {
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String bd = "<DATABASE>";
-    private static String ip = "<IPADDRESS>";
-    private static String puerto = "<PORT>";
-    private static String urlConexion = 
+    private static String bd = "sgmec";
+    private static String ip = "localhost";
+    private static String puerto = "3306";
+    private static String urlConexion =
             "jdbc:mysql://"+ip+":"+puerto+"/"+bd+
             "?allowPublicKeyRetrieval=true&useSSL=false"; 
-    private static String usuario = "<USER_NAME>";
-    private static String password = "<PASSWORD>";
+    private static String usuario = "root";
+    private static String password = "cerdicornio";
     
     public static Connection openConnectionBD(){
         Connection conexionBD = null;
@@ -25,6 +25,7 @@ public class OpenConnection {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        System.out.println("//////////////"+conexionBD);
         return conexionBD;
     }
 }

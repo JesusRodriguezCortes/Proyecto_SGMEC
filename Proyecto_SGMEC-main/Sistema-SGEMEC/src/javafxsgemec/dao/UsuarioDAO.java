@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import javafxsgemec.connectionBD.ConstantsConnection;
 import javafxsgemec.pojo.Servicio;
+import javafxsgemec.pojo.UsuarioRespuesta;
 
 public class UsuarioDAO {
     public void crearUsuario(){
@@ -30,31 +32,40 @@ public class UsuarioDAO {
         
     }
     
-    public static Usuario verificarUsuario(String usuario, String password) throws SQLException{
-        Usuario userTemp = null;
+     public static UsuarioRespuesta verificarUsuario(String usuario, 
+            String password) throws SQLException{
+        UsuarioRespuesta uRespuesta = new UsuarioRespuesta();
+        uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_CORRECTA);
+        Usuario usuarioSesion = null;
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String consulta =   "SELECT idUsuario, nombre, apellidoPaterno, apellidoMaterno " +
-                                    "FROM usuario " +
-                                    "WHERE username = ? AND password = ?";
+                String consulta = "select idUsuario,usuario,password, roles.nivelAcceso AS nivelDeAcceso "
+                        + "FROM usuario " +
+                        "INNER JOIN roles ON usuario.idRoles = roles.idRoles "+
+                        "WHERE usuario = ? AND password = ? ";
                 PreparedStatement consultaLogin = conexionBD.prepareStatement(consulta);
                 consultaLogin.setString(1, usuario);
                 consultaLogin.setString(2, password);
                 ResultSet resultadoConsulta = consultaLogin.executeQuery();
-                userTemp = new Usuario();
+                usuarioSesion = new Usuario();
                 if(resultadoConsulta.next()){
-                    //userTemp.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
-                }else{
-                    //EN CASO DE QUE NO EXISTA ALGÚN USUARIO CON COINCIDENCIA
-                    //userTemp.setIdUsuario(-1);
+                    usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
+                    usuarioSesion.setUsuario(resultadoConsulta.getString("usuario"));
+                    usuarioSesion.setContrasenia(resultadoConsulta.getString("password"));
+                    usuarioSesion.setNivelDeAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
+                    uRespuesta.setUsuarioRespuesta(usuarioSesion);
+
                 }
+                conexionBD.close();
             } catch (SQLException s) {
-                s.printStackTrace();
+                uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_DML_FALLIDA);
             } finally{
                 conexionBD.close();
             }
+        }else{
+            uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_ERROR_CONEXIONDB);
         }
-        return userTemp;
+        return uRespuesta;
     }
 }
