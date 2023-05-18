@@ -32,8 +32,7 @@ public class UsuarioDAO {
         
     }
     
-     public static UsuarioRespuesta verificarUsuario(String usuario, 
-            String password) throws SQLException{
+     public static UsuarioRespuesta verificarUsuario(String usuario,String password) throws SQLException{
         UsuarioRespuesta uRespuesta = new UsuarioRespuesta();
         uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_CORRECTA);
         Usuario usuarioSesion = null;

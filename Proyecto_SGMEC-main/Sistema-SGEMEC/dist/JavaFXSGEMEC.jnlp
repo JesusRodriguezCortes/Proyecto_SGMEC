@@ -8,7 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXSGEMEC.jar" size="1041322" download="eager" />
+    <jar href="JavaFXSGEMEC.jar" size="1050831" download="eager" />
+    <jar href="lib\hamcrest-core-1.3.jar" size="45024" download="eager" />
+    <jar href="lib\junit-4.13.2.jar" size="384581" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.49.jar" size="1006904" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="javafxsgemec.javafxsgemec"  name="JavaFXSGEMEC" />

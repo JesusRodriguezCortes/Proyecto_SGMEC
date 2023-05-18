@@ -22,8 +22,38 @@ public class ProveedorDAO {
         
     }
     
-    public void consultProveedores(){
+    public static ArrayList<Proveedor> consultProveedores(){
+        ArrayList<Proveedor> listaProveedores = new ArrayList<>();
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        if(conexionBD != null){
+            try {
+                String consulta = "SELECT idProveedor, nombre, telefono, correoElectronico, direccion FROM Proveedor;";
+                PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
+                ResultSet resultadoConsulta = configurarConsulta.executeQuery();
+                while(resultadoConsulta.next()){
+                    Proveedor proveedor = new Proveedor();
+                    proveedor.setIdProovedor(resultadoConsulta.getInt("idProveedor"));
+                    proveedor.setNombre(resultadoConsulta.getString("nombre"));
+                    proveedor.setCorreoElect(resultadoConsulta.getString("correoElectronico"));
+                    proveedor.setTelefono(resultadoConsulta.getString("telefono"));
+                    proveedor.setDireccion(resultadoConsulta.getString("direccion"));
+                    listaProveedores.add(proveedor);
+                }
+                conexionBD.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }finally{
+                try {
+                    conexionBD.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProveedorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else{
+            listaProveedores = null;
+        }
         
+        return listaProveedores;   
     }
     
     public void modificarProveedor(){
