@@ -118,7 +118,7 @@ public class ProveedorDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "UPDATE proveedor SET nombre= ?, correoElectronico = ?, telefono = ?, direccion = ?" +
+                String sqlQuery = "UPDATE proveedor SET nombre= ?, correoElectronico = ?, telefono = ?, direccion = ? " +
                                   "WHERE idProveedor = ?";
                 PreparedStatement setProveedor = conexionBD.prepareStatement(sqlQuery);
                 setProveedor.setString(1, editProveedor.getNombre());
