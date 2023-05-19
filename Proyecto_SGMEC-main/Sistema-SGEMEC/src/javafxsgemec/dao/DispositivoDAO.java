@@ -3,7 +3,6 @@ package javafxsgemec.dao;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -113,16 +112,16 @@ public class DispositivoDAO {
                 dispositivosBD = new ArrayList<>();
                 while(resultSet.next()){
                     Dispositivo newDispositivo = new Dispositivo();
-                    newDispositivo.setIdDispositivo(resultSet.getInt("idDispositivo"));
-                    newDispositivo.setMarca(resultSet.getString("marca"));
-                    newDispositivo.setModelo(resultSet.getString("modelo"));
-                    newDispositivo.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
-                    newDispositivo.setPasswordDisp(resultSet.getString("passwordDispositivo"));
-                    newDispositivo.setError(resultSet.getString("errorDispositivo"));
-                    newDispositivo.setEstado(resultSet.getString("estado"));
-                    newDispositivo.setFoto(resultSet.getByte("imagenDispositivo"));
-                    newDispositivo.setIdCliente(resultSet.getInt("idCliente"));
-                    newDispositivo.setNombreCliente(resultSet.getString("nombre"));
+                        newDispositivo.setIdDispositivo(resultSet.getInt("idDispositivo"));
+                        newDispositivo.setMarca(resultSet.getString("marca"));
+                        newDispositivo.setModelo(resultSet.getString("modelo"));
+                        newDispositivo.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
+                        newDispositivo.setPasswordDisp(resultSet.getString("passwordDispositivo"));
+                        newDispositivo.setError(resultSet.getString("errorDispositivo"));
+                        newDispositivo.setEstado(resultSet.getString("estado"));
+                        newDispositivo.setFoto(resultSet.getByte("imagenDispositivo"));
+                        newDispositivo.setIdCliente(resultSet.getInt("idCliente"));
+                        newDispositivo.setNombreCliente(resultSet.getString("nombre"));
                     dispositivosBD.add(newDispositivo);
                 }
             } catch (SQLException e) {
@@ -156,8 +155,8 @@ public class DispositivoDAO {
                 setDispositivo.setString(5, editDispositivo.getError());
                 setDispositivo.setString(6, editDispositivo.getEstado());
                 setDispositivo.setByte(7, editDispositivo.getFoto());
-                setDispositivo.setInt(7, editDispositivo.getIdCliente());
-                setDispositivo.setInt(7, editDispositivo.getIdDispositivo());
+                setDispositivo.setInt(8, editDispositivo.getIdCliente());
+                setDispositivo.setInt(9, editDispositivo.getIdDispositivo());
                 
                 int rowsAffected = setDispositivo.executeUpdate();
                 if(rowsAffected > 0){
@@ -188,7 +187,7 @@ public class DispositivoDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "DELETE FROM dispositivo WHERE idDispositivo = ? ";                
+                String sqlQuery = "DELETE FROM dispositivo WHERE idDispositivo = ?";                
                 PreparedStatement delDispositivo = conexionBD.prepareStatement(sqlQuery);
                 delDispositivo.setInt(1, idDispositivo);
                 
