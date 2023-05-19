@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import javafxsgemec.dao.RefaccionDAO;
 import javafxsgemec.pojo.Diagnostico;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ResultOperation;
@@ -59,33 +57,35 @@ public class DiagnosticoDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "SELECT diagnostico.idDiagnostico, resultadoDiagnostico, servicio.idServicio, servicio.nombre as 'TipoServicio', " +
-                                  "cotizacion, fechaInicio, fechaFin, dispositivo.idDispositivo, marca, modelo, errorDispositivo, estado, " +
-                                  "imagenDispositivo, refaccion.idRefaccion, refaccion.nombre as 'Refaccion', cliente.idCliente " +
+                String sqlQuery = "SELECT diagnostico.idDiagnostico, resultadoDiagnostico, servicio.idServicio, " +
+                                  "servicio.nombre as 'TipoServicio', cotizacion, fechaInicio, fechaFin, " +
+                                  "dispositivo.idDispositivo, marca, modelo, errorDispositivo, estado, " +
+                                  "imagenDispositivo, refaccion.idRefaccion, refaccion.nombre as 'Refaccion' " +
                                   "FROM diagnostico " +
                                   "LEFT JOIN servicio ON diagnostico.idServicio = servicio.idServicio " +
                                   "LEFT JOIN dispositivo ON diagnostico.idDispositivo = dispositivo.idDispositivo " +
                                   "LEFT JOIN refaccion ON diagnostico.idDiagnostico = refaccion.idDiagnostico " +
-                                  "LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente" +
-                                  "WHERE idDiagnostico = ?";
+                                  "WHERE diagnostico.idDiagnostico = ?";
                 PreparedStatement getDiagnostico = conexionBD.prepareStatement(sqlQuery);
                 ResultSet resultSet = getDiagnostico.executeQuery();
                 getDiagnostico.setInt(1, idDiagnostico);
-                diagnosticoBD.setIdDiagnostico(resultSet.getInt("idDiagnostico"));
-                diagnosticoBD.setResultadoDiagnostico(resultSet.getString("resultadoDiagnostico"));
-                diagnosticoBD.setIdServicio(resultSet.getInt("idServicio"));
-                diagnosticoBD.setNombreServicio(resultSet.getString("TipoServicio"));
-                diagnosticoBD.setCotizacion(resultSet.getFloat("cotizacion"));
-                diagnosticoBD.setFechaInicio(resultSet.getString("fechaInicio"));
-                diagnosticoBD.setFechaFin(resultSet.getString("fechaFin"));
-                diagnosticoBD.setIdDispositivo(resultSet.getInt("idDispositivo"));
-                diagnosticoBD.setMarcaDispositivo(resultSet.getString("marca"));
-                diagnosticoBD.setModeloDispositivo(resultSet.getString("modelo"));
-                diagnosticoBD.setErrorDispositivo(resultSet.getString("errorDispositivo"));
-                diagnosticoBD.setEstado(resultSet.getString("estado"));
-                //TO DO 
-                //OBTENER TODAS LAS FOTOS DE UN DISPOSITIVO
-                //OBTENER TODAS LAS REFACCIONES UTILIZADAS
+                    diagnosticoBD.setIdDiagnostico(resultSet.getInt("idDiagnostico"));
+                    diagnosticoBD.setResultadoDiagnostico(resultSet.getString("resultadoDiagnostico"));
+                    diagnosticoBD.setIdServicio(resultSet.getInt("idServicio"));
+                    diagnosticoBD.setNombreServicio(resultSet.getString("TipoServicio"));
+                    diagnosticoBD.setCotizacion(resultSet.getFloat("cotizacion"));
+                    diagnosticoBD.setFechaInicio(resultSet.getString("fechaInicio"));
+                    diagnosticoBD.setFechaFin(resultSet.getString("fechaFin"));
+                    diagnosticoBD.setIdDispositivo(resultSet.getInt("idDispositivo"));
+                    diagnosticoBD.setMarcaDispositivo(resultSet.getString("marca"));
+                    diagnosticoBD.setModeloDispositivo(resultSet.getString("modelo"));
+                    diagnosticoBD.setErrorDispositivo(resultSet.getString("errorDispositivo"));
+                    diagnosticoBD.setEstado(resultSet.getString("estado"));
+                    diagnosticoBD.setFoto(resultSet.getByte("imagenDispositivo"));
+                    
+                    //TO DO 
+                    //OBTENER TODAS LAS REFACCIONES UTILIZADAS
+                    
             } catch (SQLException e) {
                 response.setMessage(e.getMessage());
             } catch(NullPointerException f) {
@@ -99,7 +99,7 @@ public class DiagnosticoDAO {
         return diagnosticoBD;
     }
     
-    public static List<Diagnostico> getDiagnosticos() throws SQLException{
+    public static ArrayList<Diagnostico> getDiagnosticos() throws SQLException{
         ArrayList<Diagnostico> diagnosticosBD = null;
         ResultOperation response = new ResultOperation();
         response.setError(true);
@@ -108,14 +108,14 @@ public class DiagnosticoDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "SELECT diagnostico.idDiagnostico, resultadoDiagnostico, servicio.idServicio, servicio.nombre as 'TipoServicio', " +
-                                  "cotizacion, fechaInicio, fechaFin, dispositivo.idDispositivo, marca, modelo, errorDispositivo, estado, " +
-                                  "imagenDispositivo, refaccion.idRefaccion, refaccion.nombre as 'Refaccion', cliente.idCliente " +
+                String sqlQuery = "ELECT diagnostico.idDiagnostico, resultadoDiagnostico, servicio.idServicio, " +
+                                  "servicio.nombre as 'TipoServicio', cotizacion, fechaInicio, fechaFin, " +
+                                  "dispositivo.idDispositivo, marca, modelo, errorDispositivo, estado, " +
+                                  "imagenDispositivo, refaccion.idRefaccion, refaccion.nombre as 'Refaccion' " +
                                   "FROM diagnostico " +
                                   "LEFT JOIN servicio ON diagnostico.idServicio = servicio.idServicio " +
                                   "LEFT JOIN dispositivo ON diagnostico.idDispositivo = dispositivo.idDispositivo " +
-                                  "LEFT JOIN refaccion ON diagnostico.idDiagnostico = refaccion.idDiagnostico " +
-                                  "LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente";
+                                  "LEFT JOIN refaccion ON diagnostico.idDiagnostico = refaccion.idDiagnostico ";
                 PreparedStatement getAllDiagnosticos = conexionBD.prepareStatement(sqlQuery);
                 ResultSet resultSet = getAllDiagnosticos.executeQuery();
                 diagnosticosBD = new ArrayList<>();
@@ -133,9 +133,11 @@ public class DiagnosticoDAO {
                     newDiagnostico.setModeloDispositivo(resultSet.getString("modelo"));
                     newDiagnostico.setErrorDispositivo(resultSet.getString("errorDispositivo"));
                     newDiagnostico.setEstado(resultSet.getString("estado"));
+                    newDiagnostico.setFoto(resultSet.getByte("imagenDispositivo"));
+                    
                     //TO DO 
-                    //OBTENER TODAS LAS FOTOS DE UN DISPOSITIVO
                     //OBTENER TODAS LAS REFACCIONES UTILIZADAS
+                    
                     diagnosticosBD.add(newDiagnostico);
                 }
             } catch (SQLException e) {
@@ -159,7 +161,7 @@ public class DiagnosticoDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String sqlQuery = "UPDATE diagnostico SET cotizacion = ?, fechaInicio = ?, fechaFin = ?," +
+                String sqlQuery = "UPDATE diagnostico SET cotizacion = ?, fechaInicio = ?, fechaFin = ?, " +
                                   "resultadoDiagnostico = ?, idDispositivo = ?, idServicio = ? " +
                                   "WHERE idDiagnostico = ?";
                 PreparedStatement setDiagnostico = conexionBD.prepareStatement(sqlQuery);
@@ -200,7 +202,7 @@ public class DiagnosticoDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String sqlQuery = "DELETE FROM diagnostico WHERE idDiagnostico = ? ";                
+                String sqlQuery = "DELETE FROM diagnostico WHERE idDiagnostico = ?";                
                 PreparedStatement delDiagnostico = conexionBD.prepareStatement(sqlQuery);
                 delDiagnostico.setInt(1, idDiagnostico);
                 
