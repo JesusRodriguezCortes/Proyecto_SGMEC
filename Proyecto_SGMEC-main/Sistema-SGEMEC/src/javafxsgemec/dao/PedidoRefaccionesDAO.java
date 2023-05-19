@@ -116,7 +116,7 @@ public class PedidoRefaccionesDAO {
         if(conexionBD != null){
             try {
                 String sqlQuery = "UPDATE pedidoRefacciones SET fechaPedido = ?, " +
-                                  "numeroPedido = ?, totalPedido = ?" +
+                                  "numeroPedido = ?, totalPedido = ? " +
                                   "WHERE idPedidoRefacciones = ?";
                 PreparedStatement setPedido = conexionBD.prepareStatement(sqlQuery);
                 setPedido.setString(1, editPedidoRefacciones.getFechaPedido());
