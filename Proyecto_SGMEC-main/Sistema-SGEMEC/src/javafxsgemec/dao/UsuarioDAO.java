@@ -94,11 +94,11 @@ public class UsuarioDAO {
                 usuariosBD = new ArrayList<>();
                 while(resultSet.next()){
                     Usuario newUsuario = new Usuario();
-                    newUsuario.setIdUsuario(resultSet.getInt("idUsuario"));
-                    newUsuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
-                    newUsuario.setPassword(resultSet.getString("password"));
-                    newUsuario.setIdRoles(resultSet.getInt("idRoles"));
-                    newUsuario.setNivelAcceso(resultSet.getString("nivelAcceso"));
+                        newUsuario.setIdUsuario(resultSet.getInt("idUsuario"));
+                        newUsuario.setNombreUsuario(resultSet.getString("nombreUsuario"));
+                        newUsuario.setPassword(resultSet.getString("password"));
+                        newUsuario.setIdRoles(resultSet.getInt("idRoles"));
+                        newUsuario.setNivelAcceso(resultSet.getString("nivelAcceso"));
                     usuariosBD.add(newUsuario);
                 }
             } catch (SQLException e) {
@@ -123,11 +123,11 @@ public class UsuarioDAO {
                 String sqlQuery = "UPDATE usuario SET nombreUsuario, password, idRoles, roles.nivelAcceso " +
                                   "WHERE idUsuario = ?";
                 PreparedStatement setUsuario = conexionBD.prepareStatement(sqlQuery);
-                setUsuario.setString(1, editUsuario.getNombreUsuario());
-                setUsuario.setString(2, editUsuario.getPassword());
-                setUsuario.setInt(3, editUsuario.getIdRoles());
-                setUsuario.setString(4, editUsuario.getNivelAcceso());
-                setUsuario.setInt(5, editUsuario.getIdUsuario());
+                    setUsuario.setString(1, editUsuario.getNombreUsuario());
+                    setUsuario.setString(2, editUsuario.getPassword());
+                    setUsuario.setInt(3, editUsuario.getIdRoles());
+                    setUsuario.setString(4, editUsuario.getNivelAcceso());
+                    setUsuario.setInt(5, editUsuario.getIdUsuario());
                 
                 int rowsAffected = setUsuario.executeUpdate();
                 if(rowsAffected > 0){
@@ -160,7 +160,7 @@ public class UsuarioDAO {
             try {
                 String sqlQuery = "DELETE FROM usuario WHERE idUsuario = ?";                
                 PreparedStatement delUsuario = conexionBD.prepareStatement(sqlQuery);
-                delUsuario.setInt(1, idUsuario);
+                    delUsuario.setInt(1, idUsuario);
                 
                 int rowsAffected = delUsuario.executeUpdate();
                 if(rowsAffected > 0){
@@ -203,7 +203,6 @@ public class UsuarioDAO {
                     usuarioSesion.setPassword(resultadoConsulta.getString("password"));
                     usuarioSesion.setNivelAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
                     userResponse.setUsuarioRespuesta(usuarioSesion);
-
                 }
                 conexionBD.close();
             } catch (SQLException s) {
