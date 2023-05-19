@@ -1,6 +1,5 @@
  package javafxsgemec.dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class ServicioDAO {
             try {
                 String sqlQuery = "INSERT INTO servicio (nombre) VALUES(?)";
                 PreparedStatement getServicio = conexionBD.prepareStatement(sqlQuery);
-                getServicio.setString(1, newServicio.getNombre());
+                    getServicio.setString(1, newServicio.getNombre());
                 
                 int affectedRows = getServicio.executeUpdate();
                 if(affectedRows > 0){
@@ -85,8 +84,8 @@ public class ServicioDAO {
                 serviciosBD = new ArrayList<>();
                 while(resultSet.next()){
                     Servicio newServicio = new Servicio();
-                    newServicio.setIdServicio(resultSet.getInt("idServicio"));
-                    newServicio.setNombre(resultSet.getString("nombre"));
+                        newServicio.setIdServicio(resultSet.getInt("idServicio"));
+                        newServicio.setNombre(resultSet.getString("nombre"));
                     serviciosBD.add(newServicio);
                 }
             } catch (SQLException e) {
@@ -113,8 +112,8 @@ public class ServicioDAO {
                 String sqlQuery = "UPDATE servicio SET nombre = ? " +
                                   "WHERE idServicio = ?";
                 PreparedStatement setServicio = conexionBD.prepareStatement(sqlQuery);
-                setServicio.setString(1, editServicio.getNombre());
-                setServicio.setInt(2, editServicio.getIdServicio());
+                    setServicio.setString(1, editServicio.getNombre());
+                    setServicio.setInt(2, editServicio.getIdServicio());
                 
                 int rowsAffected = setServicio.executeUpdate();
                 if(rowsAffected > 0){
