@@ -140,7 +140,6 @@ public class Refaccion {
         this.fechaFin = fechaFin;
     }
 
-    
     @Override
     public String toString(){
         return this.nombre;
