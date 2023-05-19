@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javafxsgemec.pojo.Cliente;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ResultOperation;
@@ -62,21 +61,21 @@ public class ClienteDAO {
                                   "usuario.idUsuario, nombreUsuario, 'password', roles.idRoles, nivelAcceso " +
                                   "FROM cliente LEFT JOIN usuario ON cliente.idUsuario = usuario.idUsuario " +
                                   "LEFT JOIN roles ON usuario.idRoles = roles.idRoles " +
-                                  "WHERE cliente.idCliente = 1";
+                                  "WHERE cliente.idCliente = ?";
                 PreparedStatement getCliente = conexionBD.prepareStatement(sqlQuery);
                 ResultSet resultSet = getCliente.executeQuery();
                 getCliente.setInt(1, idCliente);
-                clienteBD.setIdCliente(resultSet.getInt("idCliente"));
-                clienteBD.setNombre(resultSet.getString("nombre"));
-                clienteBD.setApellidoPaterno(resultSet.getString("apellidoPaterno"));
-                clienteBD.setDireccion(resultSet.getString("direccion"));
-                clienteBD.setTelefono(resultSet.getInt("telefono"));
-                clienteBD.setCorreoElectronico(resultSet.getString("correoElectronico"));
-                clienteBD.setIdUsuario(resultSet.getInt("idUsuario"));
-                clienteBD.setNombreUsuario(resultSet.getString("nombreUsuario"));
-                clienteBD.setPassword(resultSet.getString("'password'"));
-                clienteBD.setIdRoles(resultSet.getInt("roles.idRoles"));
-                clienteBD.setNivelAcceso(resultSet.getString("nivelAcceso"));
+                    clienteBD.setIdCliente(resultSet.getInt("idCliente"));
+                    clienteBD.setNombre(resultSet.getString("nombre"));
+                    clienteBD.setApellidoPaterno(resultSet.getString("apellidoPaterno"));
+                    clienteBD.setDireccion(resultSet.getString("direccion"));
+                    clienteBD.setTelefono(resultSet.getInt("telefono"));
+                    clienteBD.setCorreoElectronico(resultSet.getString("correoElectronico"));
+                    clienteBD.setIdUsuario(resultSet.getInt("idUsuario"));
+                    clienteBD.setNombreUsuario(resultSet.getString("nombreUsuario"));
+                    clienteBD.setPassword(resultSet.getString("'password'"));
+                    clienteBD.setIdRoles(resultSet.getInt("roles.idRoles"));
+                    clienteBD.setNivelAcceso(resultSet.getString("nivelAcceso"));
             } catch (SQLException e) {
                 response.setMessage(e.getMessage());
             } catch(NullPointerException f) {
@@ -90,7 +89,7 @@ public class ClienteDAO {
         return clienteBD;
     }
     
-    public static List<Cliente> getClientes() throws SQLException{
+    public static ArrayList<Cliente> getClientes() throws SQLException{
         ArrayList<Cliente> clientesBD = null;
         ResultOperation response = new ResultOperation();
         response.setError(true);
@@ -108,17 +107,17 @@ public class ClienteDAO {
                 clientesBD = new ArrayList<>();
                 while(resultSet.next()){
                     Cliente newCliente = new Cliente();
-                    newCliente.setIdCliente(resultSet.getInt("idCliente"));
-                    newCliente.setNombre(resultSet.getString("nombre"));
-                    newCliente.setApellidoPaterno(resultSet.getString("apellidoPaterno"));
-                    newCliente.setDireccion(resultSet.getString("direccion"));
-                    newCliente.setTelefono(resultSet.getInt("telefono"));
-                    newCliente.setCorreoElectronico(resultSet.getString("correoElectronico"));
-                    newCliente.setIdUsuario(resultSet.getInt("idUsuario"));
-                    newCliente.setNombreUsuario(resultSet.getString("nombreUsuario"));
-                    newCliente.setPassword(resultSet.getString("'password'"));
-                    newCliente.setIdRoles(resultSet.getInt("roles.idRoles"));
-                    newCliente.setNivelAcceso(resultSet.getString("nivelAcceso"));
+                        newCliente.setIdCliente(resultSet.getInt("idCliente"));
+                        newCliente.setNombre(resultSet.getString("nombre"));
+                        newCliente.setApellidoPaterno(resultSet.getString("apellidoPaterno"));
+                        newCliente.setDireccion(resultSet.getString("direccion"));
+                        newCliente.setTelefono(resultSet.getInt("telefono"));
+                        newCliente.setCorreoElectronico(resultSet.getString("correoElectronico"));
+                        newCliente.setIdUsuario(resultSet.getInt("idUsuario"));
+                        newCliente.setNombreUsuario(resultSet.getString("nombreUsuario"));
+                        newCliente.setPassword(resultSet.getString("'password'"));
+                        newCliente.setIdRoles(resultSet.getInt("roles.idRoles"));
+                        newCliente.setNivelAcceso(resultSet.getString("nivelAcceso"));
                     clientesBD.add(newCliente);
                 }
             } catch (SQLException e) {
@@ -146,12 +145,12 @@ public class ClienteDAO {
                                   "telefono = ?, correoElectronico = ?, idUsuario = ? " +
                                   "WHERE idCliente = ?";
                 PreparedStatement setCliente = conexionBD.prepareStatement(sqlQuery);
-                setCliente.setString(1, editCliente.getNombre());
-                setCliente.setString(2, editCliente.getApellidoPaterno());
-                setCliente.setString(3, editCliente.getDireccion());
-                setCliente.setLong(4, editCliente.getTelefono());
-                setCliente.setString(5, editCliente.getCorreoElectronico());
-                setCliente.setInt(6, editCliente.getIdUsuario());
+                    setCliente.setString(1, editCliente.getNombre());
+                    setCliente.setString(2, editCliente.getApellidoPaterno());
+                    setCliente.setString(3, editCliente.getDireccion());
+                    setCliente.setLong(4, editCliente.getTelefono());
+                    setCliente.setString(5, editCliente.getCorreoElectronico());
+                    setCliente.setInt(6, editCliente.getIdUsuario());
                 
                 int rowsAffected = setCliente.executeUpdate();
                 if(rowsAffected > 0){
