@@ -1,6 +1,6 @@
 package javafxsgemec.pojo;
 
-import java.util.List;
+import java.util.ArrayList;
 import javafxsgemec.pojo.Refaccion;
 
 public class Diagnostico {
@@ -15,9 +15,9 @@ public class Diagnostico {
     private String marcaDispositivo;
     private String modeloDispositivo;
     private String errorDispositivo;
-    private String Estado;
-    private byte[] Imagen;
-    private List<Refaccion> refacciones;
+    private String estado;
+    private byte foto;
+    private ArrayList<Refaccion> refacciones;
     
     public Diagnostico(){ 
     }
@@ -25,7 +25,7 @@ public class Diagnostico {
     public Diagnostico(int idDiagnostico, String resultadoDiagnostico, int idServicio, String nombreServicio, 
                        float cotizacion, String fechaInicio, String fechaFin, int idDispositivo, 
                        String marcaDispositivo, String modeloDispositivo, String errorDispositivo, 
-                       String Estado, byte[] Imagen, List<Refaccion> refacciones) {
+                       String Estado, byte foto, ArrayList<Refaccion> refacciones) {
         this.idDiagnostico = idDiagnostico;
         this.resultadoDiagnostico = resultadoDiagnostico;
         this.idServicio = idServicio;
@@ -37,8 +37,8 @@ public class Diagnostico {
         this.marcaDispositivo = marcaDispositivo;
         this.modeloDispositivo = modeloDispositivo;
         this.errorDispositivo = errorDispositivo;
-        this.Estado = Estado;
-        this.Imagen = Imagen;
+        this.estado = estado;
+        this.foto = foto;
         this.refacciones = refacciones;
     }
 
@@ -131,26 +131,26 @@ public class Diagnostico {
     }
 
     public String getEstado() {
-        return Estado;
+        return estado;
     }
 
     public void setEstado(String Estado) {
-        this.Estado = Estado;
+        this.estado = Estado;
     }
 
-    public byte[] getImagen() {
-        return Imagen;
+    public byte getImagen() {
+        return foto;
     }
 
-    public void setImagen(byte[] Imagen) {
-        this.Imagen = Imagen;
+    public void setImagen(byte foto) {
+        this.foto = foto;
     }
 
-    public List<Refaccion> getRefacciones() {
+    public ArrayList<Refaccion> getRefacciones() {
         return refacciones;
     }
 
-    public void setRefacciones(List<Refaccion> refacciones) {
+    public void setRefacciones(ArrayList<Refaccion> refacciones) {
         this.refacciones = refacciones;
     }
 
