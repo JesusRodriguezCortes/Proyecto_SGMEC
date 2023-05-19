@@ -27,7 +27,7 @@ public class ProveedorDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idProveedor, nombre, telefono, correoElectronico, direccion FROM Proveedor;";
+                String consulta = "SELECT idProveedor, nombre, telefono, correoElectronico FROM Proveedor;";
                 PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
                 ResultSet resultadoConsulta = configurarConsulta.executeQuery();
                 while(resultadoConsulta.next()){
@@ -36,7 +36,6 @@ public class ProveedorDAO {
                     proveedor.setNombre(resultadoConsulta.getString("nombre"));
                     proveedor.setCorreoElect(resultadoConsulta.getString("correoElectronico"));
                     proveedor.setTelefono(resultadoConsulta.getString("telefono"));
-                    proveedor.setDireccion(resultadoConsulta.getString("direccion"));
                     listaProveedores.add(proveedor);
                 }
                 conexionBD.close();

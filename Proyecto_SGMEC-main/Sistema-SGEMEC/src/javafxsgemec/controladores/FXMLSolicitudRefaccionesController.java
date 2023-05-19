@@ -16,10 +16,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafxsgemec.dao.ProveedorDAO;
+import javafxsgemec.dao.RefaccionDAO;
 import javafxsgemec.pojo.Proveedor;
+import javafxsgemec.pojo.Refaccion;
 
 /**
  * FXML Controller class
@@ -30,7 +33,6 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
 
     @FXML
     private Label lbCantidad;
-    
     @FXML
     private ComboBox<Proveedor> cbProveedores;
     @FXML
@@ -40,10 +42,20 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     @FXML
     private Label lbTelefono;
     @FXML
-    private Label lbDireccion;
+    private ComboBox<Refaccion> cbRefacciones;
     
     int refaccionesCompradas = 0;
     private ObservableList<Proveedor> listaProveedores;
+    private ObservableList<Refaccion> listaRefacciones;
+    @FXML
+    private Label lbNombreRefaccion;
+    @FXML
+    private Label lbTipoRefaccion;
+    @FXML
+    private Label lbPrecio;
+    @FXML
+    private Label lbPzasDisponibles;
+    
     /**
      * Initializes the controller class.
      */
@@ -58,8 +70,18 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 lbNombre.setText(newValue.getNombre());
                 lbCorreoElectronico.setText(newValue.getCorreoElect());
                 lbTelefono.setText(newValue.getTelefono());
-                lbDireccion.setText(newValue.getDireccion());
+                cargarInformacionRefaccionesFiltradas(newValue.getIdProovedor());
             }  
+        });
+        
+        cbRefacciones.valueProperty().addListener(new ChangeListener<Refaccion>() {
+            @Override
+            public void changed(ObservableValue<? extends Refaccion> observable, Refaccion oldValue, Refaccion newValue) {
+                lbNombreRefaccion.setText(newValue.getNombre());
+                lbTipoRefaccion.setText(newValue.getTipoRefaccion());
+                lbPrecio.setText(String.valueOf(newValue.getPrecioCompra()));
+                lbPzasDisponibles.setText(String.valueOf(newValue.getPzasDisponiblesCompra()));
+            }
         });
     }    
     
@@ -71,6 +93,16 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 listaProveedores.addAll(proveedoresRecuperados);
                 cbProveedores.setItems(listaProveedores);
             }
+        }
+    
+    }
+    
+    private void cargarInformacionRefaccionesFiltradas(int idProveedor){
+        ArrayList<Refaccion> refaccionesFiltradas = RefaccionDAO.consultRefaccionesProovedor(idProveedor);
+        if(refaccionesFiltradas != null){
+            listaRefacciones = FXCollections.observableArrayList();
+            listaRefacciones.addAll(refaccionesFiltradas);
+            cbRefacciones.setItems(listaRefacciones);
         }
     
     }

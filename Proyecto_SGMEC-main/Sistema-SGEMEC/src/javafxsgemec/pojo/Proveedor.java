@@ -5,17 +5,15 @@ public class Proveedor {
     private String nombre;
     private String correoElect;
     private String telefono;
-    private String direccion;
     
     public Proveedor(){
     }
 
-    public Proveedor(int idProovedor, String nombre, String correoElect, String telefono, String direccion) {
+    public Proveedor(int idProovedor, String nombre, String correoElect, String telefono) {
         this.idProovedor = idProovedor;
         this.nombre = nombre;
         this.correoElect = correoElect;
         this.telefono = telefono;
-        this.direccion = direccion;
     }
 
     public int getIdProovedor() {
@@ -50,14 +48,7 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
+    
     
     @Override
     public String toString(){
