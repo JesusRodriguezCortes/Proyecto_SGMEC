@@ -1,11 +1,11 @@
 package javafxsgemec.dao;
 
-import javafxsgemec.pojo.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafxsgemec.pojo.Usuario;
 import javafxsgemec.pojo.UsuarioRespuesta;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ResultOperation;
