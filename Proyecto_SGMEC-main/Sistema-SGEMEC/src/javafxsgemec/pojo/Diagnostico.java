@@ -138,11 +138,11 @@ public class Diagnostico {
         this.estado = Estado;
     }
 
-    public byte getImagen() {
+    public byte getFoto() {
         return foto;
     }
 
-    public void setImagen(byte foto) {
+    public void setFoto(byte foto) {
         this.foto = foto;
     }
 
