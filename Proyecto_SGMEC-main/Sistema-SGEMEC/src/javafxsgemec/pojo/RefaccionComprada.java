@@ -9,26 +9,48 @@ package javafxsgemec.pojo;
  * @author je_zu
  */
 public class RefaccionComprada {
-    Refaccion refaccion;
-    int refaccionesCompradas;
-    float precioNetoRefacciones;
+    private String nombreRefaccion;
+    private String tipoRefaccion;
+    private int refaccionesCompradas;
+    private float precioNetoRefacciones;
+    private float precioCompra;
 
+    
     public RefaccionComprada() {
     }
 
-    public RefaccionComprada(Refaccion refaccion, int refaccionesCompradas) {
-        this.refaccion = refaccion;
+    public RefaccionComprada(String nombreRefaccion, String tipoRefaccion, int refaccionesCompradas, float precioNetoRefacciones, float precioCompra) {
+        this.nombreRefaccion = nombreRefaccion;
+        this.tipoRefaccion = tipoRefaccion;
         this.refaccionesCompradas = refaccionesCompradas;
+        this.precioNetoRefacciones = precioNetoRefacciones;
+        this.precioCompra = precioCompra;
     }
 
-    public Refaccion getRefaccion() {
-        return refaccion;
+    public String getNombreRefaccion() {
+        return nombreRefaccion;
     }
 
-    public void setRefaccion(Refaccion refaccion) {
-        this.refaccion = refaccion;
+    public void setNombreRefaccion(String nombreRefaccion) {
+        this.nombreRefaccion = nombreRefaccion;
     }
 
+    public String getTipoRefaccion() {
+        return tipoRefaccion;
+    }
+
+    public void setTipoRefaccion(String tipoRefaccion) {
+        this.tipoRefaccion = tipoRefaccion;
+    }
+
+    public float getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(float precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+    
     public int getRefaccionesCompradas() {
         return refaccionesCompradas;
     }
@@ -42,12 +64,12 @@ public class RefaccionComprada {
     }
 
     public void setPrecioNetoRefacciones() {
-        this.precioNetoRefacciones = refaccion.getPrecioCompra() * refaccionesCompradas;
+        this.precioNetoRefacciones = precioCompra * refaccionesCompradas;
     }
     
     @Override
     public String toString() {
-        return refaccion.getNombreRefaccion(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return nombreRefaccion; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
     
     

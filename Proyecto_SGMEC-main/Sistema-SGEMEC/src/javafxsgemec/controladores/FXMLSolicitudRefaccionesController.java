@@ -5,7 +5,6 @@
 package javafxsgemec.controladores;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -16,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -196,9 +194,20 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     
     private void agregarRefaccionCompradaATabla(){
         RefaccionComprada refaccionComprada = new RefaccionComprada();
-        refaccionComprada.setRefaccion(cbRefacciones.getSelectionModel().getSelectedItem());
+        ArrayList<RefaccionComprada> listaRefaccionCompradas = new ArrayList<>();
+        refaccionComprada.setNombreRefaccion(cbRefacciones.getSelectionModel().getSelectedItem().getNombreRefaccion());
+        refaccionComprada.setTipoRefaccion(cbRefacciones.getSelectionModel().getSelectedItem().getTipoRefaccion());
+        refaccionComprada.setPrecioCompra(cbRefacciones.getSelectionModel().getSelectedItem().getPrecioCompra());
         refaccionComprada.setRefaccionesCompradas(refaccionesCompradas);
         refaccionComprada.setPrecioNetoRefacciones();
+        /*for(int i = 0; i< listaRefaccionCompradas.size(); i++){
+            if(){
+            
+            }
+        }*/
+        listaRefaccionCompradas.add(refaccionComprada);
+        infoRefaccionesCompradas.addAll(listaRefaccionCompradas);
+        tbRefaccionesCompradas.setItems(infoRefaccionesCompradas);
     }
 
     @FXML
