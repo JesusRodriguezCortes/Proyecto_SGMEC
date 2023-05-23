@@ -33,7 +33,7 @@ public class ProveedorDAO {
                 while(resultadoConsulta.next()){
                     Proveedor proveedor = new Proveedor();
                     proveedor.setIdProovedor(resultadoConsulta.getInt("idProveedor"));
-                    proveedor.setNombre(resultadoConsulta.getString("nombre"));
+                    proveedor.setNombreProveedor(resultadoConsulta.getString("nombre"));
                     proveedor.setCorreoElect(resultadoConsulta.getString("correoElectronico"));
                     proveedor.setTelefono(resultadoConsulta.getString("telefono"));
                     listaProveedores.add(proveedor);

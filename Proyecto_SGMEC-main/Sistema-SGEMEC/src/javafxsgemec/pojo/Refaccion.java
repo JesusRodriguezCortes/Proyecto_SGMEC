@@ -2,7 +2,7 @@ package javafxsgemec.pojo;
 
 public class Refaccion {
     private int idRefaccion;
-    private String nombre;
+    private String nombreRefaccion;
     private String tipoRefaccion;
     private String codigoRefaccion;
     private int pzasDisponiblesCompra;
@@ -13,9 +13,9 @@ public class Refaccion {
     public Refaccion(){
     }
 
-    public Refaccion(int idRefaccion, String nombre, String tipoRefaccion, String codigoRefaccion, int pzasDisponiblesCompra, int pzasDisponiblesVenta, float precioCompra, float precioVenta) {
+    public Refaccion(int idRefaccion, String nombreRefaccion, String tipoRefaccion, String codigoRefaccion, int pzasDisponiblesCompra, int pzasDisponiblesVenta, float precioCompra, float precioVenta) {
         this.idRefaccion = idRefaccion;
-        this.nombre = nombre;
+        this.nombreRefaccion = nombreRefaccion;
         this.tipoRefaccion = tipoRefaccion;
         this.codigoRefaccion = codigoRefaccion;
         this.pzasDisponiblesCompra = pzasDisponiblesCompra;
@@ -26,12 +26,12 @@ public class Refaccion {
 
     
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreRefaccion() {
+        return nombreRefaccion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRefaccion(String nombreRefaccion) {
+        this.nombreRefaccion = nombreRefaccion;
     }
 
     public String getTipoRefaccion() {
@@ -95,6 +95,6 @@ public class Refaccion {
     
     @Override
     public String toString(){
-        return this.nombre;
+        return this.nombreRefaccion;
     }
 }

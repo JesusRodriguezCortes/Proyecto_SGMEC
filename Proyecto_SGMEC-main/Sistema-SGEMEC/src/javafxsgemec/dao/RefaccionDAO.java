@@ -43,7 +43,7 @@ public class RefaccionDAO {
                 while(resultadoConsulta.next()){
                     Refaccion refaccion = new Refaccion();
                     refaccion.setIdRefaccion(resultadoConsulta.getInt("idRefaccion"));
-                    refaccion.setNombre(resultadoConsulta.getString("nombre"));
+                    refaccion.setNombreRefaccion(resultadoConsulta.getString("nombre"));
                     refaccion.setTipoRefaccion(resultadoConsulta.getString("nombreTipoRefaccion"));
                     refaccion.setPzasDisponiblesCompra(resultadoConsulta.getInt("pzasDisponiblesCompra"));
                     refaccion.setPrecioCompra(resultadoConsulta.getFloat("PrecioCompra"));

@@ -38,7 +38,7 @@
                </font></Label>
             <TextArea layoutX="6.0" layoutY="363.0" prefHeight="121.0" prefWidth="209.0" />
          </children></Pane>
-      <Pane layoutX="263.0" layoutY="18.0" prefHeight="497.0" prefWidth="509.0" style="-fx-background-color: white;">
+      <Pane layoutX="263.0" layoutY="18.0" prefHeight="526.0" prefWidth="509.0" style="-fx-background-color: white;">
          <children>
             <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="248.0" text="Información de las refacciones">
                <font>
@@ -46,23 +46,23 @@
                </font>
             </Label>
             <ComboBox fx:id="cbRefacciones" layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione la refacción" />
-            <TableView layoutX="14.0" layoutY="134.0" prefHeight="313.0" prefWidth="482.0">
+            <TableView fx:id="tbRefaccionesCompradas" layoutX="19.0" layoutY="170.0" prefHeight="313.0" prefWidth="482.0">
               <columns>
-                <TableColumn prefWidth="155.0" text="Nombre" />
-                <TableColumn prefWidth="116.0" text="Tipo de refacción" />
-                  <TableColumn prefWidth="63.0" text="Precio" />
-                  <TableColumn prefWidth="61.0" text="Cantidad" />
-                  <TableColumn prefWidth="85.0" text="Precio neto" />
+                <TableColumn fx:id="tcNombreRefaccion" prefWidth="155.0" text="Nombre" />
+                <TableColumn fx:id="tcTipoRefaccion" prefWidth="116.0" text="Tipo de refacción" />
+                  <TableColumn fx:id="tcPrecio" prefWidth="63.0" text="Precio" />
+                  <TableColumn fx:id="tcCantidad" prefWidth="61.0" text="Cantidad" />
+                  <TableColumn fx:id="tcPrecioNeto" prefWidth="85.0" text="Precio neto" />
               </columns>
             </TableView>
             <Button layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
             <Button layoutX="330.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
-            <Label layoutX="291.0" layoutY="456.0" text="Total:">
+            <Label layoutX="292.0" layoutY="483.0" text="Total:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="346.0" layoutY="456.0" prefHeight="27.0" prefWidth="98.0" text="______">
+            <Label layoutX="350.0" layoutY="483.0" prefHeight="27.0" prefWidth="98.0" text="______">
                <font>
                   <Font size="18.0" />
                </font>
@@ -92,22 +92,22 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbNombreRefaccion" layoutX="14.0" layoutY="90.0" text="________">
+            <Label fx:id="lbNombreRefaccion" alignment="TOP_LEFT" layoutX="19.0" layoutY="90.0" prefHeight="41.0" prefWidth="98.0" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbTipoRefaccion" layoutX="123.0" layoutY="90.0" text="________">
+            <Label fx:id="lbTipoRefaccion" layoutX="123.0" layoutY="90.0" prefHeight="20.0" prefWidth="79.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbPrecio" layoutX="214.0" layoutY="90.0" text="________">
+            <Label fx:id="lbPrecio" layoutX="214.0" layoutY="90.0" prefHeight="20.0" prefWidth="62.0">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lbPzasDisponibles" layoutX="290.0" layoutY="90.0" text="________">
+            <Label fx:id="lbPzasDisponibles" layoutX="290.0" layoutY="90.0" prefHeight="20.0" prefWidth="89.0" text="0">
                <font>
                   <Font size="14.0" />
                </font>

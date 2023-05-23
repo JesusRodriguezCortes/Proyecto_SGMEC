@@ -2,16 +2,16 @@ package javafxsgemec.pojo;
 
 public class Proveedor {
     private int idProovedor;
-    private String nombre;
+    private String nombreProveedor;
     private String correoElect;
     private String telefono;
     
     public Proveedor(){
     }
 
-    public Proveedor(int idProovedor, String nombre, String correoElect, String telefono) {
+    public Proveedor(int idProovedor, String nombreProveedor, String correoElect, String telefono) {
         this.idProovedor = idProovedor;
-        this.nombre = nombre;
+        this.nombreProveedor = nombreProveedor;
         this.correoElect = correoElect;
         this.telefono = telefono;
     }
@@ -24,12 +24,12 @@ public class Proveedor {
         this.idProovedor = idProovedor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreProveedor() {
+        return nombreProveedor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
     }
 
     public String getCorreoElect() {
@@ -52,6 +52,6 @@ public class Proveedor {
     
     @Override
     public String toString(){
-        return nombre;
+        return nombreProveedor;
     }
 }

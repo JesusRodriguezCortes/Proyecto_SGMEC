@@ -10,10 +10,11 @@
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/ProveedorDAO.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/ClienteDAO.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLSolicitudRefaccionesController.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/RefaccionComprada.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/javafxsgemec.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/RefaccionDAO.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/Refaccion.java</file>
-            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/util/ShowMessage.java</file>
         </group>
     </open-files>
 </project-private>
