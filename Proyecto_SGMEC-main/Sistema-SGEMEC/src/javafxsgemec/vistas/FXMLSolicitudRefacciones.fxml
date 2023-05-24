@@ -62,7 +62,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="350.0" layoutY="483.0" prefHeight="27.0" prefWidth="98.0" text="______">
+            <Label fx:id="lbTotal" layoutX="350.0" layoutY="483.0" prefHeight="27.0" prefWidth="98.0" text="0">
                <font>
                   <Font size="18.0" />
                </font>

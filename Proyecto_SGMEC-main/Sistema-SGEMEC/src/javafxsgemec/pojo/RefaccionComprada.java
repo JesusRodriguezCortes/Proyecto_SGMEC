@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package javafxsgemec.pojo;
 
 /**
@@ -9,48 +5,28 @@ package javafxsgemec.pojo;
  * @author je_zu
  */
 public class RefaccionComprada {
-    private String nombreRefaccion;
-    private String tipoRefaccion;
+    private Refaccion refaccion;
     private int refaccionesCompradas;
     private float precioNetoRefacciones;
-    private float precioCompra;
 
     
     public RefaccionComprada() {
     }
 
-    public RefaccionComprada(String nombreRefaccion, String tipoRefaccion, int refaccionesCompradas, float precioNetoRefacciones, float precioCompra) {
-        this.nombreRefaccion = nombreRefaccion;
-        this.tipoRefaccion = tipoRefaccion;
+    public RefaccionComprada(Refaccion refaccion, int refaccionesCompradas, float precioNetoRefacciones) {
+        this.refaccion = refaccion;
         this.refaccionesCompradas = refaccionesCompradas;
         this.precioNetoRefacciones = precioNetoRefacciones;
-        this.precioCompra = precioCompra;
     }
 
-    public String getNombreRefaccion() {
-        return nombreRefaccion;
+    public Refaccion getRefaccion() {
+        return refaccion;
     }
 
-    public void setNombreRefaccion(String nombreRefaccion) {
-        this.nombreRefaccion = nombreRefaccion;
+    public void setRefaccion(Refaccion refaccion) {
+        this.refaccion = refaccion;
     }
-
-    public String getTipoRefaccion() {
-        return tipoRefaccion;
-    }
-
-    public void setTipoRefaccion(String tipoRefaccion) {
-        this.tipoRefaccion = tipoRefaccion;
-    }
-
-    public float getPrecioCompra() {
-        return precioCompra;
-    }
-
-    public void setPrecioCompra(float precioCompra) {
-        this.precioCompra = precioCompra;
-    }
-    
+ 
     public int getRefaccionesCompradas() {
         return refaccionesCompradas;
     }
@@ -64,13 +40,23 @@ public class RefaccionComprada {
     }
 
     public void setPrecioNetoRefacciones() {
-        this.precioNetoRefacciones = precioCompra * refaccionesCompradas;
+        this.precioNetoRefacciones = refaccion.getPrecioCompra() * refaccionesCompradas;
     }
     
-    @Override
-    public String toString() {
-        return nombreRefaccion; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    public String getNombreRefaccion(){
+        return refaccion.getNombreRefaccion();
     }
     
+    public String getTipoRefaccion(){
+        return refaccion.getTipoRefaccion();
+    }
     
+    public float getPrecioCompra(){
+        return refaccion.getPrecioCompra();
+    }
+    
+    public int getIdRefaccion(){
+        return refaccion.getIdRefaccion();
+    }
 }
+    

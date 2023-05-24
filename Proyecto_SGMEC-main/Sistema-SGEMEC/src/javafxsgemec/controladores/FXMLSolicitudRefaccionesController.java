@@ -6,6 +6,7 @@ package javafxsgemec.controladores;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -66,11 +68,15 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     private TableColumn tcCantidad;
     @FXML
     private TableColumn tcPrecioNeto;
+    @FXML
+    private Label lbTotal;
     
     int refaccionesCompradas = 0;
+    float totalPedido = 0;
     private ObservableList<Proveedor> listaProveedores = FXCollections.observableArrayList();
     private ObservableList<Refaccion> listaRefacciones = FXCollections.observableArrayList();
     private ObservableList<RefaccionComprada> infoRefaccionesCompradas = FXCollections.observableArrayList();
+
     
     /**
      * Initializes the controller class.
@@ -79,21 +85,23 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         lbCantidad.setText(String.valueOf(refaccionesCompradas));
+        lbTotal.setText(String.valueOf(totalPedido));
         cargarInformacionProveedor();
         
-        cbProveedores.valueProperty().addListener(new ChangeListener<Proveedor>(){
-            @Override
-            public void changed(ObservableValue<? extends Proveedor> observable, Proveedor oldValue, Proveedor newValue) {
-                cbRefacciones.getSelectionModel().clearAndSelect(0);
-                if(newValue != null){
-                    lbNombre.setText(newValue.getNombreProveedor());
-                    lbCorreoElectronico.setText(newValue.getCorreoElect());
-                    lbTelefono.setText(newValue.getTelefono());
-                    limpiarDatos();
-                    cargarInformacionRefaccionesFiltradas(newValue.getIdProovedor());
-                }
-            }  
-        });
+   cbProveedores.valueProperty().addListener(new ChangeListener<Proveedor>(){
+    @Override
+    public void changed(ObservableValue<? extends Proveedor> observable, Proveedor oldValue, Proveedor newValue) {
+        cbRefacciones.getSelectionModel().clearAndSelect(0);
+            if(newValue != null){
+                lbNombre.setText(newValue.getNombreProveedor());
+                lbCorreoElectronico.setText(newValue.getCorreoElect());
+                lbTelefono.setText(newValue.getTelefono());
+                limpiarDatos();
+                cargarInformacionRefaccionesFiltradas(newValue.getIdProovedor());
+            }
+        }  
+    });
+        
         
         cbRefacciones.valueProperty().addListener(new ChangeListener<Refaccion>() {
             @Override
@@ -110,7 +118,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         });
     }    
     private void configurarTabla(){
-        tcNombreRefaccion.setCellValueFactory(new PropertyValueFactory("nombreRefaccion"));
+        tcNombreRefaccion.setCellValueFactory(new PropertyValueFactory("refaccion"));
         tcTipoRefaccion.setCellValueFactory(new  PropertyValueFactory("tipoRefaccion"));
         tcPrecio.setCellValueFactory(new PropertyValueFactory("precioCompra"));
         tcCantidad.setCellValueFactory(new PropertyValueFactory("refaccionesCompradas"));
@@ -159,6 +167,9 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         lbPzasDisponibles.setText("0");
         refaccionesCompradas = 0;
         lbCantidad.setText(String.valueOf(refaccionesCompradas));
+        totalPedido = 0;
+        lbTotal.setText(String.valueOf(totalPedido));
+        infoRefaccionesCompradas.clear();
     }
 
     @FXML
@@ -195,23 +206,38 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     private void agregarRefaccionCompradaATabla(){
         RefaccionComprada refaccionComprada = new RefaccionComprada();
         ArrayList<RefaccionComprada> listaRefaccionCompradas = new ArrayList<>();
-        refaccionComprada.setNombreRefaccion(cbRefacciones.getSelectionModel().getSelectedItem().getNombreRefaccion());
-        refaccionComprada.setTipoRefaccion(cbRefacciones.getSelectionModel().getSelectedItem().getTipoRefaccion());
-        refaccionComprada.setPrecioCompra(cbRefacciones.getSelectionModel().getSelectedItem().getPrecioCompra());
-        refaccionComprada.setRefaccionesCompradas(refaccionesCompradas);
-        refaccionComprada.setPrecioNetoRefacciones();
-        /*for(int i = 0; i< listaRefaccionCompradas.size(); i++){
-            if(){
+        if(refaccionesCompradas > 0){
+            refaccionComprada.setRefaccion(cbRefacciones.getSelectionModel().getSelectedItem());
+            refaccionComprada.setRefaccionesCompradas(refaccionesCompradas);
+            refaccionComprada.setPrecioNetoRefacciones();
+            infoRefaccionesCompradas.add(refaccionComprada);
+            tbRefaccionesCompradas.setItems(infoRefaccionesCompradas);
+            totalPedido = totalPedido + refaccionComprada.getPrecioNetoRefacciones();
+            lbTotal.setText(String.valueOf(totalPedido));
             
-            }
-        }*/
-        listaRefaccionCompradas.add(refaccionComprada);
-        infoRefaccionesCompradas.addAll(listaRefaccionCompradas);
-        tbRefaccionesCompradas.setItems(infoRefaccionesCompradas);
+        }else{
+            ShowMessage.showAlertSimple("Dato faltante", "Ingrese el numero de refacciones que desea comprar", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML
     private void btnEliminarRefaccion(ActionEvent event) {
+        int verificarSeleccion = verificarRefaccionReleccionada();
+        
+        if(verificarSeleccion >= 0){
+            totalPedido = totalPedido - infoRefaccionesCompradas.get(verificarSeleccion).getPrecioNetoRefacciones();
+            lbTotal.setText(String.valueOf(totalPedido));
+            infoRefaccionesCompradas.remove(verificarSeleccion);
+            tbRefaccionesCompradas.setItems(infoRefaccionesCompradas);
+        }else{
+            ShowMessage.showAlertSimple("Seleccion no valida", "Seleccione una fila de la tabla para continuar", Alert.AlertType.WARNING);
+        }
+    }
+    
+    
+    private int verificarRefaccionReleccionada(){
+        int filaSeleccionada = tbRefaccionesCompradas.getSelectionModel().getSelectedIndex();
+        return filaSeleccionada;
     }
 
     @FXML
