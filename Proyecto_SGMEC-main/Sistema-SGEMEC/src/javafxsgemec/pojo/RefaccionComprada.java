@@ -58,5 +58,10 @@ public class RefaccionComprada {
     public int getIdRefaccion(){
         return refaccion.getIdRefaccion();
     }
+    
+    public int getPzasDisponiblesCompra(){
+        return refaccion.getPzasDisponiblesCompra();
+    }
+    
 }
     

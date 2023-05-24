@@ -46,7 +46,7 @@
                </font>
             </Label>
             <ComboBox fx:id="cbRefacciones" layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione la refacción" />
-            <TableView fx:id="tbRefaccionesCompradas" layoutX="19.0" layoutY="170.0" prefHeight="313.0" prefWidth="482.0">
+            <TableView fx:id="tbRefaccionesCompradas" layoutX="19.0" layoutY="170.0" onMouseClicked="#clicSeleccionarRefaccion" prefHeight="313.0" prefWidth="482.0">
               <columns>
                 <TableColumn fx:id="tcNombreRefaccion" prefWidth="155.0" text="Nombre" />
                 <TableColumn fx:id="tcTipoRefaccion" prefWidth="116.0" text="Tipo de refacción" />
@@ -56,7 +56,7 @@
               </columns>
             </TableView>
             <Button layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
-            <Button layoutX="330.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
+            <Button layoutX="335.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
             <Label layoutX="292.0" layoutY="483.0" text="Total:">
                <font>
                   <Font size="18.0" />
@@ -119,6 +119,7 @@
                </font>
             </Label>
             <Button layoutX="399.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnReducirCantidadRefacciones" text="-" />
+            <Button layoutX="410.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnModificarRefaccionComprada" text="Modificar" />
          </children></Pane>
       <Button layoutX="601.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnRealizarPedido" text="Realizar pedido" />
       <Button layoutX="710.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />

@@ -68,6 +68,34 @@ public class RefaccionDAO {
         return  listaRefacciones;
     }
     
+    public static boolean modificarPzasDisponiblesCompraRefaccion(Refaccion refaccionComprada){
+        boolean status = false;
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String consulta = "SELECT idRefaccion, Refaccion.nombre, TipoRefaccion.nombreTipoRefaccion, pzasDisponiblesCompra, precioCompra FROM Refaccion INNER JOIN TipoRefaccion ON Refaccion.idTipoRefaccion = TipoRefaccion.idTipoRefaccion INNER JOIN Proveedor on Refaccion.idProveedor = Proveedor.idProveedor WHERE Proveedor.idProveedor = ?;";
+                PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
+              
+                ResultSet resultadoConsulta = configurarConsulta.executeQuery();
+                
+                
+                conexionBD.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }finally{
+                try {
+                    conexionBD.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProveedorDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else{
+  
+        }
+        return status;
+    }
+    
     public void deleteRefaccion(){
         
     }
