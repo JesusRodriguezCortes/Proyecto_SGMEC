@@ -14,6 +14,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -33,14 +36,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafxsgemec.dao.PedidoRefaccionDAO;
 import javafxsgemec.dao.ProveedorDAO;
 import javafxsgemec.dao.RefaccionDAO;
+import javafxsgemec.pojo.PedidoRefaccion;
 import javafxsgemec.pojo.Proveedor;
 import javafxsgemec.pojo.Refaccion;
 import javafxsgemec.pojo.RefaccionComprada;
+import javafxsgemec.util.ResultadoOperacion;
 import javafxsgemec.util.ShowMessage;
 
 /**
@@ -84,11 +91,14 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     private TableColumn tcPrecioNeto;
     @FXML
     private Label lbTotal;
+    @FXML
+    private TextArea lbDireccionEntrega;
     
     Document pedidoPDF = new Document();
     String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\pedido.pdf";
     int refaccionesCompradas = 0;
     float totalPedido = 0;
+    int numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
     private ObservableList<Proveedor> listaProveedores = FXCollections.observableArrayList();
     private ObservableList<Refaccion> listaRefacciones = FXCollections.observableArrayList();
     private ObservableList<RefaccionComprada> infoRefaccionesCompradas = FXCollections.observableArrayList();
@@ -242,6 +252,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 tbRefaccionesCompradas.setItems(infoRefaccionesCompradas);
                 tbRefaccionesCompradas.refresh();
                 lbTotal.setText(String.valueOf(totalPedido));
+                limpiarDatosRefaccionSeleccionada();
             }else{
                 ShowMessage.showAlertSimple("Dato faltante", "Ingrese el numero de refacciones que desea comprar", Alert.AlertType.WARNING);
             }
@@ -323,7 +334,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         if(!infoRefaccionesCompradas.isEmpty()){
             realizarPedido();
             modificarPzasDisponibles();
-            crearPDF();
+            //crearPDF();
         }else{
             ShowMessage.showAlertSimple("No hay datos en el pedido", "Ingrese refacciones en el pedido para continuar", Alert.AlertType.WARNING);
         }
@@ -331,7 +342,47 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void realizarPedido(){
-       
+        ArrayList<String> numerosPedidoRecuperados = new ArrayList<>();
+        String direccionEntrega = lbDireccionEntrega.getText();
+        if(!direccionEntrega.isEmpty()){
+            PedidoRefaccion nuevoPedido = new PedidoRefaccion();
+            LocalDate fechaActual = LocalDate.now();
+            numerosPedidoRecuperados = PedidoRefaccionDAO.obtenerNumeroPedidos();
+            
+            if(numerosPedidoRecuperados != null){
+                for(int i = 0; i < numerosPedidoRecuperados.size();i++){
+                    if(String.valueOf(numeroPedido) == numerosPedidoRecuperados.get(i)){
+                        numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
+                        System.out.println(String.valueOf(numeroPedido));
+                        i--;
+                    }
+                }
+            }else{
+                ShowMessage.showAlertSimple("Error de conexion", "Hubo un erros con la base de datos. Intentelo de nuevo mas tarde", Alert.AlertType.NONE);
+            }
+                nuevoPedido.setNumeroPedido(String.valueOf(numeroPedido));
+                nuevoPedido.setFechaPedido(String.valueOf(fechaActual));
+                nuevoPedido.setTotalPedido(totalPedido);
+                nuevoPedido.setDireccionEntrega(direccionEntrega);
+                registrarPedido(nuevoPedido);
+        }else{
+            ShowMessage.showAlertSimple("Dato Faltante", "Ingrese la direccion de entrega para continuar", Alert.AlertType.WARNING);
+
+        }
+
+    }
+    
+    private void registrarPedido(PedidoRefaccion pedidoNuevo){
+        try {
+            ResultadoOperacion resultado = PedidoRefaccionDAO.registrarPedidoRefaccion(pedidoNuevo);
+            if(!resultado.isError()){
+                ShowMessage.showAlertSimple("Pedido registrado", resultado.getMensaje(), Alert.AlertType.INFORMATION);
+            }else{
+                ShowMessage.showAlertSimple("Error al guardar", resultado.getMensaje(), Alert.AlertType.ERROR);
+            }
+        } catch (SQLException e) {
+            ShowMessage.showAlertSimple("Error de conexion", e.getMessage(), Alert.AlertType.NONE);
+        }
     }
     
     private void modificarPzasDisponibles(){
@@ -340,12 +391,28 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
            int pzasRefaccionesCompradas = infoRefaccionesCompradas.get(i).getRefaccionesCompradas();
            int nuevasPzasDisponibles = pzasRefaccionesGuardadas - pzasRefaccionesCompradas;
            infoRefaccionesCompradas.get(i).getRefaccion().setPzasDisponiblesCompra(nuevasPzasDisponibles);
+           modificarPzasRefacciones();
        }
     
     }
     
-    private void guardarRefaccionesCompradas(){
+    private void modificarPzasRefacciones(){
+        for(int i = 0; i < infoRefaccionesCompradas.size(); i++){
+            try {
+                ResultadoOperacion resultado;
+                resultado = RefaccionDAO.modificarPzasDisponiblesCompraRefaccion(infoRefaccionesCompradas.get(i).getRefaccion());
+            } catch (SQLException ex) {
+                ShowMessage.showAlertSimple("Error de conexion", ex.getMessage(), Alert.AlertType.ERROR);
+                return;
+            }
+        }
+        
+        
+        
+    }
     
+    private void guardarRefaccionesCompradas(){
+        
     
     }
     

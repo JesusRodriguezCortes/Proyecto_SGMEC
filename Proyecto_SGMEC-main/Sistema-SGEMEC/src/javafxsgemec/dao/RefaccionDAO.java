@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javafxsgemec.pojo.Refaccion;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ConstantsConnection;
+import javafxsgemec.util.ResultadoOperacion;
 
 public class RefaccionDAO {
     public void crearRefaccion(){
@@ -68,32 +69,41 @@ public class RefaccionDAO {
         return  listaRefacciones;
     }
     
-    public static boolean modificarPzasDisponiblesCompraRefaccion(Refaccion refaccionComprada){
-        boolean status = false;
+    public static ResultadoOperacion modificarPzasDisponiblesCompraRefaccion(Refaccion refaccionModificada) throws SQLException{
+        ResultadoOperacion respuesta = new ResultadoOperacion();
+        respuesta.setError(true);
+        respuesta.setNumeroFilasAfectadas(-1);
+        
         Connection conexionBD = OpenConnection.openConnectionBD();
         
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idRefaccion, Refaccion.nombre, TipoRefaccion.nombreTipoRefaccion, pzasDisponiblesCompra, precioCompra FROM Refaccion INNER JOIN TipoRefaccion ON Refaccion.idTipoRefaccion = TipoRefaccion.idTipoRefaccion INNER JOIN Proveedor on Refaccion.idProveedor = Proveedor.idProveedor WHERE Proveedor.idProveedor = ?;";
+                String consulta = "UPDATE Refaccion SET pzasDisponiblesCompra = ? WHERE idRefaccion = ?; ;";
                 PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
-              
-                ResultSet resultadoConsulta = configurarConsulta.executeQuery();
+                configurarConsulta.setInt(1, refaccionModificada.getPzasDisponiblesCompra());
+                configurarConsulta.setInt(2, refaccionModificada.getIdRefaccion());
+                
+                int numeroFilas = configurarConsulta.executeUpdate();
+                if(numeroFilas > 0){
+                    respuesta.setError(false);
+                    respuesta.setMensaje("Informacion de refaccion modificada correctamente");
+                    respuesta.setNumeroFilasAfectadas(numeroFilas);
+                }else{
+                    respuesta.setMensaje("No se pudo modificar la informacion de refaccion.");
+                }
                 
                 
                 conexionBD.close();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                respuesta.setMensaje(ex.getMessage());
             }finally{
-                try {
                     conexionBD.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ProveedorDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
             }
         }else{
-  
+            respuesta.setMensaje("Por el momento no hay conexión con la base de datos...");
         }
-        return status;
+        return respuesta;
     }
     
     public void deleteRefaccion(){
