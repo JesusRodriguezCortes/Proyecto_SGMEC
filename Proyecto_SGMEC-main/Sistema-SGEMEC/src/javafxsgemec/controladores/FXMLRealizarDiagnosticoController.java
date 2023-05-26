@@ -126,6 +126,7 @@ public class FXMLRealizarDiagnosticoController implements Initializable {
                 equipo.getIdDispositivo());
             DiagnosticoDAO.createDiagnostico(diag);
             CotizacionDAO.createCotizacion(cotizacion);
+            ShowMessage.showAlertSimple("Cotizacion Enviada", "La cotizacion se ha enviado al cliente", Alert.AlertType.INFORMATION);
             
         }
     }
