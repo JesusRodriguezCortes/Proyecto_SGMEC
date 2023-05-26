@@ -40,10 +40,10 @@ public class UsuarioDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String consulta = "select idUsuario,usuario,password, roles.nivelAcceso AS nivelDeAcceso "
+                String consulta = "select idUsuario,nombreUsuario,password, roles.nivelAcceso AS nivelDeAcceso "
                         + "FROM usuario " +
                         "INNER JOIN roles ON usuario.idRoles = roles.idRoles "+
-                        "WHERE usuario = ? AND password = ? ";
+                        "WHERE nombreUsuario = ? AND password = ? ";
                 PreparedStatement consultaLogin = conexionBD.prepareStatement(consulta);
                 consultaLogin.setString(1, usuario);
                 consultaLogin.setString(2, password);
@@ -51,7 +51,7 @@ public class UsuarioDAO {
                 usuarioSesion = new Usuario();
                 if(resultadoConsulta.next()){
                     usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
-                    usuarioSesion.setUsuario(resultadoConsulta.getString("usuario"));
+                    usuarioSesion.setUsuario(resultadoConsulta.getString("nombreUsuario"));
                     usuarioSesion.setContrasenia(resultadoConsulta.getString("password"));
                     usuarioSesion.setNivelDeAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
                     uRespuesta.setUsuarioRespuesta(usuarioSesion);

@@ -32,7 +32,6 @@ public class FXMLInicioSesionController implements Initializable {
     private TextField tfUsuario;
     @FXML
     private PasswordField tfContrasenia;
-    @FXML
     private Label lbError;
     UsuarioRespuesta usuarioSesion;
 
@@ -51,11 +50,12 @@ public class FXMLInicioSesionController implements Initializable {
         tfContrasenia.setText("");
         if(usuario.isEmpty()){
             valido = false;
-            lbError.setText("Rellene todos los campos");
+            ShowMessage.showAlertSimple("Campos Vacios",
+                    "Por favor rellene los campos vacios", Alert.AlertType.WARNING);
         }
         if(contrasenia.isEmpty()){
             valido = false;
-            lbError.setText("Rellene todos los campos");
+            ShowMessage.showAlertSimple("Campos Vacios", "Por favor rellene los campos vacios", Alert.AlertType.WARNING);
         }
         if(valido)
             verificarCredencialesUsuario(usuario, contrasenia);
