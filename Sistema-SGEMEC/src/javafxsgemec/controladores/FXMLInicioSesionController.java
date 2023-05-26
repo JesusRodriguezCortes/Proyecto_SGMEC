@@ -16,12 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafxsgemec.connectionBD.ConstantsConnection;
+import javafxsgemec.dao.UsuarioDAO;
 import javafxsgemec.javafxsgemec;
-import javafxsgemec.modelo.dao.UsuarioDAO;
-import javafxsgemec.modelo.pojo.Usuario;
-import javafxsgemec.modelo.pojo.UsuarioRespuesta;
-import javafxsgemec.util.Constantes;
+import javafxsgemec.pojo.UsuarioRespuesta;
 import javafxsgemec.util.utilidades;
+import javafxsgemec.util.ShowMessage;
 
 
 public class FXMLInicioSesionController implements Initializable {
@@ -45,6 +45,7 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIniciarSesion(ActionEvent event) {
         String usuario = tfUsuario.getText();
         String contrasenia = tfContrasenia.getText();
+        System.out.println("ANTES DEL ERROR");
         boolean valido = true;
         tfUsuario.setText("");
         tfContrasenia.setText("");
@@ -62,23 +63,23 @@ public class FXMLInicioSesionController implements Initializable {
     private void verificarCredencialesUsuario(String user, String password){
         try {
             usuarioSesion = UsuarioDAO.verificarUsuario(user, password);
-            if(usuarioSesion.getRespuestaConexion()==Constantes.OPERACION_EXITOSA){
+            if(usuarioSesion.getRespuestaConexion()==ConstantsConnection.CODIGO_OPERACION_CORRECTA){
                 System.out.println("Usuario consultado"+usuarioSesion.getUsarioRespuesta().getUsuario());
                 irPantallaPrincipal();
             }else{
-                utilidades.mostrarAlertaSimple("Credenciales incorrectas", 
+                ShowMessage.showAlertSimple("Credenciales incorrectas", 
                         "El número de personal y/o contraseña es incorrecto, favor de verificarlos", 
                         Alert.AlertType.WARNING);
             }
         } catch (SQLException | NullPointerException e) {
-            utilidades.mostrarAlertaSimple("Error de conexión", 
+            ShowMessage.showAlertSimple("Error de conexión", 
                     "Hubo un error en el proceso de comunicación, inténtelo más tarde...", Alert.AlertType.ERROR);
         } 
     }
 
     private void irPantallaPrincipal() {
                 try {
-            utilidades.mostrarAlertaSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsuario()+" al sistema", 
+            ShowMessage.showAlertSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsuario()+" al sistema", 
                     Alert.AlertType.INFORMATION);
             String ventana = null;
             System.out.println("Nivel de acceso BD: "+usuarioSesion.getUsarioRespuesta().getNivelDeAcceso());
@@ -95,7 +96,7 @@ public class FXMLInicioSesionController implements Initializable {
             escenarioBase.show();
         } catch (IOException ex) {
             ex.printStackTrace();
-            utilidades.mostrarAlertaSimple("Error", "No se puede mostrar la pantalla principal", 
+            ShowMessage.showAlertSimple("Error", "No se puede mostrar la pantalla principal", 
                     Alert.AlertType.ERROR);
         }
     }

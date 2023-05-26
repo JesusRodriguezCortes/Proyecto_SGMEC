@@ -5,12 +5,21 @@
 package javafxsgemec.controladores;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+import javafxsgemec.connectionBD.ResultOperation;
+import javafxsgemec.dao.EquipoComputoDAO;
+import javafxsgemec.pojo.Cliente;
+import javafxsgemec.pojo.EquipoComputo;
+import javafxsgemec.util.ShowMessage;
 
 /**
  * FXML Controller class
@@ -51,13 +60,48 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     private TextArea txaComentariosCliente;
     @FXML
     private TextArea txaInformacionDiagnostico;
+    
+    private EquipoComputo dispositivo;
+    private Cliente cliente;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        mostrarDatosDispositivo();
     }    
     
+    public void mostrarDatosDispositivo(){
+        lbMarca.setText(dispositivo.getMarca());
+        lbModelo.setText(dispositivo.getModelo());
+        lbNombreCliente.setText(cliente.getNombre());
+    }
+    
+    public void guardarDatosMantenimiento(){
+        try{
+            ResultOperation resultadoEditar = EquipoComputoDAO.actualizarEstadoEquipoComputo(dispositivo);
+            if(!resultadoEditar.isError()){
+                ShowMessage.showAlertSimple("Estado de mantenimiento editado", resultadoEditar.getMessage(), Alert.AlertType.INFORMATION);
+            }else{
+                ShowMessage.showAlertSimple("Error al editar", resultadoEditar.getMessage(), Alert.AlertType.ERROR);
+            }
+        }catch(SQLException e){
+            ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+    private void cerrarVentana(){
+        Stage escenarioPrincipal = (Stage) txaInformacionDiagnostico.getScene().getWindow();
+        escenarioPrincipal.close();
+    }
+    
+    @FXML
+    private void clicCancelar(ActionEvent event) {
+        cerrarVentana();
+    }
+
+    @FXML
+    private void clicAceptar(ActionEvent event) {
+        
+    }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #66CCCC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLSolicitudRefaccionesController">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="556.0" prefWidth="222.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="11.0" layoutY="6.0" prefHeight="19.0" prefWidth="200.0" text="Información del provedor">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbProveedores" layoutX="6.0" layoutY="39.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione al proveedor" />
+            <Label layoutX="11.0" layoutY="83.0" text="Nombre:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="lbNombre" layoutX="11.0" layoutY="100.0" prefHeight="17.0" prefWidth="186.0" />
+            <Label fx:id="lbCorreoElectronico" layoutX="11.0" layoutY="163.0" prefHeight="17.0" prefWidth="186.0" />
+            <Label layoutX="8.0" layoutY="143.0" text="Correo electronico:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label layoutX="9.0" layoutY="218.0" text="Telefono:">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="lbTelefono" layoutX="9.0" layoutY="238.0" prefHeight="17.0" prefWidth="186.0" />
+            <Label layoutX="7.0" layoutY="312.0" prefHeight="41.0" prefWidth="141.0" text="Ingrese la direccion de entrega:" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <TextArea fx:id="lbDireccionEntrega" layoutX="6.0" layoutY="363.0" prefHeight="121.0" prefWidth="209.0" />
+         </children></Pane>
+      <Pane layoutX="263.0" layoutY="18.0" prefHeight="526.0" prefWidth="509.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="248.0" text="Información de las refacciones">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbRefacciones" layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione la refacción" />
+            <TableView fx:id="tbRefaccionesCompradas" layoutX="19.0" layoutY="170.0" onMouseClicked="#clicSeleccionarRefaccion" prefHeight="313.0" prefWidth="482.0">
+              <columns>
+                <TableColumn fx:id="tcNombreRefaccion" prefWidth="155.0" text="Nombre" />
+                <TableColumn fx:id="tcTipoRefaccion" prefWidth="116.0" text="Tipo de refacción" />
+                  <TableColumn fx:id="tcPrecio" prefWidth="63.0" text="Precio" />
+                  <TableColumn fx:id="tcCantidad" prefWidth="61.0" text="Cantidad" />
+                  <TableColumn fx:id="tcPrecioNeto" prefWidth="85.0" text="Precio neto" />
+              </columns>
+            </TableView>
+            <Button layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
+            <Button layoutX="335.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
+            <Label layoutX="292.0" layoutY="483.0" text="Total:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTotal" layoutX="350.0" layoutY="483.0" prefHeight="27.0" prefWidth="98.0" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="70.0" text="Nombre:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="123.0" layoutY="70.0" text="Tipo:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="214.0" layoutY="70.0" text="Precio:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="288.0" layoutY="70.0" prefHeight="20.0" prefWidth="111.0" text="Pzas disponibles:" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="415.0" layoutY="70.0" text="Cantidad:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbNombreRefaccion" alignment="TOP_LEFT" layoutX="19.0" layoutY="90.0" prefHeight="41.0" prefWidth="98.0" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbTipoRefaccion" layoutX="123.0" layoutY="90.0" prefHeight="20.0" prefWidth="79.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbPrecio" layoutX="214.0" layoutY="90.0" prefHeight="20.0" prefWidth="62.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbPzasDisponibles" layoutX="290.0" layoutY="90.0" prefHeight="20.0" prefWidth="89.0" text="0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="461.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnAumentarCantidadRefacciones" text="+" />
+            <Label fx:id="lbCantidad" alignment="CENTER" layoutX="419.0" layoutY="90.0" prefHeight="20.0" prefWidth="41.0" text="0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="399.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnReducirCantidadRefacciones" text="-" />
+            <Button layoutX="410.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnModificarRefaccionComprada" text="Modificar" />
+         </children></Pane>
+      <Button layoutX="601.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnRealizarPedido" text="Realizar pedido" />
+      <Button layoutX="710.0" layoutY="561.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+   </children>
+</AnchorPane>
