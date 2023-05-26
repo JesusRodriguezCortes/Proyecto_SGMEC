@@ -6,7 +6,6 @@ package javafxsgemec.controladores;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -14,11 +13,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +27,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -42,6 +37,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxsgemec.dao.PedidoRefaccionDAO;
 import javafxsgemec.dao.ProveedorDAO;
+import javafxsgemec.dao.RefaccionCompradaDAO;
 import javafxsgemec.dao.RefaccionDAO;
 import javafxsgemec.pojo.PedidoRefaccion;
 import javafxsgemec.pojo.Proveedor;
@@ -94,11 +90,14 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     @FXML
     private TextArea lbDireccionEntrega;
     
-    Document pedidoPDF = new Document();
-    String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\pedido.pdf";
+    
+    String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\";
+    String ficheroFinal = "";
+    String direccionEntrega = "";
     int refaccionesCompradas = 0;
-    float totalPedido = 0;
-    int numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
+    int numeroPedido = 0;
+    float totalPedido = 0;;
+    LocalDate fechaActual = null;
     private ObservableList<Proveedor> listaProveedores = FXCollections.observableArrayList();
     private ObservableList<Refaccion> listaRefacciones = FXCollections.observableArrayList();
     private ObservableList<RefaccionComprada> infoRefaccionesCompradas = FXCollections.observableArrayList();
@@ -117,7 +116,6 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
    cbProveedores.valueProperty().addListener(new ChangeListener<Proveedor>(){
     @Override
     public void changed(ObservableValue<? extends Proveedor> observable, Proveedor oldValue, Proveedor newValue) {
-        cbRefacciones.getSelectionModel().clearAndSelect(0);
             if(newValue != null){
                 lbNombre.setText(newValue.getNombreProveedor());
                 lbCorreoElectronico.setText(newValue.getCorreoElect());
@@ -185,7 +183,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void limpiarDatos(){
-        cbRefacciones.getSelectionModel().clearSelection();
+        cbRefacciones.getSelectionModel().select(-1);
         lbNombreRefaccion.setText("");
         lbTipoRefaccion.setText("");
         lbPrecio.setText("");
@@ -221,11 +219,8 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         int validarProveedor = cbProveedores.getSelectionModel().getSelectedIndex();
         int validarRefaccion = cbRefacciones.getSelectionModel().getSelectedIndex();
         
-        boolean verificarRefaccion = verificarRefaccionesAgregadas();
-
-        
-        
-        if(validarProveedor != -1 && validarRefaccion != -1){
+        if(validarProveedor != -1 && validarRefaccion != -1 ){
+            boolean verificarRefaccion = verificarRefaccionesAgregadas();
             if(verificarRefaccion == false){
                 agregarRefaccionCompradaATabla();
             }else{
@@ -242,7 +237,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     private void modificarRefaccionesCompradas(){
         
         int verificarSeleccion = verificarRefaccionReleccionada();
-        
+  
         if(verificarSeleccion >= 0){
             if(refaccionesCompradas > 0){
                 totalPedido = totalPedido - infoRefaccionesCompradas.get(verificarSeleccion).getPrecioNetoRefacciones();
@@ -295,6 +290,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void limpiarDatosRefaccionSeleccionada(){
+        cbRefacciones.getSelectionModel().select(-1);
         lbNombreRefaccion.setText("");
         lbTipoRefaccion.setText("");
         lbPrecio.setText("");
@@ -331,44 +327,70 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
 
     @FXML
     private void btnRealizarPedido(ActionEvent event) {
+        direccionEntrega = lbDireccionEntrega.getText();
         if(!infoRefaccionesCompradas.isEmpty()){
-            realizarPedido();
-            modificarPzasDisponibles();
-            //crearPDF();
+            if(!direccionEntrega.isEmpty()){
+                realizarPedido();
+                modificarPzasDisponibles();
+                guardarRefaccionesCompradas();
+                crearPDF();
+                limpiarTodosLosCampos();
+            }else{
+                ShowMessage.showAlertSimple("Dato faltante", "Ingrese la direccion de entrega para continuar", Alert.AlertType.INFORMATION);
+            }
         }else{
             ShowMessage.showAlertSimple("No hay datos en el pedido", "Ingrese refacciones en el pedido para continuar", Alert.AlertType.WARNING);
         }
  
     }
     
+    private void limpiarTodosLosCampos(){
+        cbRefacciones.getSelectionModel().select(-1);
+        lbNombre.setText("");
+        lbCorreoElectronico.setText("");
+        lbTelefono.setText("");
+        lbDireccionEntrega.setText("");
+        lbNombreRefaccion.setText("");
+        lbTipoRefaccion.setText("");
+        lbPrecio.setText("");
+        lbCantidad.setText("0");
+        lbPzasDisponibles.setText("0");
+        refaccionesCompradas = 0;
+        lbCantidad.setText(String.valueOf(refaccionesCompradas));
+        totalPedido = 0;
+        lbTotal.setText(String.valueOf(totalPedido));
+        infoRefaccionesCompradas.clear();
+        ficheroFinal = "";
+        numeroPedido = 0;
+        cbProveedores.getSelectionModel().select(-1);
+   
+        
+    }
+    
     private void realizarPedido(){
         ArrayList<String> numerosPedidoRecuperados = new ArrayList<>();
-        String direccionEntrega = lbDireccionEntrega.getText();
-        if(!direccionEntrega.isEmpty()){
-            PedidoRefaccion nuevoPedido = new PedidoRefaccion();
-            LocalDate fechaActual = LocalDate.now();
-            numerosPedidoRecuperados = PedidoRefaccionDAO.obtenerNumeroPedidos();
-            
-            if(numerosPedidoRecuperados != null){
-                for(int i = 0; i < numerosPedidoRecuperados.size();i++){
-                    if(String.valueOf(numeroPedido) == numerosPedidoRecuperados.get(i)){
-                        numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
-                        System.out.println(String.valueOf(numeroPedido));
-                        i--;
-                    }
-                }
-            }else{
-                ShowMessage.showAlertSimple("Error de conexion", "Hubo un erros con la base de datos. Intentelo de nuevo mas tarde", Alert.AlertType.NONE);
-            }
-                nuevoPedido.setNumeroPedido(String.valueOf(numeroPedido));
-                nuevoPedido.setFechaPedido(String.valueOf(fechaActual));
-                nuevoPedido.setTotalPedido(totalPedido);
-                nuevoPedido.setDireccionEntrega(direccionEntrega);
-                registrarPedido(nuevoPedido);
-        }else{
-            ShowMessage.showAlertSimple("Dato Faltante", "Ingrese la direccion de entrega para continuar", Alert.AlertType.WARNING);
 
+        PedidoRefaccion nuevoPedido = new PedidoRefaccion();
+        fechaActual = LocalDate.now();
+        numerosPedidoRecuperados = PedidoRefaccionDAO.obtenerNumeroPedidos();
+        numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
+
+        if(numerosPedidoRecuperados != null){
+            for(int i = 0; i < numerosPedidoRecuperados.size();i++){
+                if(String.valueOf(numeroPedido) == numerosPedidoRecuperados.get(i)){
+                    numeroPedido = (int) Math.floor(Math.random() * (9999 - 1000 +1)) + 1000;
+                    System.out.println(String.valueOf(numeroPedido));
+                    i = 0;
+                }
+            }
+        }else{
+            ShowMessage.showAlertSimple("Error de conexion", "Hubo un erros con la base de datos. Intentelo de nuevo mas tarde", Alert.AlertType.NONE);
         }
+            nuevoPedido.setNumeroPedido(String.valueOf(numeroPedido));
+            nuevoPedido.setFechaPedido(String.valueOf(fechaActual));
+            nuevoPedido.setTotalPedido(totalPedido);
+            nuevoPedido.setDireccionEntrega(direccionEntrega);
+            registrarPedido(nuevoPedido);
 
     }
     
@@ -412,29 +434,46 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void guardarRefaccionesCompradas(){
+        PedidoRefaccion pedidoRefaccion = PedidoRefaccionDAO.ObtnenerPedidoRefaccion(String.valueOf(numeroPedido));
+        System.out.println(String.valueOf(pedidoRefaccion.getNumeroPedido()));
+        System.out.println(numeroPedido);
+        if(pedidoRefaccion != null){
+            if(pedidoRefaccion.getIdPedido() > 0){
+                for(int i = 0; i<infoRefaccionesCompradas.size(); i++){
+                    RefaccionComprada refaccionCompradaBD = infoRefaccionesCompradas.get(i);
+                    try {
+                        ResultadoOperacion resultado = RefaccionCompradaDAO.registrarRefaccionComprada(pedidoRefaccion.getIdPedido(), refaccionCompradaBD);
+                    } catch (SQLException ex) {
+                       ShowMessage.showAlertSimple("Error de conexion", ex.getMessage(), Alert.AlertType.ERROR);
+                        return;
+                    }
+                }
+            }else{
+                ShowMessage.showAlertSimple("No se encontro el pedido", "No se encontro el pedido", Alert.AlertType.WARNING);
+            }
         
-    
+        }
     }
-    
-    
-    
-    
     private void crearPDF(){
          try {
             try {
-                PdfWriter.getInstance(pedidoPDF, new FileOutputStream(destinoPDF));
+                Document pedidoPDF = new Document();
+                String archivoPDF = "PedidoRefaccionNo"+ String.valueOf(numeroPedido) + ".pdf";
+                ficheroFinal = destinoPDF + archivoPDF;
+                PdfWriter.getInstance(pedidoPDF, new FileOutputStream(ficheroFinal));
                 pedidoPDF.open();
                 
                 Phrase encabezado = new Phrase();
-                encabezado.add("SGMEC\n"+ "Pedido de refacciones\n" + "numero de pedido: " + "" +"\n" + "Proveedor: " + cbProveedores.getSelectionModel().getSelectedItem().getNombreProveedor() + "\n\n");
+                encabezado.add("SGMEC\n"+ "Pedido de refacciones\n" + "numero de pedido: " + String.valueOf(numeroPedido) + "\n" + "Fecha Pedido: "+ String.valueOf(fechaActual) +"\n" + "Proveedor: " + cbProveedores.getSelectionModel().getSelectedItem().getNombreProveedor() + "\n\n");
                 pedidoPDF.add(encabezado);
                 
-                crearTablaPDF();
+                crearTablaPDF(pedidoPDF);
                 
+                Phrase total = new Phrase("\nTotal: " + totalPedido);
+                pedidoPDF.add(total);
                 
                 pedidoPDF.close();
                 
-                ShowMessage.showAlertSimple("Pedido Realizado", "Su pedido ha sido realizado con exito", Alert.AlertType.INFORMATION);
             } catch (DocumentException ex) {
                 Logger.getLogger(FXMLSolicitudRefaccionesController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -443,7 +482,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         }
     }
     
-    private void crearTablaPDF() throws DocumentException{
+    private void crearTablaPDF(Document pedidoPDF) throws DocumentException{
         PdfPTable tablaPedidoRefaccion = new PdfPTable(5);
                 tablaPedidoRefaccion.setWidthPercentage(100);
                 PdfPCell celdaNombreRefaccion = new PdfPCell(new Phrase("Nombre refaccion"));
@@ -489,6 +528,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
        int verificarSeleccion = verificarRefaccionReleccionada();
         
         if(verificarSeleccion >= 0){
+            cbRefacciones.getSelectionModel().select(verificarSeleccion);
             lbNombreRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getNombreRefaccion()));
             lbTipoRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getTipoRefaccion()));
             lbPrecio.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getPrecioCompra()));

@@ -1,12 +1,10 @@
 package javafxsgemec.dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafxsgemec.pojo.PedidoRefaccion;
@@ -82,19 +80,37 @@ public class PedidoRefaccionDAO {
         return respuesta;
     }
     
-    public void consultPedidoRefaccion(){
+    public static PedidoRefaccion ObtnenerPedidoRefaccion(String numeroPedido){
+        PedidoRefaccion pedidoRefaccion = new PedidoRefaccion();
+        Connection conexionBD = OpenConnection.openConnectionBD();
         
-    }
-    
-    public void consultPedidosRefacciones(){
+        if(conexionBD != null){
+            try {
+                String sentencia = "SELECT idPedidoRefacciones, fechaPedido, numeroPedido, totalPedido, direccionEntrega FROM pedidoRefacciones WHERE numeroPedido = ?;";
+                PreparedStatement configurarConsulta = conexionBD.prepareStatement(sentencia);
+                configurarConsulta.setString(1, numeroPedido);
+                ResultSet resultadoConsulta = configurarConsulta.executeQuery();
+                while(resultadoConsulta.next()){
+                    pedidoRefaccion.setIdPedido(resultadoConsulta.getInt("idPedidoRefacciones"));
+                    pedidoRefaccion.setFechaPedido(resultadoConsulta.getString("fechaPedido"));
+                    pedidoRefaccion.setNumeroPedido(resultadoConsulta.getString("numeroPedido"));
+                    pedidoRefaccion.setTotalPedido(resultadoConsulta.getFloat("totalPedido"));
+                    pedidoRefaccion.setDireccionEntrega(resultadoConsulta.getString("direccionEntrega"));
+                }
+                conexionBD.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PedidoRefaccionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+                try {
+                    conexionBD.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(PedidoRefaccionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else{
+            pedidoRefaccion = null;
+        }
         
-    }
-    
-    public void modificarPedidoRefaccion(){
-        
-    }
-    
-    public void deletePedidoRefaccion(){
-        
+        return pedidoRefaccion;
     }
 }
