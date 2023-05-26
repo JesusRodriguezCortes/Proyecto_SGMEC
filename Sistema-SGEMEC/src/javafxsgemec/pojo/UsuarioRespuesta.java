@@ -1,8 +1,12 @@
 package javafxsgemec.pojo;
 
+import javafxsgemec.pojo.Usuario;
+import java.util.ArrayList;
+
 public class UsuarioRespuesta {
     private int respuestaConexion;
     private Usuario usuarioRespuesta;
+    
     public UsuarioRespuesta() {
     }
 

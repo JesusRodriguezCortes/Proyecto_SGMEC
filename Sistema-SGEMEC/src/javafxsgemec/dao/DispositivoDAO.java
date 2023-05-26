@@ -135,6 +135,86 @@ public class DispositivoDAO {
         return dispositivosBD;
     }
     
+    public static Dispositivo getDispositivoCliente(int idDispositivo, int idCliente) throws SQLException{
+        Dispositivo dispositivoBD = null;
+        ResultOperation response = new ResultOperation();
+        response.setError(true);
+        response.setNumberRowsAffected(-1);
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String sqlQuery = "SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, " +
+                                  "errorDispositivo, estado, imagenDispositivo, dispositivo.idCliente, " +
+                                  "CONCAT(cliente.nombre,' ',cliente.apellidoPaterno) " +
+                                  "FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente "+
+                                  "WHERE idDispositivo = ? AND idCliente = ?;";
+                PreparedStatement getDispositivo = conexionBD.prepareStatement(sqlQuery);
+                ResultSet resultSet = getDispositivo.executeQuery();
+                getDispositivo.setInt(1, idDispositivo);
+                getDispositivo.setInt(2, idCliente);
+                    dispositivoBD.setIdDispositivo(resultSet.getInt("idDispositivo"));
+                    dispositivoBD.setMarca(resultSet.getString("marca"));
+                    dispositivoBD.setModelo(resultSet.getString("modelo"));
+                    dispositivoBD.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
+                    dispositivoBD.setPasswordDisp(resultSet.getString("passwordDispositivo"));
+                    dispositivoBD.setError(resultSet.getString("errorDispositivo"));
+                    dispositivoBD.setEstado(resultSet.getString("estado"));
+                    dispositivoBD.setFoto(resultSet.getByte("imagenDispositivo"));
+                    dispositivoBD.setIdCliente(resultSet.getInt("idCliente"));
+                    dispositivoBD.setNombreCliente(resultSet.getString("nombre"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally{
+                conexionBD.close();
+            }
+        }else{
+            response.setMessage("Por el momento no hay conexión con la base de datos...");
+        }
+        return dispositivoBD;
+    }
+    
+    public static ArrayList<Dispositivo> getDispositivosCliente(int idCliente) throws SQLException{
+        ArrayList<Dispositivo> dispositivosBD = null;
+        ResultOperation response = new ResultOperation();
+        response.setError(true);
+        response.setNumberRowsAffected(-1);
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String sqlQuery = "SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, " +
+                                  "errorDispositivo, estado, imagenDispositivo, dispositivo.idCliente, " +
+                                  "CONCAT(cliente.nombre,' ',cliente.apellidoPaterno) as nombreCliente " +
+                                  "FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente;";
+                PreparedStatement getAllDevices = conexionBD.prepareStatement(sqlQuery);
+                ResultSet resultSet = getAllDevices.executeQuery();
+                dispositivosBD = new ArrayList<>();
+                while(resultSet.next()){
+                    Dispositivo newDispositivo = new Dispositivo();
+                        newDispositivo.setIdDispositivo(resultSet.getInt("idDispositivo"));
+                        newDispositivo.setMarca(resultSet.getString("marca"));
+                        newDispositivo.setModelo(resultSet.getString("modelo"));
+                        newDispositivo.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
+                        newDispositivo.setPasswordDisp(resultSet.getString("passwordDispositivo"));
+                        newDispositivo.setError(resultSet.getString("errorDispositivo"));
+                        newDispositivo.setEstado(resultSet.getString("estado"));
+                        newDispositivo.setFoto(resultSet.getByte("imagenDispositivo"));
+                        newDispositivo.setIdCliente(resultSet.getInt("idCliente"));
+                        newDispositivo.setNombreCliente(resultSet.getString("nombreCliente"));
+                    dispositivosBD.add(newDispositivo);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally{
+                conexionBD.close();
+            }
+        }else{
+            response.setMessage("Por el momento no hay conexión con la base de datos...");
+        }
+        return dispositivosBD;
+    }
+    
     public static ResultOperation editDispositivo(Dispositivo editDispositivo) throws SQLException{
         ResultOperation response = new ResultOperation();
         response.setError(true);

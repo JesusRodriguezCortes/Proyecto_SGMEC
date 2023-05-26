@@ -14,25 +14,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxsgemec.javafxsgemec;
 
-public class FXMLEncargadoMantenimientoController implements Initializable {
+
+public class FXMLAdministradorController implements Initializable {
     @FXML
-    private Button btnRealizarDiagnostico;
+    private Button btnAdministrarRefacciones;
     @FXML
-    private Button btnActualizarEstadoMan;
-    
+    private Button btnSolicitarRefacciones;
+    @FXML
+    private Button btnAdministrarEquipos;
+    @FXML
+    private Button btnLiberarEquipos;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-    
-    @FXML
-    private void clicRealizarDiagnostico(ActionEvent event) throws IOException {
-            String ventana = "vistas/FXMLEquiposEncargado.fxml";
-            Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
-            Scene escenaPrincipal = new Scene(vista);
-            Stage escenarioBase = (Stage) btnActualizarEstadoMan.getScene().getWindow();
-            escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.show();
     }    
 
     @FXML
@@ -40,12 +35,37 @@ public class FXMLEncargadoMantenimientoController implements Initializable {
             String ventana = "vistas/FXMLInicioSesion.fxml";
             Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
             Scene escenaPrincipal = new Scene(vista);
-            Stage escenarioBase = (Stage) btnActualizarEstadoMan.getScene().getWindow();
+            Stage escenarioBase = (Stage) btnLiberarEquipos.getScene().getWindow();
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.show();
     }
 
     @FXML
-    private void clicActualizarEstado(ActionEvent event) {
+    private void clicAdministrarRefacciones(ActionEvent event) {
     }
+
+    @FXML
+    private void clicSolicitarRefacciones(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicAdministrarServicios(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicRecepcionarEquipoComputo(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicAdministrarEquipos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicConsultarEquipoLiberado(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicLiberarEquipo(ActionEvent event) {
+    }
+    
 }

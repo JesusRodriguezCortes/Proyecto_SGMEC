@@ -10,42 +10,64 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafxsgemec.javafxsgemec;
 
-public class FXMLEncargadoMantenimientoController implements Initializable {
+
+public class FXMLRealizarDiagnosticoController implements Initializable {
     @FXML
-    private Button btnRealizarDiagnostico;
+    private Text txtMarca;
     @FXML
-    private Button btnActualizarEstadoMan;
-    
+    private ImageView ivComputadora;
+    @FXML
+    private TextArea txarDiagnostico;
+    @FXML
+    private TextArea txarCotizacion;
+    @FXML
+    private TextFlow txfwComentarios;
+    @FXML
+    private Text txtModelo;
+    @FXML
+    private Text txtUsuario;
+    @FXML
+    private Text txtContrasenia;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-    
-    @FXML
-    private void clicRealizarDiagnostico(ActionEvent event) throws IOException {
-            String ventana = "vistas/FXMLEquiposEncargado.fxml";
-            Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
-            Scene escenaPrincipal = new Scene(vista);
-            Stage escenarioBase = (Stage) btnActualizarEstadoMan.getScene().getWindow();
-            escenarioBase.setScene(escenaPrincipal);
-            escenarioBase.show();
     }    
 
     @FXML
-    private void clicBack(MouseEvent event) throws IOException {
-            String ventana = "vistas/FXMLInicioSesion.fxml";
+    private void clicCancelar(ActionEvent event) throws IOException {
+            String ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
             Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
             Scene escenaPrincipal = new Scene(vista);
-            Stage escenarioBase = (Stage) btnActualizarEstadoMan.getScene().getWindow();
+            Stage escenarioBase = (Stage) txtMarca.getScene().getWindow();
+            escenarioBase.setScene(escenaPrincipal);
+            escenarioBase.show();
+    }
+
+
+    @FXML
+    private void clicBack(MouseEvent event) throws IOException {
+            String ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
+            Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
+            Scene escenaPrincipal = new Scene(vista);
+            Stage escenarioBase = (Stage) txtMarca.getScene().getWindow();
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.show();
     }
 
     @FXML
-    private void clicActualizarEstado(ActionEvent event) {
+    private void clicAgregarRefaccion(ActionEvent event) {
     }
+
+    @FXML
+    private void clicEnviarCotizacion(ActionEvent event) {
+    }  
 }

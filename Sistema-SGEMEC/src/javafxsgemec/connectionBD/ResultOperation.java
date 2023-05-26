@@ -1,6 +1,5 @@
 package javafxsgemec.connectionBD;
 
-
 public class ResultOperation {
     private boolean error;
     private String message;
