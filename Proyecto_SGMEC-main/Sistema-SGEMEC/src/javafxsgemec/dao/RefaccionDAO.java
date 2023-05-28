@@ -12,39 +12,24 @@ import java.util.logging.Logger;
 import javafxsgemec.pojo.Refaccion;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ConstantsConnection;
+import javafxsgemec.pojo.Proveedor;
 import javafxsgemec.util.ResultadoOperacion;
 
-public class RefaccionDAO {
-    public void crearRefaccion(){
-        
-    }
-    
-    public void consultRefaccion(){
-        
-    }
-    
-    public void consultRefacciones(){
-        
-    }
-    
-    public void modificarRefaccion(){
-        
-    }
-    
+public class RefaccionDAO {    
     public static ArrayList<Refaccion> consultRefaccionesProovedor(int idProveedor){
         ArrayList<Refaccion> listaRefacciones = new ArrayList<>();
         Connection conexionBD = OpenConnection.openConnectionBD();
         
         if(conexionBD != null){
             try {
-                String consulta = "SELECT idRefaccion, Refaccion.nombre, TipoRefaccion.nombreTipoRefaccion, pzasDisponiblesCompra, precioCompra FROM Refaccion INNER JOIN TipoRefaccion ON Refaccion.idTipoRefaccion = TipoRefaccion.idTipoRefaccion INNER JOIN Proveedor on Refaccion.idProveedor = Proveedor.idProveedor WHERE Proveedor.idProveedor = ?;";
+                String consulta = "SELECT Refaccion.idRefaccion, Refaccion.nombreRefaccion, TipoRefaccion.nombreTipoRefaccion, RefaccionProveedor.pzasDisponiblesCompra, RefaccionProveedor.precioCompra, Proveedor.idProveedor FROM Refaccion INNER JOIN TipoRefaccion on TipoRefaccion.idTipoRefaccion = Refaccion.idTipoRefaccion INNER JOIN RefaccionProveedor on RefaccionProveedor.idRefaccion = Refaccion.idRefaccion INNER JOIN Proveedor on Proveedor.idProveedor = RefaccionProveedor.idProveedor WHERE Proveedor.idProveedor = ?;";
                 PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
                 configurarConsulta.setInt(1, idProveedor);
                 ResultSet resultadoConsulta = configurarConsulta.executeQuery();
                 while(resultadoConsulta.next()){
                     Refaccion refaccion = new Refaccion();
                     refaccion.setIdRefaccion(resultadoConsulta.getInt("idRefaccion"));
-                    refaccion.setNombreRefaccion(resultadoConsulta.getString("nombre"));
+                    refaccion.setNombreRefaccion(resultadoConsulta.getString("nombreRefaccion"));
                     refaccion.setTipoRefaccion(resultadoConsulta.getString("nombreTipoRefaccion"));
                     refaccion.setPzasDisponiblesCompra(resultadoConsulta.getInt("pzasDisponiblesCompra"));
                     refaccion.setPrecioCompra(resultadoConsulta.getFloat("PrecioCompra"));
@@ -69,7 +54,7 @@ public class RefaccionDAO {
         return  listaRefacciones;
     }
     
-    public static ResultadoOperacion modificarPzasDisponiblesCompraRefaccion(Refaccion refaccionModificada) throws SQLException{
+    public static ResultadoOperacion modificarPzasDisponiblesCompraRefaccion(Refaccion refaccionModificada, int idProveedor) throws SQLException{
         ResultadoOperacion respuesta = new ResultadoOperacion();
         respuesta.setError(true);
         respuesta.setNumeroFilasAfectadas(-1);
@@ -78,10 +63,11 @@ public class RefaccionDAO {
         
         if(conexionBD != null){
             try {
-                String consulta = "UPDATE Refaccion SET pzasDisponiblesCompra = ? WHERE idRefaccion = ?; ;";
+                String consulta = "UPDATE RefaccionProveedor SET pzasDisponiblesCompra = ? where idRefaccion = ? and idProveedor = ?;";
                 PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
                 configurarConsulta.setInt(1, refaccionModificada.getPzasDisponiblesCompra());
                 configurarConsulta.setInt(2, refaccionModificada.getIdRefaccion());
+                configurarConsulta.setInt(3, idProveedor);
                 
                 int numeroFilas = configurarConsulta.executeUpdate();
                 if(numeroFilas > 0){
@@ -106,7 +92,4 @@ public class RefaccionDAO {
         return respuesta;
     }
     
-    public void deleteRefaccion(){
-        
-    }
 }

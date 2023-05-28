@@ -11,17 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafxsgemec.pojo.Proveedor;
 import javafxsgemec.connectionBD.OpenConnection;
-import javafxsgemec.connectionBD.ConstantsConnection;
 
-public class ProveedorDAO {
-    public void crearProveedor(){
-        
-    }
-    
-    public void consultProveedor(){
-        
-    }
-    
+public class ProveedorDAO {    
     public static ArrayList<Proveedor> consultProveedores(){
         ArrayList<Proveedor> listaProveedores = new ArrayList<>();
         Connection conexionBD = OpenConnection.openConnectionBD();
@@ -55,11 +46,4 @@ public class ProveedorDAO {
         return listaProveedores;   
     }
     
-    public void modificarProveedor(){
-        
-    }
-    
-    public void deleteProveedor(){
-        
-    }
 }

@@ -39,10 +39,12 @@ import javafxsgemec.dao.PedidoRefaccionDAO;
 import javafxsgemec.dao.ProveedorDAO;
 import javafxsgemec.dao.RefaccionCompradaDAO;
 import javafxsgemec.dao.RefaccionDAO;
+import javafxsgemec.dao.SucursalDAO;
 import javafxsgemec.pojo.PedidoRefaccion;
 import javafxsgemec.pojo.Proveedor;
 import javafxsgemec.pojo.Refaccion;
 import javafxsgemec.pojo.RefaccionComprada;
+import javafxsgemec.pojo.Sucursal;
 import javafxsgemec.util.ResultadoOperacion;
 import javafxsgemec.util.ShowMessage;
 
@@ -88,20 +90,22 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     @FXML
     private Label lbTotal;
     @FXML
-    private TextArea lbDireccionEntrega;
+    private ComboBox<Sucursal> cbDireccionDeEntrega;
+    @FXML
+    private Label lbDireccionDeEntrega;
+
     
-    
-    String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\";
-    String ficheroFinal = "";
-    String direccionEntrega = "";
-    int refaccionesCompradas = 0;
-    int numeroPedido = 0;
-    float totalPedido = 0;;
-    LocalDate fechaActual = null;
+    private String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\";
+    private String ficheroFinal = "";
+    private String direccionEntrega = "";
+    private int refaccionesCompradas = 0;
+    private int numeroPedido = 0;
+    private float totalPedido = 0;;
+    private LocalDate fechaActual = null;
     private ObservableList<Proveedor> listaProveedores = FXCollections.observableArrayList();
     private ObservableList<Refaccion> listaRefacciones = FXCollections.observableArrayList();
     private ObservableList<RefaccionComprada> infoRefaccionesCompradas = FXCollections.observableArrayList();
-
+    private ObservableList<Sucursal> listaSucursales = FXCollections.observableArrayList();
     
     /**
      * Initializes the controller class.
@@ -112,19 +116,20 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         lbCantidad.setText(String.valueOf(refaccionesCompradas));
         lbTotal.setText(String.valueOf(totalPedido));
         cargarInformacionProveedor();
+        cargarDireccionesSucursales();
         
-   cbProveedores.valueProperty().addListener(new ChangeListener<Proveedor>(){
-    @Override
-    public void changed(ObservableValue<? extends Proveedor> observable, Proveedor oldValue, Proveedor newValue) {
-            if(newValue != null){
-                lbNombre.setText(newValue.getNombreProveedor());
-                lbCorreoElectronico.setText(newValue.getCorreoElect());
-                lbTelefono.setText(newValue.getTelefono());
-                limpiarDatos();
-                cargarInformacionRefaccionesFiltradas(newValue.getIdProovedor());
-            }
-        }  
-    });
+        cbProveedores.valueProperty().addListener(new ChangeListener<Proveedor>(){
+            @Override
+            public void changed(ObservableValue<? extends Proveedor> observable, Proveedor oldValue, Proveedor newValue) {
+                    if(newValue != null){
+                        lbNombre.setText(newValue.getNombreProveedor());
+                        lbCorreoElectronico.setText(newValue.getCorreoElect());
+                        lbTelefono.setText(newValue.getTelefono());
+                        limpiarDatos();
+                        cargarInformacionRefaccionesFiltradas(newValue.getIdProovedor());
+                    }
+                }  
+        });
         
         
         cbRefacciones.valueProperty().addListener(new ChangeListener<Refaccion>() {
@@ -140,7 +145,20 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 }
             }
         });
-    }    
+        
+        cbDireccionDeEntrega.valueProperty().addListener(new ChangeListener<Sucursal>(){
+            @Override
+            public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue) {
+                if(newValue != null){
+                    lbDireccionDeEntrega.setText(newValue.getDireccionSucursal());
+                }
+            }
+        
+        
+        
+        });
+    } 
+    
     private void configurarTabla(){
         tcNombreRefaccion.setCellValueFactory(new PropertyValueFactory("refaccion"));
         tcTipoRefaccion.setCellValueFactory(new  PropertyValueFactory("tipoRefaccion"));
@@ -149,6 +167,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         tcPrecioNeto.setCellValueFactory(new PropertyValueFactory("precioNetoRefacciones"));
         
     }
+    
     
     private void cargarInformacionProveedor() {
         ArrayList<Proveedor> proveedoresRecuperados = ProveedorDAO.consultProveedores();
@@ -163,6 +182,20 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
             ShowMessage.showAlertSimple("Error de conexión", "Hubo un error al conectarse con la base de datos. Intentelo de nuevo mas tarde", Alert.AlertType.ERROR);
         }
     
+    }
+    
+     private void cargarDireccionesSucursales(){
+        ArrayList<Sucursal> sucursalesRecuperadas = SucursalDAO.consultSucurales();
+        if (sucursalesRecuperadas != null) {
+            if (!sucursalesRecuperadas.isEmpty()) {
+                listaSucursales.addAll(sucursalesRecuperadas);
+                cbDireccionDeEntrega.setItems(listaSucursales);
+            }else{
+                ShowMessage.showAlertSimple("Proveedores no encontrados", "No existen registros de proveedores en la base de datos", Alert.AlertType.WARNING);
+            }
+        }else{
+            ShowMessage.showAlertSimple("Error de conexión", "Hubo un error al conectarse con la base de datos. Intentelo de nuevo mas tarde", Alert.AlertType.ERROR);
+        }
     }
     
     private void cargarInformacionRefaccionesFiltradas(int idProveedor){
@@ -229,7 +262,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
             
   
         }else{
-            ShowMessage.showAlertSimple("Proveedor o refaccion no seleccionado(a)", "Seleccion un proveedor o refaccion para continuar", Alert.AlertType.WARNING);
+            ShowMessage.showAlertSimple("Proveedor o refaccion no seleccionado(a)", "Seleccione un proveedor o refaccion para continuar", Alert.AlertType.WARNING);
         }
         
     }
@@ -327,9 +360,9 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
 
     @FXML
     private void btnRealizarPedido(ActionEvent event) {
-        direccionEntrega = lbDireccionEntrega.getText();
         if(!infoRefaccionesCompradas.isEmpty()){
-            if(!direccionEntrega.isEmpty()){
+            if(cbDireccionDeEntrega.getSelectionModel().getSelectedIndex() != -1){
+                direccionEntrega = cbDireccionDeEntrega.getSelectionModel().getSelectedItem().getDireccionSucursal();
                 realizarPedido();
                 modificarPzasDisponibles();
                 guardarRefaccionesCompradas();
@@ -339,7 +372,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 ShowMessage.showAlertSimple("Dato faltante", "Ingrese la direccion de entrega para continuar", Alert.AlertType.INFORMATION);
             }
         }else{
-            ShowMessage.showAlertSimple("No hay datos en el pedido", "Ingrese refacciones en el pedido para continuar", Alert.AlertType.WARNING);
+            ShowMessage.showAlertSimple("No hay datos en el pedido", "Seleccione refacciones en el pedido para continuar", Alert.AlertType.WARNING);
         }
  
     }
@@ -349,7 +382,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         lbNombre.setText("");
         lbCorreoElectronico.setText("");
         lbTelefono.setText("");
-        lbDireccionEntrega.setText("");
+        lbDireccionDeEntrega.setText("");
         lbNombreRefaccion.setText("");
         lbTipoRefaccion.setText("");
         lbPrecio.setText("");
@@ -362,6 +395,8 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         infoRefaccionesCompradas.clear();
         ficheroFinal = "";
         numeroPedido = 0;
+        listaRefacciones.clear();
+        cbDireccionDeEntrega.getSelectionModel().select(-1);
         cbProveedores.getSelectionModel().select(-1);
    
         
@@ -422,7 +457,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         for(int i = 0; i < infoRefaccionesCompradas.size(); i++){
             try {
                 ResultadoOperacion resultado;
-                resultado = RefaccionDAO.modificarPzasDisponiblesCompraRefaccion(infoRefaccionesCompradas.get(i).getRefaccion());
+                resultado = RefaccionDAO.modificarPzasDisponiblesCompraRefaccion(infoRefaccionesCompradas.get(i).getRefaccion(), cbProveedores.getSelectionModel().getSelectedItem().getIdProovedor());
             } catch (SQLException ex) {
                 ShowMessage.showAlertSimple("Error de conexion", ex.getMessage(), Alert.AlertType.ERROR);
                 return;
@@ -464,7 +499,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
                 pedidoPDF.open();
                 
                 Phrase encabezado = new Phrase();
-                encabezado.add("SGMEC\n"+ "Pedido de refacciones\n" + "numero de pedido: " + String.valueOf(numeroPedido) + "\n" + "Fecha Pedido: "+ String.valueOf(fechaActual) +"\n" + "Proveedor: " + cbProveedores.getSelectionModel().getSelectedItem().getNombreProveedor() + "\n\n");
+                encabezado.add("SGMEC\n"+ "Pedido de refacciones\n" + "numero de pedido: " + String.valueOf(numeroPedido) + "\n" + "Fecha Pedido: "+ String.valueOf(fechaActual) +"\n" + "Proveedor: " + cbProveedores.getSelectionModel().getSelectedItem().getNombreProveedor() + "\n" + "Direccion de entrega: " +direccionEntrega +"\n\n");
                 pedidoPDF.add(encabezado);
                 
                 crearTablaPDF(pedidoPDF);

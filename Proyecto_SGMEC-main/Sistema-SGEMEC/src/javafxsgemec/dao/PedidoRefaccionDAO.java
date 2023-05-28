@@ -63,7 +63,7 @@ public class PedidoRefaccionDAO {
                 int numeroFilas = prepararSentencia.executeUpdate();
                 if(numeroFilas > 0){
                     respuesta.setError(false);
-                    respuesta.setMensaje("Pedido agregado correctamente.");
+                    respuesta.setMensaje("Pedido "+ nuevoPedido.getNumeroPedido() +" agregado correctamente.");
                     respuesta.setNumeroFilasAfectadas(numeroFilas);
                 }else{
                     respuesta.setMensaje("No se pudo registrar la información del pedido.");
