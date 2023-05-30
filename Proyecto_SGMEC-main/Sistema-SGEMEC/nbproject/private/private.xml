@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/Sucursal.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLAdministradorController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/ProveedorDAO.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLInicioSesionController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/ClienteDAO.java</file>
