@@ -12,6 +12,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -25,7 +26,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,6 +44,7 @@ import javafxsgemec.dao.ProveedorDAO;
 import javafxsgemec.dao.RefaccionCompradaDAO;
 import javafxsgemec.dao.RefaccionDAO;
 import javafxsgemec.dao.SucursalDAO;
+import javafxsgemec.javafxsgemec;
 import javafxsgemec.pojo.PedidoRefaccion;
 import javafxsgemec.pojo.Proveedor;
 import javafxsgemec.pojo.Refaccion;
@@ -574,8 +579,15 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void cerrarVentana(){
-        Stage escenario = (Stage) lbNombre.getScene().getWindow();
-        escenario.close();
+        try {
+           Parent vista = FXMLLoader.load(javafxsgemec.class.getResource("vistas/FXMLAdministrador.fxml"));
+           Scene escenaPrincipal = new Scene(vista);
+           Stage escenarioBase = (Stage) lbCantidad.getScene().getWindow();
+           escenarioBase.setScene(escenaPrincipal);
+           escenarioBase.show(); 
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLAdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

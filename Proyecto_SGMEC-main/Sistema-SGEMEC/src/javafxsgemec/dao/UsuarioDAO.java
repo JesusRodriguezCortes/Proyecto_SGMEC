@@ -12,59 +12,38 @@ import javafxsgemec.pojo.Servicio;
 import javafxsgemec.pojo.UsuarioRespuesta;
 
 public class UsuarioDAO {
-    public void crearUsuario(){
-        
-    }
-    
-    public void consultUsuario(){
-        
-    }
-    
-    public void consultUsuarios(){
-        
-    }
-    
-    public void modificarUsuario(){
-        
-    }
-    
-    public void deleteUsuario(){
-        
-    }
-    
-     public static UsuarioRespuesta verificarUsuario(String usuario,String password) throws SQLException{
-        UsuarioRespuesta uRespuesta = new UsuarioRespuesta();
-        uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_CORRECTA);
+    public static UsuarioRespuesta verificarUsuario(String usuario, String password) throws SQLException{
+        UsuarioRespuesta userResponse = new UsuarioRespuesta();
+        userResponse.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_CORRECTA);
         Usuario usuarioSesion = null;
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String consulta = "select idUsuario,usuario,password, roles.nivelAcceso AS nivelDeAcceso "
-                        + "FROM usuario " +
-                        "INNER JOIN roles ON usuario.idRoles = roles.idRoles "+
-                        "WHERE usuario = ? AND password = ? ";
-                PreparedStatement consultaLogin = conexionBD.prepareStatement(consulta);
+                String sqlQuery = "SELECT idUsuario, nombreUsuario, password, rol.nivelAcceso AS nivelDeAcceso " +
+                                  "FROM usuario " +
+                                  "LEFT JOIN rol ON usuario.idRol = rol.idRol "+
+                                  "WHERE usuario = ? AND password = ? ";
+                PreparedStatement consultaLogin = conexionBD.prepareStatement(sqlQuery);
                 consultaLogin.setString(1, usuario);
                 consultaLogin.setString(2, password);
                 ResultSet resultadoConsulta = consultaLogin.executeQuery();
                 usuarioSesion = new Usuario();
                 if(resultadoConsulta.next()){
                     usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
-                    usuarioSesion.setUsuario(resultadoConsulta.getString("usuario"));
-                    usuarioSesion.setContrasenia(resultadoConsulta.getString("password"));
-                    usuarioSesion.setNivelDeAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
-                    uRespuesta.setUsuarioRespuesta(usuarioSesion);
-
+                    //usuarioSesion.setNombreUsuario(resultadoConsulta.getString("usuario"));
+                    //usuarioSesion.setPassword(resultadoConsulta.getString("password"));
+                    //usuarioSesion.setNivelAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
+                    userResponse.setUsuarioRespuesta(usuarioSesion);
                 }
                 conexionBD.close();
             } catch (SQLException s) {
-                uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_DML_FALLIDA);
+                userResponse.setRespuestaConexion(ConstantsConnection.CODIGO_OPERACION_DML_FALLIDA);
             } finally{
                 conexionBD.close();
             }
         }else{
-            uRespuesta.setRespuestaConexion(ConstantsConnection.CODIGO_ERROR_CONEXIONDB);
+            userResponse.setRespuestaConexion(ConstantsConnection.CODIGO_ERROR_CONEXIONDB);
         }
-        return uRespuesta;
+        return userResponse;
     }
 }

@@ -10,7 +10,7 @@ public class javafxsgemec extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLSolicitudRefacciones.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("vistas/FXMLAdministrador.fxml"));
         
         Scene scene = new Scene(root);
         

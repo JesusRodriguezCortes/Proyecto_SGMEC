@@ -6,6 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLAdministradorController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLAdministradorController">
+   <children>
+      <Button fx:id="btnPedidos" layoutX="51.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnRealizarPedido" prefHeight="25.0" prefWidth="98.0" text="Realizar pedido" />
+   </children>
 </AnchorPane>
