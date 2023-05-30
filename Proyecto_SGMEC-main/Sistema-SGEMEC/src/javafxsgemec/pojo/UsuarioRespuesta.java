@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class UsuarioRespuesta {
     private int respuestaConexion;
     private Usuario usuarioRespuesta;
+    
     public UsuarioRespuesta() {
     }
 

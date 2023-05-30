@@ -20,9 +20,11 @@ public class UsuarioDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
+
                 String sqlQuery = "SELECT idUsuario, nombreUsuario, password, roles.nivelAcceso AS nivelDeAcceso " +
                                   "FROM usuario " +
                                   "LEFT JOIN roles ON usuario.idRoles = roles.idRoles "+
+
                                   "WHERE usuario = ? AND password = ? ";
                 PreparedStatement consultaLogin = conexionBD.prepareStatement(sqlQuery);
                 consultaLogin.setString(1, usuario);
@@ -30,10 +32,10 @@ public class UsuarioDAO {
                 ResultSet resultadoConsulta = consultaLogin.executeQuery();
                 usuarioSesion = new Usuario();
                 if(resultadoConsulta.next()){
-                    usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
-                    usuarioSesion.setNombreUsuario(resultadoConsulta.getString("usuario"));
-                    usuarioSesion.setPassword(resultadoConsulta.getString("password"));
-                    usuarioSesion.setNivelAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
+                    //usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
+                    //usuarioSesion.setNombreUsuario(resultadoConsulta.getString("usuario"));
+                    //usuarioSesion.setPassword(resultadoConsulta.getString("password"));
+                    //usuarioSesion.setNivelAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
                     userResponse.setUsuarioRespuesta(usuarioSesion);
                 }
                 conexionBD.close();
