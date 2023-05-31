@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXSGEMEC.jar" size="2622996" download="eager" />
+    <jar href="JavaFXSGEMEC.jar" size="2692079" download="eager" />
     <jar href="lib\itext-5.0.5.jar" size="1599728" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.49.jar" size="1006904" download="eager" />
   </resources>

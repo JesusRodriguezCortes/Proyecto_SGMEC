@@ -32,7 +32,6 @@ public class FXMLInicioSesionController implements Initializable {
     private TextField tfUsuario;
     @FXML
     private PasswordField tfContrasenia;
-    @FXML
     private Label lbError;
     UsuarioRespuesta usuarioSesion;
 
@@ -51,17 +50,18 @@ public class FXMLInicioSesionController implements Initializable {
         tfContrasenia.setText("");
         if(usuario.isEmpty()){
             valido = false;
-            lbError.setText("Rellene todos los campos");
+            ShowMessage.showAlertSimple("Campos Vacios",
+                    "Por favor rellene los campos vacios", Alert.AlertType.WARNING);
         }
         if(contrasenia.isEmpty()){
             valido = false;
-            lbError.setText("Rellene todos los campos");
+            ShowMessage.showAlertSimple("Campos Vacios", "Por favor rellene los campos vacios", Alert.AlertType.WARNING);
         }
         if(valido)
             verificarCredencialesUsuario(usuario, contrasenia);
     }
     private void verificarCredencialesUsuario(String user, String password){
-        /*try {
+        try {
             usuarioSesion = UsuarioDAO.verificarUsuario(user, password);
             if(usuarioSesion.getRespuestaConexion()==ConstantsConnection.CODIGO_OPERACION_CORRECTA){
                 System.out.println("Usuario consultado"+usuarioSesion.getUsarioRespuesta().getUsuario());
@@ -74,11 +74,11 @@ public class FXMLInicioSesionController implements Initializable {
         } catch (SQLException | NullPointerException e) {
             ShowMessage.showAlertSimple("Error de conexión", 
                     "Hubo un error en el proceso de comunicación, inténtelo más tarde...", Alert.AlertType.ERROR);
-        } */
+        } 
     }
 
     private void irPantallaPrincipal() {
-                /*try {
+                try {
             ShowMessage.showAlertSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsuario()+" al sistema", 
                     Alert.AlertType.INFORMATION);
             String ventana = null;
@@ -98,6 +98,6 @@ public class FXMLInicioSesionController implements Initializable {
             ex.printStackTrace();
             ShowMessage.showAlertSimple("Error", "No se puede mostrar la pantalla principal", 
                     Alert.AlertType.ERROR);
-        }*/
+        }
     }
 }

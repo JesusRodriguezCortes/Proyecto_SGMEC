@@ -20,23 +20,22 @@ public class UsuarioDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-
-                String sqlQuery = "SELECT idUsuario, nombreUsuario, password, roles.nivelAcceso AS nivelDeAcceso " +
-                                  "FROM usuario " +
-                                  "LEFT JOIN roles ON usuario.idRoles = roles.idRoles "+
-
-                                  "WHERE usuario = ? AND password = ? ";
-                PreparedStatement consultaLogin = conexionBD.prepareStatement(sqlQuery);
+                String consulta = "select idUsuario,nombreUsuario,password, rol.nivelAcceso AS nivelAcceso "
+                        + "FROM usuario " +
+                        "INNER JOIN rol ON usuario.idRol = rol.idRol "+
+                        "WHERE nombreUsuario = ? AND password = ? ";
+                PreparedStatement consultaLogin = conexionBD.prepareStatement(consulta);
                 consultaLogin.setString(1, usuario);
                 consultaLogin.setString(2, password);
                 ResultSet resultadoConsulta = consultaLogin.executeQuery();
                 usuarioSesion = new Usuario();
                 if(resultadoConsulta.next()){
-                    //usuarioSesion.setIdUsuario( resultadoConsulta.getInt("idUsuario") );
-                    //usuarioSesion.setNombreUsuario(resultadoConsulta.getString("usuario"));
-                    //usuarioSesion.setPassword(resultadoConsulta.getString("password"));
-                    //usuarioSesion.setNivelAcceso(resultadoConsulta.getString("nivelDeAcceso").trim());
+                    usuarioSesion.setIdUsuario(resultadoConsulta.getInt("idUsuario") );
+                    usuarioSesion.setUsuario(resultadoConsulta.getString("nombreUsuario"));
+                    usuarioSesion.setContrasenia(resultadoConsulta.getString("password"));
+                    usuarioSesion.setNivelDeAcceso(resultadoConsulta.getString("nivelAcceso").trim());
                     userResponse.setUsuarioRespuesta(usuarioSesion);
+
                 }
                 conexionBD.close();
             } catch (SQLException s) {
