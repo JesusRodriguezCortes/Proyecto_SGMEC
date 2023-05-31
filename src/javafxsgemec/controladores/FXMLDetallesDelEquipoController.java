@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -26,8 +27,6 @@ public class FXMLDetallesDelEquipoController implements Initializable {
     @FXML
     private ImageView ivComputadora;
     @FXML
-    private Text txtConrasenia;
-    @FXML
     private CheckBox cbEnviadoAEmpresa;
     @FXML
     private CheckBox cbRecibidoEmpresa;
@@ -42,45 +41,31 @@ public class FXMLDetallesDelEquipoController implements Initializable {
     @FXML
     private CheckBox cbRecibidoCliente;
     @FXML
-    private Label lbFecha;
-    @FXML
-    private Label lbServicio;
-    @FXML
     private Label lbProblemas;
     @FXML
     private Label lbMarca;
     @FXML
     private Label lbModelo;
     @FXML
-    private Label lbNumeroSerie;
-    @FXML
-    private Label lbSistemaOperativo;
-    @FXML
-    private Label lbTamanioPantalla;
-    @FXML
-    private Label lbMemoriaRAM;
-    @FXML
-    private Label lbAlmacenamiento;
-    @FXML
     private Label lbUsuario;
     @FXML
     private Label lbContrasenia;
     private Dispositivo equipo;
+    @FXML
+    private Button btSolicitarServicio;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarDatosDispositivo();
+        
     }    
-
 
     @FXML
     private void clicBack(MouseEvent event) throws IOException {
         String ventana = "vistas/FXMLEquiposCliente.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
         Scene escenaPrincipal = new Scene(vista);
-        Stage escenarioBase = (Stage) lbTamanioPantalla.getScene().getWindow();
-        escenarioBase.setScene(escenaPrincipal);
-        escenarioBase.show();        
+        Stage escenarioBase = (Stage) lbMarca.getScene().getWindow();
+        escenarioBase.close();        
     }
 
     @FXML
@@ -88,7 +73,7 @@ public class FXMLDetallesDelEquipoController implements Initializable {
         String ventana = "vistas/FXMLSolicitarServicio.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
         Scene escenaPrincipal = new Scene(vista);
-        Stage escenarioBase = (Stage) lbTamanioPantalla.getScene().getWindow();
+        Stage escenarioBase = (Stage) lbMarca.getScene().getWindow();
         escenarioBase.setScene(escenaPrincipal);
         escenarioBase.show();        
     }
@@ -96,9 +81,10 @@ public class FXMLDetallesDelEquipoController implements Initializable {
     public void cargarDatosDispositivo(){
        this.lbMarca.setText(equipo.getMarca());
        this.lbModelo.setText(equipo.getModelo());
-       this.lbUsuario.setText(equipo.getUsuario());
-       this.lbContrasenia.setText(equipo.getPassword().replaceAll(this.lbContrasenia.getText(), "*"));
        this.lbProblemas.setText(equipo.getErrorDispos());
+       this.lbUsuario.setText(equipo.getUsuario());
+       this.lbContrasenia.setText(equipo.getPassword());
+       
        switch(equipo.getIdEstado()){
             case 1:
                 cbEnviadoAEmpresa.setSelected(true);
@@ -164,10 +150,17 @@ public class FXMLDetallesDelEquipoController implements Initializable {
                 cbRecibidoCliente.setSelected(true);
                break;
        }
+       if(equipo.getIdEstado() > 0){
+           this.btSolicitarServicio.setDisable(true);
+       }else{
+           this.btSolicitarServicio.setDisable(false);
+       }
     }
     
     public void obtenerEquipo(int idEquipo) throws SQLException{
-        Dispositivo dps=DispositivoDAO.getDispositivo(idEquipo);
-        this.equipo=dps;
+        System.out.println("ID EQUIPO EN DetallesDelEquipo - obtenerEquipo: "+idEquipo);
+        Dispositivo equipo = DispositivoDAO.getDispositivo(idEquipo);
+        this.equipo = equipo;
+        cargarDatosDispositivo();
     }
 }

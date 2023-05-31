@@ -18,17 +18,17 @@
 
 <AnchorPane prefHeight="421.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxsgemec.controladores.FXMLDetallesDelEquipoController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="129.0" layoutX="57.0" layoutY="97.0" stroke="BLACK" strokeType="INSIDE" width="457.0" />
-      <ImageView fx:id="ivComputadora" fitHeight="78.0" fitWidth="124.0" layoutX="605.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="129.0" layoutX="57.0" layoutY="97.0" stroke="BLACK" strokeType="INSIDE" width="250.0" />
+      <ImageView fx:id="ivComputadora" fitHeight="119.0" fitWidth="136.0" layoutX="577.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../recursos/img/comp.png" />
          </image>
       </ImageView>
       <Text layoutX="72.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca" />
       <Text layoutX="73.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo" wrappingWidth="82.171875" />
-      <Text layoutX="277.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario " />
-      <Text layoutX="278.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña" />
-      <Button layoutX="613.0" layoutY="351.0" mnemonicParsing="false" onAction="#clicSolicitarServicio" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: #8BCDF1;" text="Solicitar Servicio" />
+      <Text layoutX="73.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuario " />
+      <Text layoutX="72.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña" />
+      <Button fx:id="btSolicitarServicio" layoutX="616.0" layoutY="353.0" mnemonicParsing="false" onAction="#clicSolicitarServicio" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: #8BCDF1;" text="Solicitar Servicio" />
       <AnchorPane layoutX="-2.0" layoutY="-46.0" prefHeight="119.0" prefWidth="768.0" style="-fx-background-color: #3366FF;">
          <children>
             <AnchorPane layoutX="-22.0" layoutY="84.0" prefHeight="34.0" prefWidth="792.0" style="-fx-background-color: #3366;" />
@@ -48,14 +48,8 @@
                </font>
             </Text>
          </children></AnchorPane>
-      <Text layoutX="74.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema operativo" wrappingWidth="105.00000000000011" />
-      <Text fx:id="txtConrasenia" layoutX="73.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de serie" wrappingWidth="90.33331298828136" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="119.0" layoutX="232.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="283.0" />
-      <Text layoutX="276.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tamaño pantalla" wrappingWidth="90.33331298828136" />
-      <Text layoutX="276.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Memoria RAM" wrappingWidth="79.00000000000011" />
-      <Text layoutX="277.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Almacenamiento" wrappingWidth="105.00000000000011" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutX="232.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="283.0" />
       <Text layoutX="57.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles del dispositivo" />
-      <Text layoutX="232.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultimo Servicio" />
       <Text layoutX="59.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado de mantenimiento" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutX="57.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" width="153.0" />
       <Label layoutX="72.0" layoutY="253.0" text="Enviado" />
@@ -71,21 +65,12 @@
       <CheckBox fx:id="cbReparacion" disable="true" layoutX="168.0" layoutY="314.0" mnemonicParsing="false" />
       <CheckBox fx:id="cbEnviadoACliente" disable="true" layoutX="168.0" layoutY="353.0" mnemonicParsing="false" />
       <CheckBox fx:id="cbRecibidoCliente" disable="true" layoutX="168.0" layoutY="373.0" mnemonicParsing="false" />
-      <Label layoutX="243.0" layoutY="261.0" text="Fecha" />
-      <Label fx:id="lbFecha" layoutX="332.0" layoutY="261.0" text="&lt;Fecha&gt;" />
-      <Label layoutX="243.0" layoutY="281.0" text="Servicio" />
-      <Label fx:id="lbServicio" layoutX="333.0" layoutY="282.0" text="&lt;Tipo servicio&gt;" />
-      <Label layoutX="243.0" layoutY="305.0" text="Problemas" />
-      <Label fx:id="lbProblemas" layoutX="332.0" layoutY="306.0" text="&lt;Problemas&gt;" />
-      <Label fx:id="lbMarca" layoutX="207.0" layoutY="106.0" text="&lt;Marca&gt;" />
-      <Label fx:id="lbModelo" layoutX="206.0" layoutY="130.0" text="&lt;Modelo&gt;" />
-      <Label fx:id="lbNumeroSerie" layoutX="206.0" layoutY="154.0" text="&lt;S/N&gt;" />
-      <Label fx:id="lbSistemaOperativo" layoutX="206.0" layoutY="180.0" text="&lt;SO&gt;" />
-      <Label fx:id="lbTamanioPantalla" layoutX="404.0" layoutY="106.0" text="&lt;Tamaño&gt;" />
-      <Label fx:id="lbMemoriaRAM" layoutX="404.0" layoutY="124.0" text="&lt;RAM&gt;" />
-      <Label fx:id="lbAlmacenamiento" layoutX="404.0" layoutY="143.0" text="&lt;Almacenamiento&gt;" />
-      <Label fx:id="lbUsuario" layoutX="407.0" layoutY="170.0" text="&lt;Usuario&gt;" />
-      <Label fx:id="lbContrasenia" layoutX="407.0" layoutY="189.0" text="&lt;Password&gt;" />
+      <Label layoutX="232.0" layoutY="232.0" text="Problemas" />
+      <Label fx:id="lbProblemas" alignment="TOP_LEFT" layoutX="238.0" layoutY="255.0" prefHeight="143.0" prefWidth="264.0" text="&lt;Problemas&gt;" />
+      <Label fx:id="lbMarca" layoutX="164.0" layoutY="106.0" text="&lt;Marca&gt;" />
+      <Label fx:id="lbModelo" layoutX="166.0" layoutY="131.0" text="&lt;Modelo&gt;" />
+      <Label fx:id="lbUsuario" layoutX="167.0" layoutY="176.0" text="&lt;Usuario&gt;" />
+      <Label fx:id="lbContrasenia" layoutX="168.0" layoutY="197.0" text="&lt;Password&gt;" />
       <CheckBox fx:id="cbEmpaquetado" disable="true" layoutX="168.0" layoutY="333.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>

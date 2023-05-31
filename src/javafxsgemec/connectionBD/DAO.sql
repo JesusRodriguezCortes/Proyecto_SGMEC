@@ -14,6 +14,15 @@ FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente
 LEFT JOIN estadodispositivo ON dispositivo.idEstado = estadodispositivo.idEstado 
 WHERE idDispositivo = 1;
 
+USE SGEMEC;
+SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, 
+errorDispositivo, imagenDispositivo, caracteristicas, dispositivo.idCliente, 
+CONCAT(cliente.nombre,' ',cliente.apellidoPaterno,' ',cliente.apellidoMaterno) AS 
+nombreCliente, dispositivo.idEstadoDispositivo, EstadoDispositivo.nombreEstadoDispositivo 
+FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente 
+LEFT JOIN estadodispositivo ON dispositivo.idEstadoDispositivo = estadodispositivo.idEstadoDispositivo 
+WHERE idDispositivo = 2;
+
 /*-------------Mostrar dispositivos de un cliente-------------*/
 USE SGEMEC;
 SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, 
@@ -92,3 +101,17 @@ WHERE Municipio.idMunicipio = 1;
 SELECT idColonia, nombreColonia FROM Colonia 
 RIGHT JOIN CodigoPostal ON Colonia.idCodigoPostal = CodigoPostal.idCodigoPostal 
 WHERE CodigoPostal.idCodigoPostal = 1;
+
+SELECT * FROM Estado;
+SELECT * FROM Municipio;
+SELECT * FROM Paqueteria;
+
+
+SELECT idSolicitudServicio, numeroGuia, idDiagnostico, solicitudservicio.idPaqueteria, nombrePaqueteria 
+FROM solicitudservicio 
+LEFT JOIN paqueteria ON solicitudservicio.idPaqueteria = paqueteria.idPaqueteria 
+WHERE numeroGuia = '123' AND solicitudservicio.idPaqueteria = 1;
+
+INSERT INTO solicitudservicio (numeroGuia, idDiagnostico, idPaqueteria) 
+VALUES (?,?,?);
+SELECT * FROM Paqueteria WHERE nombrePaqueteria = 1;

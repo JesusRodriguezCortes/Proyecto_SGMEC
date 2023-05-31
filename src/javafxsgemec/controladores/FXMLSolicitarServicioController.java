@@ -3,6 +3,8 @@ package javafxsgemec.controladores;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafxsgemec.javafxsgemec;
 import javafxsgemec.dao.DireccionDAO;
+import javafxsgemec.dao.SolicitudServicioDAO;
+import javafxsgemec.dao.PaqueteriaDAO;
 import javafxsgemec.pojo.DireccionCompleta;
 import javafxsgemec.pojo.direcciones.Estado;
 import javafxsgemec.pojo.direcciones.Municipio;
@@ -36,61 +40,77 @@ import javafxsgemec.util.ShowMessage;
 public class FXMLSolicitarServicioController implements Initializable {
 
     @FXML
-    private Button btnAceptar;
-    @FXML
     private ComboBox<String> cbEstado;
     @FXML
     private ComboBox<String> cbMunicipio;
-    @FXML
-    private Label lbCiudad;
     @FXML
     private Label lbColonia;
     @FXML
     private Label lbCalle;
     @FXML
-    private Label lbEntreCalles;
-    @FXML
-    private Label lbCiudadAlter;
-    @FXML
     private Label lbColoniaAlter;
     @FXML
     private Label lbCalleAlter;
-    @FXML
-    private Label lbEntreCallesAlter;
     @FXML
     private Button btnGuardar;
     @FXML
     private ComboBox<String> cbPaqueteria;
     @FXML
     private TextField tfNumGuia;
-    private ObservableList<Estado> estados = FXCollections.observableArrayList();
-    private ObservableList<Municipio> municipios = FXCollections.observableArrayList();
+    private ObservableList<String> nombresEstados = FXCollections.observableArrayList();
+    private ObservableList<String> nombresMunicipios = FXCollections.observableArrayList();
+    private ObservableList<String> nombresPaqueterias = FXCollections.observableArrayList();
+    @FXML
+    private Label lbMunicipio;
+    @FXML
+    private Label lbMunicipioAlter;
+    @FXML
+    private Label lbErrorSolicitud;
     
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try{
-            this.estados = FXCollections.observableArrayList(DireccionDAO.getEstados());
-        }catch(SQLException e){
-            e.getCause();
-        }
-        iniciarCBEstados();
-    }    
+        cargarEstados();
+        cargarPaqueterias();
+        btnGuardar.setDisable(true);
+        // Configurar el evento de selección del comboBox1
+        cbEstado.setOnAction(event -> {
+            // Obtener el valor seleccionado en comboBox1
+            String seleccion = cbEstado.getValue();
 
-    private void iniciarCBEstados(){
+            // Actualizar el contenido del comboBox2 en base a la selección del comboBox1
+            cargarMunicipios(seleccion);
+        });
+        tfNumGuia.textProperty().addListener((observable, oldValue, newValue) -> {
+            verificarHabilitarBoton();
+        });
+        cbPaqueteria.valueProperty().addListener((observable, oldValue, newValue) -> {
+            verificarHabilitarBoton();
+        });
+    }    
+    
+    public void verificarHabilitarBoton(){
+        // Verificar la condición deseada
+        String texto = tfNumGuia.getText();
+        String seleccion = cbPaqueteria.getValue();
+
+        if (texto.length()<5 || seleccion == null || seleccion.isEmpty()) {
+            btnGuardar.setDisable(true); // Si no se cumple la condición, deshabilitar el botón
+        } else {
+            btnGuardar.setDisable(false); // Si se cumple la condición, habilitar el botón
+        }
+    }
+
+    private void cargarEstados(){
         try{
-            cbEstado.setItems(FXCollections.observableArrayList(DireccionDAO.getEstados().toString()));
+            ArrayList<String> nombresEstados = DireccionDAO.getNombresEstados();
+            this.nombresEstados = FXCollections.observableArrayList(nombresEstados);
+            cbEstado.setItems(this.nombresEstados);
             cbEstado.valueProperty().addListener((observable, oldValue, newValue) -> {
                 cbMunicipio.getItems().clear();
-                for (Estado estado : this.estados) {
-                    if (estado.getNombreEstado().equals(newValue)) {
-                        try {
-                            cbMunicipio.setItems(
-                                    FXCollections.observableArrayList(DireccionDAO.getMunicipiosEstado(estado.getIdEstado()).toString())
-                            );
-                        } catch (SQLException ex) {
-                            Logger.getLogger(FXMLSolicitarServicioController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                for (String nombre : this.nombresEstados) {
+                    if (nombre.equals(newValue)) {
+                        cargarMunicipios(newValue);
                     }
                 }
             });
@@ -104,9 +124,14 @@ public class FXMLSolicitarServicioController implements Initializable {
         }
     }
     
-    /*private void cargarMunicipios(String estado){
+    private void cargarMunicipios(String nombreEstado){
         try{
-            
+            int idEstado = DireccionDAO.getIdEstado(nombreEstado);
+            cbMunicipio.getItems().clear();
+            ArrayList<String> nombresMunicipios = DireccionDAO.getNombresMunicipiosEstado(idEstado);
+            Collections.sort(nombresMunicipios);
+            this.nombresMunicipios = FXCollections.observableArrayList(nombresMunicipios);
+            cbMunicipio.getItems().addAll(this.nombresMunicipios);
         } catch (SQLException e){
             e.printStackTrace();
             ShowMessage.showAlertSimple(
@@ -115,14 +140,62 @@ public class FXMLSolicitarServicioController implements Initializable {
                     Alert.AlertType.ERROR
             );
         }
-    }*/
+    }
+    
+    private void cargarPaqueterias(){
+        try{
+            ArrayList<String> nombresPaqueterias = PaqueteriaDAO.getNombresPaqueterias();
+            this.nombresPaqueterias = FXCollections.observableArrayList(nombresPaqueterias);
+            cbPaqueteria.setItems(this.nombresPaqueterias);
+        } catch (SQLException e){
+            e.printStackTrace();
+            ShowMessage.showAlertSimple(
+                    "Error de conexión",
+                    "Por el momento no se pudo obtener las paqueterias.\nNo hay conexión con la base de datos...",
+                    Alert.AlertType.ERROR
+            );
+        }
+    }
     
     @FXML
     private void clicGuardar(ActionEvent event) {
-        
+        try{
+            if(verificarDatosSolicitud() == false){
+                String numeroGuia = this.tfNumGuia.getText();
+                int idPaqueteria = PaqueteriaDAO.getIdPaqueteria(cbPaqueteria.getValue());
+                int idDiagnostico = 0;
+                SolicitudServicioDAO.createSolicitud(numeroGuia,idPaqueteria,idDiagnostico);
+                System.out.println("");
+                this.lbErrorSolicitud.setVisible(false);
+            }else{
+                this.lbErrorSolicitud.setVisible(true);
+            }
+        }catch(SQLException e){
+            ShowMessage.showAlertSimple(
+                    "Error de conexión", 
+                    "No se pudo registrar la información en la base de datos, \nintente más terde.", 
+                    Alert.AlertType.ERROR
+            );
+        }
+    }
+    
+    private boolean verificarDatosSolicitud(){
+        try{
+            boolean existe = SolicitudServicioDAO.verificarDatosSolicitud(
+                    this.tfNumGuia.getText(), 
+                    this.cbPaqueteria.getValue()
+            );
+            if(existe == true){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    @FXML
     private void clicAceptar(ActionEvent event) throws IOException {
         String ventana = "vistas/FXMLDetallesDelEquipo.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
@@ -148,5 +221,6 @@ public class FXMLSolicitarServicioController implements Initializable {
 
     @FXML
     private void clicMunicipio(ActionEvent event) {
+        
     }
 }

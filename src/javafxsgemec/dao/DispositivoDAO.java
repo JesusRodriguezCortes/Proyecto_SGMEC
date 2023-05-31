@@ -73,6 +73,7 @@ public class DispositivoDAO {
                 PreparedStatement getDispositivo = conexionBD.prepareStatement(sqlQuery);
                 getDispositivo.setInt(1, idDispositivo);                
                 ResultSet resultSet = getDispositivo.executeQuery();
+                if(resultSet.next()){
                     dispositivoBD.setIdDispositivo(resultSet.getInt("idDispositivo"));
                     dispositivoBD.setMarca(resultSet.getString("marca"));
                     dispositivoBD.setModelo(resultSet.getString("modelo"));
@@ -85,6 +86,7 @@ public class DispositivoDAO {
                     dispositivoBD.setNombreCliente(resultSet.getString("nombreCliente"));
                     dispositivoBD.setIdEstado(resultSet.getInt("idEstadoDispositivo"));
                     dispositivoBD.setEstado(resultSet.getString("nombreEstadoDispositivo"));
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally{

@@ -147,6 +147,65 @@ public class DireccionDAO {
         return estadosBD;
     }
     
+public static ArrayList<String> getNombresEstados() throws SQLException{
+    ArrayList<String> nombresEstados = new ArrayList<>();
+    Connection conexionBD = OpenConnection.openConnectionBD();
+
+    if(conexionBD != null){
+        try {
+            String sqlQuery = "SELECT * FROM Estado; ";
+            PreparedStatement getEstado = conexionBD.prepareStatement(sqlQuery);
+            ResultSet resultSet = getEstado.executeQuery();
+            while(resultSet.next()){
+                nombresEstados.add(resultSet.getString("nombreEstado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(NullPointerException f) {
+            f.printStackTrace();
+        } finally{
+            conexionBD.close();
+        }
+    }else{
+        ShowMessage.showAlertSimple(
+                "Error de conexión",
+                "Por el momento no hay conexión con la base de datos...",
+                Alert.AlertType.ERROR
+        );
+    }
+    return nombresEstados;
+}
+    
+    public static int getIdEstado(String nombreEstado) throws SQLException{
+        int idEstado = 0;
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String sqlQuery = "SELECT idEstado FROM Estado WHERE nombreEstado = ?; ";
+                PreparedStatement getEstado = conexionBD.prepareStatement(sqlQuery);
+                getEstado.setString(1, nombreEstado);
+                ResultSet resultSet = getEstado.executeQuery();
+                if(resultSet.next()){
+                    idEstado = resultSet.getInt("idEstado");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch(NullPointerException f) {
+                f.printStackTrace();
+            } finally{
+                conexionBD.close();
+            }
+        }else{
+            ShowMessage.showAlertSimple(
+                    "Error de conexión",
+                    "Por el momento no hay conexión con la base de datos...",
+                    Alert.AlertType.ERROR
+            );
+        }
+        return idEstado;
+    }
+    
     public static ArrayList<Municipio> getMunicipiosEstado(int idEstado) throws SQLException{
         ArrayList<Municipio> municipiosBD = null;
         Connection conexionBD = OpenConnection.openConnectionBD();
@@ -181,6 +240,36 @@ public class DireccionDAO {
             );
         }
         return municipiosBD;
+    }
+    
+    public static ArrayList<String> getNombresMunicipiosEstado(int idEstado) throws SQLException{
+        ArrayList<String> nombresMunicipios = new ArrayList<>();
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String sqlQuery = "SELECT * FROM Municipio WHERE idEstado = ?; ";
+                PreparedStatement getMunicipios = conexionBD.prepareStatement(sqlQuery);
+                getMunicipios.setInt(1, idEstado);
+                ResultSet resultSet = getMunicipios.executeQuery();
+                while(resultSet.next()){
+                    nombresMunicipios.add(resultSet.getString("nombreMunicipio"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch(NullPointerException f) {
+                f.printStackTrace();
+            } finally{
+                conexionBD.close();
+            }
+        }else{
+            ShowMessage.showAlertSimple(
+                    "Error de conexión",
+                    "Por el momento no hay conexión con la base de datos...",
+                    Alert.AlertType.ERROR
+            );
+        }
+        return nombresMunicipios;
     }
     
     public static ArrayList<CodigoPostal> getCodigosPostalesMunicipio(int idMunicipio) throws SQLException{
@@ -254,40 +343,4 @@ public class DireccionDAO {
         }
         return coloniasBD;
     }
-    
-    /*public static ResultSet setDireccionCliente (int idCodigoPostal) throws SQLException{
-        ArrayList<Colonia> coloniasBD = null;
-        Connection conexionBD = OpenConnection.openConnectionBD();
-        
-        if(conexionBD != null){
-            try {
-                String sqlQuery = "SELECT idColonia, nombreColonia FROM Colonia " +
-                                  "RIGHT JOIN CodigoPostal ON Colonia.idCodigoPostal = CodigoPostal.idCodigoPostal " +
-                                  "WHERE CodigoPostal.idCodigoPostal = ?; ";
-                PreparedStatement getAllAddress = conexionBD.prepareStatement(sqlQuery);
-                getAllAddress.setInt(1, idCodigoPostal);
-                ResultSet resultSet = getAllAddress.executeQuery();
-                coloniasBD = new ArrayList<>();
-                while(resultSet.next()){
-                    Colonia newColonia = new Colonia();
-                        newColonia.setIdColonia(resultSet.getInt("idColonia"));
-                        newColonia.setNombreColonia(resultSet.getString("nombreColonia"));
-                    coloniasBD.add(newColonia);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch(NullPointerException f) {
-                f.printStackTrace();
-            } finally{
-                conexionBD.close();
-            }
-        }else{
-            ShowMessage.showAlertSimple(
-                    "Error de conexión",
-                    "Por el momento no hay conexión con la base de datos...",
-                    Alert.AlertType.ERROR
-            );
-        }
-        return coloniasBD;
-    }*/
 }

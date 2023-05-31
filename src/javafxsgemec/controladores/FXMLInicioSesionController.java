@@ -36,7 +36,8 @@ public class FXMLInicioSesionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.tfUsuario.setText("cliente");
+        this.tfContrasenia.setText("cliente");
     }    
 
     @FXML
@@ -62,11 +63,7 @@ public class FXMLInicioSesionController implements Initializable {
         try {
             usuarioSesion = UsuarioDAO.verificarUsuario(user, password);
             if(usuarioSesion.getRespuestaConexion() == ConstantsConnection.CODIGO_OPERACION_CORRECTA){
-                ShowMessage.showAlertSimple(
-                    "Bienvenido(a)", 
-                    "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsername()+" al sistema", 
-                    Alert.AlertType.INFORMATION
-                );
+                
                 irPantallaPrincipal();
             }else{
                 ShowMessage.showAlertSimple(
