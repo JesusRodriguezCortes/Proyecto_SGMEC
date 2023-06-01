@@ -1,29 +1,30 @@
 package javafxsgemec.pojo;
 
-public class PedidoRefaccion {
-   
-    private int idPedidoRefaccion;
+public class PedidoRefacciones {
+    
+    private int idPedidoRefacc;
     private String fechaPedido;
-    private String numeroPedido;
+    private int numeroPedido;
     private float totalPedido;
     private String direccionEntrega;
 
-    public PedidoRefaccion() {}
+    public PedidoRefacciones (){
+        
+    }
 
-    public PedidoRefaccion(int idPedidoRefaccion, String fechaPedido, String numeroPedido, float totalPedido, String direccionEntrega) {
-        this.idPedidoRefaccion = idPedidoRefaccion;
+    public PedidoRefacciones(int idPedidoRefacc, String fechaPedido, int numeroPedido, float totalPedido) {
+        this.idPedidoRefacc = idPedidoRefacc;
         this.fechaPedido = fechaPedido;
         this.numeroPedido = numeroPedido;
         this.totalPedido = totalPedido;
-        this.direccionEntrega = direccionEntrega;
     }
     
-    public int getIdPedidoRefaccion() {
-        return idPedidoRefaccion;
+    public int getIdPedidoRefacc() {
+        return idPedidoRefacc;
     }
 
-    public void setIdPedidoRefaccion(int idPedidoRefaccion) {
-        this.idPedidoRefaccion = idPedidoRefaccion;
+    public void setIdPedidoRefacc(int idPedidoRefacc) {
+        this.idPedidoRefacc = idPedidoRefacc;
     }
 
     public String getFechaPedido() {
@@ -34,11 +35,11 @@ public class PedidoRefaccion {
         this.fechaPedido = fechaPedido;
     }
 
-    public String getNumeroPedido() {
+    public int getNumeroPedido() {
         return numeroPedido;
     }
 
-    public void setNumeroPedido(String numeroPedido) {
+    public void setNumeroPedido(int numeroPedido) {
         this.numeroPedido = numeroPedido;
     }
 
@@ -59,7 +60,7 @@ public class PedidoRefaccion {
     }
     
     @Override
-    public String toString(){
-        return this.numeroPedido;
+    public String toString() {
+        return "PedidoRefacciones{" + "fechaPedido=" + fechaPedido + ", numeroPedido=" + numeroPedido + ", totalPedido=" + totalPedido + '}';
     }
 }

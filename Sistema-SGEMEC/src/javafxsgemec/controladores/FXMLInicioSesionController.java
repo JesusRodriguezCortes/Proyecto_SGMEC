@@ -20,7 +20,6 @@ import javafxsgemec.connectionBD.ConstantsConnection;
 import javafxsgemec.dao.UsuarioDAO;
 import javafxsgemec.javafxsgemec;
 import javafxsgemec.pojo.UsuarioRespuesta;
-import javafxsgemec.util.utilidades;
 import javafxsgemec.util.ShowMessage;
 
 
@@ -32,7 +31,6 @@ public class FXMLInicioSesionController implements Initializable {
     private TextField tfUsuario;
     @FXML
     private PasswordField tfContrasenia;
-    @FXML
     private Label lbError;
     UsuarioRespuesta usuarioSesion;
 
@@ -45,7 +43,6 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIniciarSesion(ActionEvent event) {
         String usuario = tfUsuario.getText();
         String contrasenia = tfContrasenia.getText();
-        System.out.println("ANTES DEL ERROR");
         boolean valido = true;
         tfUsuario.setText("");
         tfContrasenia.setText("");
@@ -57,47 +54,83 @@ public class FXMLInicioSesionController implements Initializable {
             valido = false;
             lbError.setText("Rellene todos los campos");
         }
-        if(valido)
+        if(valido == true){
             verificarCredencialesUsuario(usuario, contrasenia);
+        }
     }
     private void verificarCredencialesUsuario(String user, String password){
         try {
             usuarioSesion = UsuarioDAO.verificarUsuario(user, password);
-            if(usuarioSesion.getRespuestaConexion()==ConstantsConnection.CODIGO_OPERACION_CORRECTA){
-                System.out.println("Usuario consultado"+usuarioSesion.getUsarioRespuesta().getUsuario());
+            if(usuarioSesion.getRespuestaConexion() == ConstantsConnection.CODIGO_OPERACION_CORRECTA){
+                ShowMessage.showAlertSimple(
+                    "Bienvenido(a)", 
+                    "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsername()+" al sistema", 
+                    Alert.AlertType.INFORMATION
+                );
                 irPantallaPrincipal();
             }else{
-                ShowMessage.showAlertSimple("Credenciales incorrectas", 
+                ShowMessage.showAlertSimple(
+                        "Credenciales incorrectas", 
                         "El número de personal y/o contraseña es incorrecto, favor de verificarlos", 
-                        Alert.AlertType.WARNING);
+                        Alert.AlertType.WARNING
+                );
             }
-        } catch (SQLException | NullPointerException e) {
-            ShowMessage.showAlertSimple("Error de conexión", 
-                    "Hubo un error en el proceso de comunicación, inténtelo más tarde...", Alert.AlertType.ERROR);
-        } 
+        } catch (SQLException e) {
+            System.out.println("//Error controller sql: \""+e.getMessage()+"\"");
+            ShowMessage.showAlertSimple(
+                    "Error de conexión", 
+                    "Hubo un error en el proceso de comunicación, inténtelo más tarde...", 
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException e){
+            System.out.println("//Error controller npe: \""+e.getMessage()+"\"");
+            System.out.println("//ID de usuario: \""+usuarioSesion.getUsarioRespuesta().getUsername()+"\"");
+            ShowMessage.showAlertSimple(
+                    "Error de datos", 
+                    "Hubo un error en el proceso de comunicación, inténtelo más tarde...", 
+                    Alert.AlertType.ERROR
+            );
+        }
     }
 
     private void irPantallaPrincipal() {
-                try {
-            ShowMessage.showAlertSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsuario()+" al sistema", 
-                    Alert.AlertType.INFORMATION);
-            String ventana = null;
-            System.out.println("Nivel de acceso BD: "+usuarioSesion.getUsarioRespuesta().getNivelDeAcceso());
-            if(utilidades.compararString(usuarioSesion.getUsarioRespuesta().getNivelDeAcceso(), "administrador"))
-                ventana = "vistas/FXMLAdministrador.fxml";
-            else if(utilidades.compararString(usuarioSesion.getUsarioRespuesta().getNivelDeAcceso(), "cliente"))
-                ventana = "vistas/FXMLCliente.fxml";
-            else if(utilidades.compararString(usuarioSesion.getUsarioRespuesta().getNivelDeAcceso(), "encargado"))
-                ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
+        try {
+            String nivelDeAcceso = usuarioSesion.getUsarioRespuesta().getNivelDeAcceso();
+            System.out.println("Nivel de acceso BD: "+nivelDeAcceso);
+            String ventana = "";
+            nivelDeAcceso = nivelDeAcceso.trim();
+            switch(nivelDeAcceso){
+                case "cliente":
+                    ventana = "vistas/FXMLCliente.fxml";
+                    break;
+                case "administrador":
+                    ventana = "vistas/FXMLAdministrador.fxml";
+                    break;
+                case "encargado":
+                    ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
+                    break;
+                default:
+                    System.out.println("DEFAULT Nivel de acceso BD: "+nivelDeAcceso);
+                    ShowMessage.showAlertSimple(
+                            "ERROR FATAL", 
+                            "No puede ingresar por conflicto de nivel de usuario", 
+                            Alert.AlertType.ERROR
+                    );
+                    break;
+            }
             Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
             Scene escenaPrincipal = new Scene(vista);
             Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
             escenarioBase.setScene(escenaPrincipal);
             escenarioBase.show();
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             ex.printStackTrace();
-            ShowMessage.showAlertSimple("Error", "No se puede mostrar la pantalla principal", 
-                    Alert.AlertType.ERROR);
+            System.out.println("ERROR I/O: "+ex.getMessage());
+            ShowMessage.showAlertSimple(
+                    "Error", 
+                    "No se puede mostrar la pantalla principal", 
+                    Alert.AlertType.ERROR
+            );
         }
     }
 }

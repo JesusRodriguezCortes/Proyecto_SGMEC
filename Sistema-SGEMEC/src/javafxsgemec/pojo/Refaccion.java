@@ -1,85 +1,28 @@
 package javafxsgemec.pojo;
 
 public class Refaccion {
-    private int idRefaccion;
-    private String nombreRefaccion;
-    private String tipoRefaccion;
-    private String codigoRefaccion;
-    private int pzasDisponiblesCompra;
-    private int pzasDisponiblesVenta;
-    private float precioCompra;
-    private float precioVenta;
-   
-    public Refaccion(){
-    }
-
-    public Refaccion(int idRefaccion, String nombreRefaccion, String tipoRefaccion, String codigoRefaccion, int pzasDisponiblesCompra, int pzasDisponiblesVenta, float precioCompra, float precioVenta) {
-        this.idRefaccion = idRefaccion;
-        this.nombreRefaccion = nombreRefaccion;
-        this.tipoRefaccion = tipoRefaccion;
-        this.codigoRefaccion = codigoRefaccion;
-        this.pzasDisponiblesCompra = pzasDisponiblesCompra;
-        this.pzasDisponiblesVenta = pzasDisponiblesVenta;
-        this.precioCompra = precioCompra;
-        this.precioVenta = precioVenta;
-    }
-
     
+    private int idRefaccion;
+    private String nombre;
+    private String codigoRefaccion;
+    private int idTipoRefaccion;
+    private String tipoRefaccion;
+    private int idDiagnostico;
+    private String fechaInicio;
+    private String fechaFin;
+    
+    
+    public Refaccion() {}
 
-    public String getNombreRefaccion() {
-        return nombreRefaccion;
-    }
-
-    public void setNombreRefaccion(String nombreRefaccion) {
-        this.nombreRefaccion = nombreRefaccion;
-    }
-
-    public String getTipoRefaccion() {
-        return tipoRefaccion;
-    }
-
-    public void setTipoRefaccion(String tipoRefaccion) {
-        this.tipoRefaccion = tipoRefaccion;
-    }
-
-    public String getCodigoRefaccion() {
-        return codigoRefaccion;
-    }
-
-    public void setCodigoRefaccion(String codigoRefaccion) {
+    public Refaccion(int idRefaccion, String nombre, String codigoRefaccion, int idTipoRefaccion, String tipoRefaccion, int idDiagnostico, String fechaInicio, String fechaFin) {
+        this.idRefaccion = idRefaccion;
+        this.nombre = nombre;
         this.codigoRefaccion = codigoRefaccion;
-    }
-
-    public int getPzasDisponiblesCompra() {
-        return pzasDisponiblesCompra;
-    }
-
-    public void setPzasDisponiblesCompra(int pzasDisponiblesCompra) {
-        this.pzasDisponiblesCompra = pzasDisponiblesCompra;
-    }
-
-    public int getPzasDisponiblesVenta() {
-        return pzasDisponiblesVenta;
-    }
-
-    public void setPzasDisponiblesVenta(int pzasDisponiblesVenta) {
-        this.pzasDisponiblesVenta = pzasDisponiblesVenta;
-    }
-
-    public float getPrecioCompra() {
-        return precioCompra;
-    }
-
-    public void setPrecioCompra(float precioCompra) {
-        this.precioCompra = precioCompra;
-    }
-
-    public float getPrecioVenta() {
-        return precioVenta;
-    }
-
-    public void setPrecioVenta(float precioVenta) {
-        this.precioVenta = precioVenta;
+        this.idTipoRefaccion = idTipoRefaccion;
+        this.tipoRefaccion = tipoRefaccion;
+        this.idDiagnostico = idDiagnostico;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     public int getIdRefaccion() {
@@ -90,11 +33,64 @@ public class Refaccion {
         this.idRefaccion = idRefaccion;
     }
 
-   
+    public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCodigoRefaccion() {
+        return codigoRefaccion;
+    }
+
+    public void setCodigoRefaccion(String codigoRefaccion) {
+        this.codigoRefaccion = codigoRefaccion;
+    }
+
+    public int getIdTipoRefaccion() {
+        return idTipoRefaccion;
+    }
+
+    public void setIdTipoRefaccion(int idTipoRefaccion) {
+        this.idTipoRefaccion = idTipoRefaccion;
+    }
+
+    public String getTipoRefaccion() {
+        return tipoRefaccion;
+    }
+
+    public void setTipoRefaccion(String tipoRefaccion) {
+        this.tipoRefaccion = tipoRefaccion;
+    }
+
+    public int getIdDiagnostico() {
+        return idDiagnostico;
+    }
+
+    public void setIdDiagnostico(int idDiagnostico) {
+        this.idDiagnostico = idDiagnostico;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
     
     @Override
     public String toString(){
-        return this.nombreRefaccion;
+        return this.nombre+" "+this.tipoRefaccion;
     }
 }

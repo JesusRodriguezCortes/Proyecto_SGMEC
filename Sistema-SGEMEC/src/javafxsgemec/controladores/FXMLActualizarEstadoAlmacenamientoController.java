@@ -11,13 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafxsgemec.connectionBD.ResultOperation;
-import javafxsgemec.dao.EquipoComputoDAO;
+import javafxsgemec.dao.DispositivoDAO;
 import javafxsgemec.pojo.Cliente;
+import javafxsgemec.pojo.Dispositivo;
 import javafxsgemec.pojo.EquipoComputo;
 import javafxsgemec.util.ShowMessage;
 
@@ -33,36 +34,14 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @FXML
     private Label lbModelo;
     @FXML
-    private Label lbSistemaOperativo;
-    @FXML
     private Label lbNombreCliente;
     @FXML
-    private Label lbAlmacenamiento;
-    @FXML
-    private Label lbRam;
-    @FXML
-    private Label lbProcesador;
-    @FXML
-    private Label lbTarjetaVideo;
-    @FXML
-    private CheckBox cbEnviadoCliente;
-    @FXML
-    private CheckBox cbRecibidoEmpresa;
-    @FXML
-    private CheckBox cbEnEspera;
-    @FXML
-    private CheckBox cbEnValoracion;
-    @FXML
-    private CheckBox cbDiagnosticado;
-    @FXML
-    private CheckBox cbPagoRealizado;
-    @FXML
     private TextArea txaComentariosCliente;
-    @FXML
-    private TextArea txaInformacionDiagnostico;
     
-    private EquipoComputo dispositivo;
+    private Dispositivo dispositivo;
     private Cliente cliente;
+    @FXML
+    private ToggleGroup estado;
 
     /**
      * Initializes the controller class.
@@ -70,17 +49,62 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mostrarDatosDispositivo();
+        
     }    
     
     public void mostrarDatosDispositivo(){
         lbMarca.setText(dispositivo.getMarca());
         lbModelo.setText(dispositivo.getModelo());
         lbNombreCliente.setText(cliente.getNombre());
+        txaComentariosCliente.setText(dispositivo.getErrorDispos());
+    }
+    
+    public int convertirEstadoAId(){
+        int ID;     
+        switch(estado.getSelectedToggle().toString()){
+            case "1. Enviado por el cliente":
+                ID = 1;
+                break;
+            case "2. Recibido por la empresa":
+                ID = 2;
+                break;
+            case "3. En espera":
+                ID = 3;
+                break;
+            case "4. En reparación":
+                ID = 4;
+                break;
+            case "5. Enviado por la empresa":
+                ID = 5;
+                break;
+            case "6. Pago realizado":
+                ID = 6;
+                break;
+            case "7. Diagnosticado":
+                ID = 7;
+                break;
+            case "8. En valoración":
+                ID = 8;
+                break;
+            case "9. Empaquetado":
+                ID = 9;
+                break;
+            case "10. Recibido por el cliente":
+                ID = 10;
+                break;
+            default:
+                ID = 0;
+                break;
+        }
+        
+        return ID;
     }
     
     public void guardarDatosMantenimiento(){
+        if(estado.getSelectedToggle()!=null){
         try{
-            ResultOperation resultadoEditar = EquipoComputoDAO.actualizarEstadoEquipoComputo(dispositivo);
+            dispositivo.setIdEstado(convertirEstadoAId());
+            ResultOperation resultadoEditar = DispositivoDAO.editEstadoDispositivo(dispositivo);
             if(!resultadoEditar.isError()){
                 ShowMessage.showAlertSimple("Estado de mantenimiento editado", resultadoEditar.getMessage(), Alert.AlertType.INFORMATION);
             }else{
@@ -89,19 +113,18 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
         }catch(SQLException e){
             ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
         }
+        }else{
+            ShowMessage.showAlertSimple("Ningún estado seleccionado", "Debes seleccionar uno de los"
+                    + "estados para poder guardar", Alert.AlertType.WARNING);
+        }            
     }
     private void cerrarVentana(){
-        Stage escenarioPrincipal = (Stage) txaInformacionDiagnostico.getScene().getWindow();
+        Stage escenarioPrincipal = (Stage) txaComentariosCliente.getScene().getWindow();
         escenarioPrincipal.close();
     }
     
-    @FXML
     private void clicCancelar(ActionEvent event) {
         cerrarVentana();
     }
 
-    @FXML
-    private void clicAceptar(ActionEvent event) {
-        
-    }
 }

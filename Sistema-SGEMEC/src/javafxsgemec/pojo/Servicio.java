@@ -1,35 +1,36 @@
 package javafxsgemec.pojo;
 
 public class Servicio {
-    private float precio;
-    private String tipoServicio;
     
-    public Servicio(){
+    private int idServicio;
+    private String nombreServicio;
+    
+    
+    public Servicio() {}
+
+    public Servicio(int idServicio, String nombreServicio) {
+        this.idServicio = idServicio;
+        this.nombreServicio = nombreServicio;
     }
 
-    public Servicio(float precio, String tipoServicio) {
-        this.precio = precio;
-        this.tipoServicio = tipoServicio;
+    public int getIdServicio() {
+        return idServicio;
     }
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
+    public void setIdServicio(int idServicio) {
+        this.idServicio = idServicio;
     }
 
-    public float getPrecio(){
-        return this.precio;
+    public String getNombreServicio() {
+        return nombreServicio;
     }
-    
-    public void setTipoServicio(String tipoServicio) {
-        this.tipoServicio = tipoServicio;
-    }
-    
-    public String getTipoServicio(){
-        return this.tipoServicio;
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
     
     @Override
     public String toString(){
-        return this.tipoServicio+" "+this.precio;
+        return this.nombreServicio;
     }
 }

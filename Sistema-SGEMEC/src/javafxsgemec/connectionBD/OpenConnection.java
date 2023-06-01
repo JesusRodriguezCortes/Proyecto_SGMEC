@@ -5,28 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class OpenConnection {
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String BD = "SGMEC";
-    private static final String IP = "localhost";
-    private static final String PUERTO = "3306";
-    
-    /*private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE = "gestiondetutorias";
-    private static final String HOSTNAME = "localhost";
-    private static final String PORT = "3306";
-    private static final String URL_CONEXION = "jdbc:mysql://"+HOSTNAME+":"+PORT+"/"+DATABASE+"?serverTimezone=UTC";
-    */
-    
-    
-    private static final String URLCONEXION = "jdbc:mysql://"+IP+":"+PUERTO+"/"+BD+"?allowPublicKeyRetrieval=true&useSSL=false"; 
-    private static final String USUARIO = "AdminSGMEC";
-    private static final String PASSWORD = "AdminSGMEC";
+    private static String driver = "com.mysql.jdbc.Driver";
+    private static String bd = "sgemec";
+    private static String ip = "localhost";
+    private static String puerto = "3306";
+    private static String urlConexion =
+            "jdbc:mysql://"+ip+":"+puerto+"/"+bd+
+            "?allowPublicKeyRetrieval=true&useSSL=false"; 
+    private static String usuario = "root";
+    private static String password = "q1w2e3r4t5y6";
     
     public static Connection openConnectionBD(){
         Connection conexionBD = null;
         try {
-            Class.forName(DRIVER);
-            conexionBD = DriverManager.getConnection(URLCONEXION, USUARIO, PASSWORD);
+            Class.forName(driver);
+            conexionBD = DriverManager.getConnection(urlConexion, usuario, password);
         } catch (ClassNotFoundException ex ) {
             ex.printStackTrace();
         } catch (SQLException ex) {

@@ -1,6 +1,6 @@
 package javafxsgemec.pojo;
 
-public class EquipoComputo {
+public class Dispositivo {
     
     private int idDispositivo;
     private String marca;
@@ -15,9 +15,9 @@ public class EquipoComputo {
     private int idEstado;
     private String estado;
 
-    public EquipoComputo() {}
+    public Dispositivo() {}
 
-    public EquipoComputo(int idDispositivo, String marca, String modelo, String usuario, String password, String errorDispos, byte[] foto, String caracteristicas, int idCliente, String nombreCliente, int idEstado, String estado) {
+    public Dispositivo(int idDispositivo, String marca, String modelo, String usuario, String password, String errorDispos, byte[] foto, String caracteristicas, int idCliente, String nombreCliente, int idEstado, String estado) {
         this.idDispositivo = idDispositivo;
         this.marca = marca;
         this.modelo = modelo;
