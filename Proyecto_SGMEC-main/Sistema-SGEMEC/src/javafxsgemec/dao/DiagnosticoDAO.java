@@ -18,17 +18,15 @@ public class DiagnosticoDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "INSERT INTO diagnostico " +
-                                  "(cotizacion, fechaInicio, fechaFin, resultadoDiagnostico, idDispositivo, idServicio) " +
-                                  "VALUES(?, ?, ?, ?, ?, ?)";
+                String sqlQuery = "INSERT INTO diagnostico \n" +
+                "( fechaInicio, fechaFin, resultadoDiagnostico, idDispositivo, idServicio) \n" +
+                    "VALUES( ?, ?, ?, ?, ?)";
                 PreparedStatement getDiagnostico = conexionBD.prepareStatement(sqlQuery);
-                getDiagnostico.setFloat(1, newDiagnostico.getCotizacion());
-                getDiagnostico.setString(2, newDiagnostico.getFechaInicio());
-                getDiagnostico.setString(3, newDiagnostico.getFechaFin());
-                getDiagnostico.setString(4, newDiagnostico.getResultadoDiagnostico());
-                getDiagnostico.setInt(5, newDiagnostico.getIdDispositivo());
-                getDiagnostico.setInt(6, newDiagnostico.getIdServicio());
-                
+                getDiagnostico.setString(1, newDiagnostico.getFechaInicio());
+                getDiagnostico.setString(2, newDiagnostico.getFechaFin());
+                getDiagnostico.setString(3, newDiagnostico.getResultadoDiagnostico());
+                getDiagnostico.setInt(4, newDiagnostico.getIdDispositivo());
+                getDiagnostico.setInt(5, newDiagnostico.getIdServicio());  
                 int affectedRows = getDiagnostico.executeUpdate();
                 if(affectedRows > 0){
                     response.setError(false);
@@ -47,6 +45,7 @@ public class DiagnosticoDAO {
         }
         return response;
     }
+
     
     public static Diagnostico getDiagnostico(int idDiagnostico) throws SQLException{
         Diagnostico diagnosticoBD = null;

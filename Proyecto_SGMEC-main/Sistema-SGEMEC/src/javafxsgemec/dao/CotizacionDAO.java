@@ -17,8 +17,9 @@ public class CotizacionDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "INSERT INTO cotizacion (reparacionHardware, reparacionSoftware, actualizaciones, servicioLimpieza, costoRepuestos, manoObra, idDispositivo) \n" +
-                  "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                String sqlQuery = "INSERT INTO cotizacion (reparacionHardware, reparacionSoftware,"
+                        + " actualizaciones, servicioLimpieza, costoRepuesto, manoDeObra, garantia, idDispositivo) \n" +
+                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
                 PreparedStatement getCotizacion = conexionBD.prepareStatement(sqlQuery);
                 getCotizacion.setDouble(1, newCotizacion.getReparacionHardWare());
                 getCotizacion.setDouble(2, newCotizacion.getReparacionSoftware());
@@ -26,7 +27,8 @@ public class CotizacionDAO {
                 getCotizacion.setDouble(4, newCotizacion.getServicioLimpieza());
                 getCotizacion.setDouble(5, newCotizacion.getCostoRepusto());
                 getCotizacion.setDouble(6, newCotizacion.getManoDeObra());
-                getCotizacion.setDouble(7, newCotizacion.getIdDispositivo());               
+                getCotizacion.setDouble(7, newCotizacion.getGarantia());
+                getCotizacion.setDouble(8, newCotizacion.getIdDispositivo());               
                 int affectedRows = getCotizacion.executeUpdate();
                 if(affectedRows > 0){
                     response.setError(false);
@@ -45,4 +47,5 @@ public class CotizacionDAO {
         }
         return response;
     }
+
 }

@@ -103,10 +103,14 @@ public class DispositivoDAO {
         
         if(conexionBD != null){
             try {
-                String sqlQuery = "SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, " +
-                                  "errorDispositivo, estado, imagenDispositivo, dispositivo.idCliente, cliente.nombre, " +
-                                  "cliente.apellidoPaterno " +
-                                  "FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente";
+                String sqlQuery = "SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo,\n" +
+                                  "errorDispositivo, estadoDispositivo.nombreEstadoDispositivo as estado, imagenDispositivo, cliente.idCliente, cliente.nombre, \n" +
+                                  "cliente.apellidoPaterno\n" +
+                                  "FROM dispositivo,estadoDispositivo,cliente\n" +
+                                  "where dispositivo.idCliente=cliente.idCliente\n" +
+                                  "and\n" +
+                                  "dispositivo.idEstadoDispositivo=estadoDispositivo.idEstadoDispositivo\n" +
+                                  "and estadoDispositivo.nombreEstadoDispositivo=\"valoracion\";";
                 PreparedStatement getAllDevices = conexionBD.prepareStatement(sqlQuery);
                 ResultSet resultSet = getAllDevices.executeQuery();
                 dispositivosBD = new ArrayList<>();
@@ -134,6 +138,7 @@ public class DispositivoDAO {
         }
         return dispositivosBD;
     }
+
     
     public static ResultOperation editDispositivo(Dispositivo editDispositivo) throws SQLException{
         ResultOperation response = new ResultOperation();
