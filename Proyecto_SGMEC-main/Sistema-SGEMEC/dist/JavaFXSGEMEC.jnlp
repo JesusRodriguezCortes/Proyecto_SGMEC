@@ -8,11 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< Updated upstream
     <jar href="JavaFXSGEMEC.jar" size="2692204" download="eager" />
-=======
-    <jar href="JavaFXSGEMEC.jar" size="2692201" download="eager" />
->>>>>>> Stashed changes
     <jar href="lib\itext-5.0.5.jar" size="1599728" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.49.jar" size="1006904" download="eager" />
   </resources>
