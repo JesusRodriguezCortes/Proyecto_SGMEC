@@ -21,11 +21,7 @@ public class RefaccionDAO {
         
         if(conexionBD != null){
             try {
-<<<<<<< Updated upstream
                 String consulta = "SELECT Refaccion.idRefaccion, Refaccion.nombreRefaccion, TipoRefaccion.nombreTipoRefaccion, RefaccionProveedor.pzasDisponiblesCompra, RefaccionProveedor.precioCompra, Proveedor.idProveedor FROM Refaccion INNER JOIN TipoRefaccion on TipoRefaccion.idTipoRefaccion = Refaccion.idTipoRefaccion INNER JOIN RefaccionProveedor on RefaccionProveedor.idRefaccion = Refaccion.idRefaccion INNER JOIN Proveedor on Proveedor.idProveedor = RefaccionProveedor.idProveedor WHERE Proveedor.idProveedor = ? AND RefaccionProveedor.pzasDisponiblesCompra > 0;";
-=======
-                String consulta = "SELECT Refaccion.idRefaccion, Refaccion.nombreRefaccion, TipoRefaccion.nombreTipoRefaccion, RefaccionProveedor.pzasDisponiblesCompra, RefaccionProveedor.precioCompra, Proveedor.idProveedor FROM Refaccion INNER JOIN TipoRefaccion on TipoRefaccion.idTipoRefaccion = Refaccion.idTipoRefaccion INNER JOIN RefaccionProveedor on RefaccionProveedor.idRefaccion = Refaccion.idRefaccion INNER JOIN Proveedor on Proveedor.idProveedor = RefaccionProveedor.idProveedor WHERE Proveedor.idProveedor = ? AND RefaccionProveedor.pzasDisponiblesCompra;";
->>>>>>> Stashed changes
                 PreparedStatement configurarConsulta = conexionBD.prepareStatement(consulta);
                 configurarConsulta.setInt(1, idProveedor);
                 ResultSet resultadoConsulta = configurarConsulta.executeQuery();
