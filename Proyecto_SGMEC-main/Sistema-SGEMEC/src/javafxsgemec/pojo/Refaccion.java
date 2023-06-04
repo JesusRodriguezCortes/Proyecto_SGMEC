@@ -1,6 +1,8 @@
 package javafxsgemec.pojo;
 
 public class Refaccion {
+
+
     private int idRefaccion;
     private String nombreRefaccion;
     private String tipoRefaccion;
@@ -91,10 +93,9 @@ public class Refaccion {
     }
 
    
-
-    
     @Override
     public String toString(){
         return this.nombreRefaccion;
     }
+
 }

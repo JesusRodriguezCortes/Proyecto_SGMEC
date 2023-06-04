@@ -1,6 +1,7 @@
 package javafxsgemec.pojo;
 
 public class Proveedor {
+
     private int idProovedor;
     private String nombreProveedor;
     private String correoElect;
@@ -46,12 +47,12 @@ public class Proveedor {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
 
-    
+    }
     
     @Override
     public String toString(){
         return nombreProveedor;
     }
+
 }

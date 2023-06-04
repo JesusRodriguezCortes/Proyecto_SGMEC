@@ -1,3 +1,4 @@
+
 package javafxsgemec.util;
 
 import java.io.IOException;
@@ -21,3 +22,4 @@ public class StartScene {
     }
     
 }
+

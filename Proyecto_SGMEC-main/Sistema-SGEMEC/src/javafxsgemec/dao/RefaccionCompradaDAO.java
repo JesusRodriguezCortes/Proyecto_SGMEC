@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package javafxsgemec.dao;
 
 import java.sql.Connection;
@@ -11,10 +7,6 @@ import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.pojo.RefaccionComprada;
 import javafxsgemec.util.ResultadoOperacion;
 
-/**
- *
- * @author je_zu
- */
 public class RefaccionCompradaDAO {
     
     public static ResultadoOperacion registrarRefaccionComprada(int idPedido, RefaccionComprada refaccionComprada) throws SQLException{
@@ -53,3 +45,4 @@ public class RefaccionCompradaDAO {
     }
     
 }
+

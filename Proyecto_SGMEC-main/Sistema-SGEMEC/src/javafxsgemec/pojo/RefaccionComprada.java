@@ -1,9 +1,5 @@
 package javafxsgemec.pojo;
 
-/**
- *
- * @author je_zu
- */
 public class RefaccionComprada {
     private Refaccion refaccion;
     private int refaccionesCompradas;
@@ -65,3 +61,4 @@ public class RefaccionComprada {
     
 }
     
+

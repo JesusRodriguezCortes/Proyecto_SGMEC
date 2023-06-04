@@ -39,3 +39,4 @@ public class ResultOperation {
         this.numberAffectedRows = numberAffectedRows;
     }  
 }
+
