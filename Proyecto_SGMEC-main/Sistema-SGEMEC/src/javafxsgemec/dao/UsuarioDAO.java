@@ -20,7 +20,7 @@ public class UsuarioDAO {
         Connection conexionBD = OpenConnection.openConnectionBD();
         if(conexionBD != null){
             try {
-                String consulta = "select idUsuario,nombreUsuario,password, rol.nivelAcceso AS nivelAcceso "
+                String consulta = "select idUsuario,nombreUsuario,password, rol.nivelAcceso "
                         + "FROM usuario " +
                         "INNER JOIN rol ON usuario.idRol = rol.idRol "+
                         "WHERE nombreUsuario = ? AND password = ? ";
