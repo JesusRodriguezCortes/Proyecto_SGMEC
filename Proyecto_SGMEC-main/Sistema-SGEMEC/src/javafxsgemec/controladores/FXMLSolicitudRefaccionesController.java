@@ -10,6 +10,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,9 +36,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafxsgemec.dao.PedidoRefaccionDAO;
 import javafxsgemec.dao.ProveedorDAO;
@@ -99,8 +101,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     @FXML
     private Label lbDireccionDeEntrega;
 
-    
-    private String destinoPDF = "C:\\Users\\je_zu\\Desktop\\Procesos\\PDFs\\";
+    private String destinoPDF = "";
     private String ficheroFinal = "";
     private String direccionEntrega = "";
     private int refaccionesCompradas = 0;
@@ -368,11 +369,16 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         if(!infoRefaccionesCompradas.isEmpty()){
             if(cbDireccionDeEntrega.getSelectionModel().getSelectedIndex() != -1){
                 direccionEntrega = cbDireccionDeEntrega.getSelectionModel().getSelectedItem().getDireccionSucursal();
-                realizarPedido();
-                modificarPzasDisponibles();
-                guardarRefaccionesCompradas();
-                crearPDF();
-                limpiarTodosLosCampos();
+                
+                boolean status = realizarPedido();
+                System.out.println(String.valueOf(status));
+                if(status == true){
+                    modificarPzasDisponibles();
+                    guardarRefaccionesCompradas();
+                    crearPDF();
+                    ShowMessage.showAlertSimple("Pedido registrado", "El pedido " + numeroPedido + " ha sido generado y guardado con exito", Alert.AlertType.INFORMATION);   
+                    limpiarTodosLosCampos();
+                }
             }else{
                 ShowMessage.showAlertSimple("Dato faltante", "Ingrese la direccion de entrega para continuar", Alert.AlertType.INFORMATION);
             }
@@ -381,6 +387,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         }
  
     }
+   
     
     private void limpiarTodosLosCampos(){
         cbRefacciones.getSelectionModel().select(-1);
@@ -407,7 +414,8 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         
     }
     
-    private void realizarPedido(){
+    private boolean realizarPedido(){
+        boolean status = false;
         ArrayList<String> numerosPedidoRecuperados = new ArrayList<>();
 
         PedidoRefaccion nuevoPedido = new PedidoRefaccion();
@@ -430,21 +438,27 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
             nuevoPedido.setFechaPedido(String.valueOf(fechaActual));
             nuevoPedido.setTotalPedido(totalPedido);
             nuevoPedido.setDireccionEntrega(direccionEntrega);
-            registrarPedido(nuevoPedido);
+            status = registrarPedido(nuevoPedido);
+            
+            return status;
 
     }
     
-    private void registrarPedido(PedidoRefaccion pedidoNuevo){
+    private boolean registrarPedido(PedidoRefaccion pedidoNuevo){
+        boolean status = false;
         try {
             ResultadoOperacion resultado = PedidoRefaccionDAO.registrarPedidoRefaccion(pedidoNuevo);
             if(!resultado.isError()){
-                ShowMessage.showAlertSimple("Pedido registrado", resultado.getMensaje(), Alert.AlertType.INFORMATION);
+
+                status = true;
             }else{
                 ShowMessage.showAlertSimple("Error al guardar", resultado.getMensaje(), Alert.AlertType.ERROR);
             }
         } catch (SQLException e) {
             ShowMessage.showAlertSimple("Error de conexion", e.getMessage(), Alert.AlertType.NONE);
         }
+        
+        return status;
     }
     
     private void modificarPzasDisponibles(){
@@ -495,10 +509,21 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
         }
     }
     private void crearPDF(){
+        DirectoryChooser directorio = new DirectoryChooser();
+        directorio.setTitle("Selecciona una carpeta");
+        directorio.setInitialDirectory(new File("C://"));
+        Stage escenarioActual = (Stage) lbCantidad.getScene().getWindow();
+        File directorioDestino = directorio.showDialog(escenarioActual);
+        
+        if(directorioDestino != null){
+            destinoPDF = directorioDestino.toString();
+            System.out.println(destinoPDF);
+        }
+        
          try {
             try {
                 Document pedidoPDF = new Document();
-                String archivoPDF = "PedidoRefaccionNo"+ String.valueOf(numeroPedido) + ".pdf";
+                String archivoPDF = "/PedidoRefaccionNo"+ String.valueOf(numeroPedido) + ".pdf";
                 ficheroFinal = destinoPDF + archivoPDF;
                 PdfWriter.getInstance(pedidoPDF, new FileOutputStream(ficheroFinal));
                 pedidoPDF.open();

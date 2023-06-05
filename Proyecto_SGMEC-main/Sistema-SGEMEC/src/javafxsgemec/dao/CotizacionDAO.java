@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javafxsgemec.connectionBD.OpenConnection;
 import javafxsgemec.connectionBD.ResultOperation;
 import javafxsgemec.pojo.Cotizacion;
-import javafxsgemec.pojo.Diagnostico;
 
 public class CotizacionDAO {
     public static ResultOperation createCotizacion(Cotizacion newCotizacion) throws SQLException{
