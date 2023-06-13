@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/PedidoRefaccion.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/RefaccionComprada.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/Refaccion.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/EstadoDispositivo.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/RefaccionCompradaDAO.java</file>
+        </group>
     </open-files>
 </project-private>
