@@ -22,7 +22,7 @@ public class DispositivoDAO {
         if(conexionBD != null){
             try {
                 String sqlQuery = "INSERT INTO dispositivo (marca, modelo, usuarioDispositivo, passwordDispositivo, " +
-                                   "errorDispositivo, estado, imagenDispositivo, idCliente) " +
+                                   "errorDispositivo, idEstado, imagenDispositivo, idCliente) " +
                                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement setDispositivo = conexionBD.prepareStatement(sqlQuery);
                     setDispositivo.setString(1, newDispositivo.getMarca());
@@ -30,7 +30,7 @@ public class DispositivoDAO {
                     setDispositivo.setString(3, newDispositivo.getUsuarioDisp());
                     setDispositivo.setString(4, newDispositivo.getPasswordDisp());
                     setDispositivo.setString(5, newDispositivo.getError());
-                    setDispositivo.setString(6, newDispositivo.getEstado());
+                    setDispositivo.setInt(6, newDispositivo.getIdEstado());
                     setDispositivo.setInt(7, newDispositivo.getIdCliente());
                         FileInputStream fotoDispositivo = new FileInputStream(foto);
                     setDispositivo.setBlob(8, fotoDispositivo);
@@ -66,7 +66,7 @@ public class DispositivoDAO {
         if(conexionBD != null){
             try {
                 String sqlQuery = "SELECT idDispositivo, marca, modelo, usuarioDispositivo, passwordDispositivo, " +
-                                  "errorDispositivo, estado, imagenDispositivo, dispositivo.idCliente, cliente.nombre, " +
+                                  "errorDispositivo, idEstado, imagenDispositivo, dispositivo.idCliente, cliente.nombre, " +
                                   "cliente.apellidoPaterno " +
                                   "FROM dispositivo LEFT JOIN cliente ON dispositivo.idCliente = cliente.idCliente "+
                                   "WHERE idDispositivo = ?";
@@ -79,7 +79,7 @@ public class DispositivoDAO {
                     dispositivoBD.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
                     dispositivoBD.setPasswordDisp(resultSet.getString("passwordDispositivo"));
                     dispositivoBD.setError(resultSet.getString("errorDispositivo"));
-                    dispositivoBD.setEstado(resultSet.getString("estado"));
+                    dispositivoBD.setIdEstado(resultSet.getInt("idEstado"));
                     dispositivoBD.setFoto(resultSet.getBytes("imagenDispositivo"));
                     dispositivoBD.setIdCliente(resultSet.getInt("idCliente"));
                     dispositivoBD.setNombreCliente(resultSet.getString("nombre"));
@@ -122,7 +122,7 @@ public class DispositivoDAO {
                         newDispositivo.setUsuarioDisp(resultSet.getString("usuarioDispositivo"));
                         newDispositivo.setPasswordDisp(resultSet.getString("passwordDispositivo"));
                         newDispositivo.setError(resultSet.getString("errorDispositivo"));
-                        newDispositivo.setEstado(resultSet.getString("estado"));
+                        newDispositivo.setIdEstado(resultSet.getInt("estado"));
                         newDispositivo.setFoto(resultSet.getBytes("imagenDispositivo"));
                         newDispositivo.setIdCliente(resultSet.getInt("idCliente"));
                         newDispositivo.setNombreCliente(resultSet.getString("nombre"));
@@ -149,7 +149,7 @@ public class DispositivoDAO {
         if(conexionBD != null){
             try {
                 String sqlQuery = "UPDATE dispositivo SET marca = ?, modelo = ?, usuarioDispositivo = ?, " +
-                                  "passwordDispositivo = ?, errorDispositivo = ?, estado = ?, imagenDispositivo = ?, " +
+                                  "passwordDispositivo = ?, errorDispositivo = ?, idEstado = ?, imagenDispositivo = ?, " +
                                   "idClient = ?" +
                                   "WHERE idDispositivo = ?";
                 PreparedStatement setDispositivo = conexionBD.prepareStatement(sqlQuery);
@@ -158,7 +158,7 @@ public class DispositivoDAO {
                 setDispositivo.setString(3, editDispositivo.getUsuarioDisp());
                 setDispositivo.setString(4, editDispositivo.getPasswordDisp());
                 setDispositivo.setString(5, editDispositivo.getError());
-                setDispositivo.setString(6, editDispositivo.getEstado());
+                setDispositivo.setInt(6, editDispositivo.getIdEstado());
                 setDispositivo.setBytes(7, editDispositivo.getFoto());
                 setDispositivo.setInt(8, editDispositivo.getIdCliente());
                 setDispositivo.setInt(9, editDispositivo.getIdDispositivo());
