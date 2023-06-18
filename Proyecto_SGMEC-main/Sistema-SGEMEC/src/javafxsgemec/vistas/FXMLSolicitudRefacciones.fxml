@@ -30,7 +30,7 @@
                         <TableColumn fx:id="tcPrecioNeto" prefWidth="85.0" text="Precio neto" />
                     </columns>
                   </TableView>
-                  <Button layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
+                  <Button fx:id="btnAgregar" layoutX="255.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnAgregarRefaccion" text="Agregar" />
                   <Button layoutX="335.0" layoutY="33.0" mnemonicParsing="false" onAction="#btnEliminarRefaccion" text="Eliminar" />
                   <Label layoutX="292.0" layoutY="483.0" text="Total:">
                      <font>

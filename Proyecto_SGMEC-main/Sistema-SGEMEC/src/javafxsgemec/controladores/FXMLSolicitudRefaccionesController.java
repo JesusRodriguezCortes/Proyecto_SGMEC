@@ -32,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -112,6 +113,8 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     private ObservableList<Refaccion> listaRefacciones = FXCollections.observableArrayList();
     private ObservableList<RefaccionComprada> infoRefaccionesCompradas = FXCollections.observableArrayList();
     private ObservableList<Sucursal> listaSucursales = FXCollections.observableArrayList();
+    @FXML
+    private Button btnAgregar;
     
     /**
      * Initializes the controller class.
@@ -237,7 +240,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
 
     @FXML
     private void btnAumentarCantidadRefacciones(ActionEvent event) {
-        if (cbRefacciones.getSelectionModel().getSelectedIndex() != -1) {
+        if (cbRefacciones.getSelectionModel().getSelectedIndex() != -1 ) {
           if(refaccionesCompradas < cbRefacciones.getSelectionModel().getSelectedItem().getPzasDisponiblesCompra()){
                 refaccionesCompradas++;
                 lbCantidad.setText(String.valueOf(refaccionesCompradas));       
@@ -275,7 +278,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     
     private void modificarRefaccionesCompradas(){
         
-        int verificarSeleccion = verificarRefaccionReleccionada();
+        int verificarSeleccion = verificarRefaccionCompradaSeleccionada();
   
         if(verificarSeleccion >= 0){
             if(refaccionesCompradas > 0){
@@ -345,7 +348,7 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     }
     
     private void eliminarRefaccionComprada(){
-        int verificarSeleccion = verificarRefaccionReleccionada();
+        int verificarSeleccion = verificarRefaccionCompradaSeleccionada();
         
         if(verificarSeleccion >= 0){
             totalPedido = totalPedido - infoRefaccionesCompradas.get(verificarSeleccion).getPrecioNetoRefacciones();
@@ -360,6 +363,11 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
     
     
     private int verificarRefaccionReleccionada(){
+        int filaSeleccionada = tbRefaccionesCompradas.getSelectionModel().getSelectedItem().getIdRefaccion();
+        return filaSeleccionada;
+    }
+    
+    private int verificarRefaccionCompradaSeleccionada(){
         int filaSeleccionada = tbRefaccionesCompradas.getSelectionModel().getSelectedIndex();
         return filaSeleccionada;
     }
@@ -593,13 +601,22 @@ public class FXMLSolicitudRefaccionesController implements Initializable {
        int verificarSeleccion = verificarRefaccionReleccionada();
         
         if(verificarSeleccion >= 0){
-            cbRefacciones.getSelectionModel().select(verificarSeleccion);
-            lbNombreRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getNombreRefaccion()));
-            lbTipoRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getTipoRefaccion()));
-            lbPrecio.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getPrecioCompra()));
-            lbPzasDisponibles.setText(String.valueOf(infoRefaccionesCompradas.get(verificarSeleccion).getPzasDisponiblesCompra()));
-            refaccionesCompradas = infoRefaccionesCompradas.get(verificarSeleccion).getRefaccionesCompradas();
-            lbCantidad.setText(String.valueOf(refaccionesCompradas));
+            int refaccionSeleccionada = -1;
+            for(int i= 0;i < listaRefacciones.size(); i++){
+                if(listaRefacciones.get(i).getIdRefaccion() == verificarSeleccion){
+                    refaccionSeleccionada = i;
+                }
+            }
+        
+        int RefaccionComprada = verificarRefaccionCompradaSeleccionada();
+
+        cbRefacciones.getSelectionModel().select(refaccionSeleccionada);
+        lbNombreRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(RefaccionComprada).getNombreRefaccion()));
+        lbTipoRefaccion.setText(String.valueOf(infoRefaccionesCompradas.get(RefaccionComprada).getTipoRefaccion()));
+        lbPrecio.setText(String.valueOf(infoRefaccionesCompradas.get(RefaccionComprada).getPrecioCompra()));
+        lbPzasDisponibles.setText(String.valueOf(infoRefaccionesCompradas.get(RefaccionComprada).getPzasDisponiblesCompra()));
+        refaccionesCompradas = infoRefaccionesCompradas.get(RefaccionComprada).getRefaccionesCompradas();
+        lbCantidad.setText(String.valueOf(refaccionesCompradas));
         }
     }
     

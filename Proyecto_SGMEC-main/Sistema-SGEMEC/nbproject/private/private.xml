@@ -5,8 +5,14 @@
         <group>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/PedidoRefaccion.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/RefaccionComprada.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/CotizacionDAO.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLSolicitudRefaccionesController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/Refaccion.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/PedidoRefaccionesDAO.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLEncargadoMantenimientoController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/EstadoDispositivo.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/DispositivoDAO.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/dao/RefaccionCompradaDAO.java</file>
         </group>
     </open-files>
