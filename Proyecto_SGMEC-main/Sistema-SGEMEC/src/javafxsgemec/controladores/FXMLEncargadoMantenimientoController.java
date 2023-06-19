@@ -45,6 +45,12 @@ public class FXMLEncargadoMantenimientoController implements Initializable {
     }
 
     @FXML
-    private void clicActualizarEstado(ActionEvent event) {
+    private void clicActualizarEstado(ActionEvent event) throws IOException {
+        String ventana = "vistas/FXMLActualizarEstadoAlmacenamiento.fxml";
+        Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
+        Scene escenaPrincipal = new Scene(vista);
+        Stage escenarioBase = (Stage) btnActualizarEstadoMan.getScene().getWindow();
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.show();
     }
 }
