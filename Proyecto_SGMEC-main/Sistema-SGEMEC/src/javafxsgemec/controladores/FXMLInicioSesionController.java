@@ -64,7 +64,7 @@ public class FXMLInicioSesionController implements Initializable {
         try {
             usuarioSesion = UsuarioDAO.verificarUsuario(user, password);
             if(usuarioSesion.getRespuestaConexion()==ConstantsConnection.CODIGO_OPERACION_CORRECTA){
-                System.out.println("Usuario consultado"+usuarioSesion.getUsarioRespuesta().getUsuario());
+                System.out.println("Usuario consultado"+usuarioSesion.getUsarioRespuesta().getUsername());
                 irPantallaPrincipal();
             }else{
                 ShowMessage.showAlertSimple("Credenciales incorrectas", 
@@ -79,7 +79,7 @@ public class FXMLInicioSesionController implements Initializable {
 
     private void irPantallaPrincipal() {
                 try {
-            ShowMessage.showAlertSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsuario()+" al sistema", 
+            ShowMessage.showAlertSimple("Bienvenido(a)", "Credenciales correctas, Bienvenido(a) "+usuarioSesion.getUsarioRespuesta().getUsername()+" al sistema", 
                     Alert.AlertType.INFORMATION);
             String ventana = null;
             System.out.println("Nivel de acceso BD: "+usuarioSesion.getUsarioRespuesta().getNivelDeAcceso());

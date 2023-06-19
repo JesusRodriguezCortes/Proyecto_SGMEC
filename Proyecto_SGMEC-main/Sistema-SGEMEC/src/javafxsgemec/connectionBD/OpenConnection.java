@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class OpenConnection {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String BD = "SGMECDB";
+    private static final String BD = "SGMECFinal";
     private static final String IP = "localhost";
     private static final String PUERTO = "3306";
     

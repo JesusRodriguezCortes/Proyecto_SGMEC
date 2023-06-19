@@ -26,6 +26,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafxsgemec.dao.CotizacionDAO;
 import javafxsgemec.dao.DiagnosticoDAO;
+import javafxsgemec.dao.DispositivoDAO;
 import javafxsgemec.javafxsgemec;
 import javafxsgemec.pojo.Cotizacion;
 import javafxsgemec.pojo.Diagnostico;
@@ -107,10 +108,14 @@ public class FXMLRealizarDiagnosticoController implements Initializable {
     }
 
     @FXML
-    private void clicEnviarCotizacion(ActionEvent event) throws SQLException {
+    private void clicEnviarCotizacion(ActionEvent event) throws SQLException, IOException {
         System.out.println(txarDiagnostico.getText().length());
         if((txarDiagnostico.getText().length()==0))
-          ShowMessage.showAlertSimple("CAMPOS VACIOS", "Por favor asegurese de llenar los campos vacios", Alert.AlertType.WARNING);
+          ShowMessage.showAlertSimple(
+            "CAMPOS VACIOS", 
+            "Por favor asegurese de llenar los campos vacios", 
+            Alert.AlertType.WARNING
+          );
         else{
             Diagnostico diag= new Diagnostico();
             diag.setResultadoDiagnostico(txarDiagnostico.getText());
@@ -126,8 +131,14 @@ public class FXMLRealizarDiagnosticoController implements Initializable {
                 equipo.getIdDispositivo());
             DiagnosticoDAO.createDiagnostico(diag);
             CotizacionDAO.createCotizacion(cotizacion);
-            ShowMessage.showAlertSimple("Cotizacion Enviada", "La cotizacion se ha enviado al cliente", Alert.AlertType.INFORMATION);
-            
+            this.equipo.setIdEstado(3);
+            DispositivoDAO.editDispositivo(this.equipo);
+            ShowMessage.showAlertSimple(
+                "Cotizacion Enviada", 
+                "La cotizacion se ha enviado al cliente", 
+                Alert.AlertType.INFORMATION
+            );
+            clicBack(null);
         }
     }
 
@@ -135,10 +146,10 @@ public class FXMLRealizarDiagnosticoController implements Initializable {
         this.equipo=dispositivo;
         lbMarca.setText(dispositivo.getMarca());
         lbModelo.setText(dispositivo.getModelo());
-        lbContrasenia.setText(dispositivo.getPasswordDisp());
-        lbUsuario.setText(dispositivo.getUsuarioDisp());
+        lbContrasenia.setText(dispositivo.getPassword());
+        lbUsuario.setText(dispositivo.getUsuario());
         txfwComentarios.setTextAlignment(TextAlignment.LEFT);
-        txfwComentarios.getChildren().add(new Text(dispositivo.getError()));
+        txfwComentarios.getChildren().add(new Text(dispositivo.getErrorDispos()));
     }
 
     @FXML

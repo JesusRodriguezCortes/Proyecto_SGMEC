@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package javafxsgemec.controladores;
 
 import java.io.IOException;
@@ -14,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -23,18 +20,12 @@ import javafx.stage.Stage;
 import javafxsgemec.dao.DispositivoDAO;
 import javafxsgemec.javafxsgemec;
 import javafxsgemec.pojo.Dispositivo;
+import javafxsgemec.pojo.Cliente;
 
-/**
- * FXML Controller class
- *
- * @author Cesar
- */
 public class FXMLDetallesDelEquipoController implements Initializable {
 
     @FXML
     private ImageView ivComputadora;
-    @FXML
-    private Text txtConrasenia;
     @FXML
     private CheckBox cbEnviadoAEmpresa;
     @FXML
@@ -50,45 +41,33 @@ public class FXMLDetallesDelEquipoController implements Initializable {
     @FXML
     private CheckBox cbRecibidoCliente;
     @FXML
-    private Label lbFecha;
-    @FXML
-    private Label lbServicio;
-    @FXML
     private Label lbProblemas;
     @FXML
     private Label lbMarca;
     @FXML
     private Label lbModelo;
     @FXML
-    private Label lbNumeroSerie;
-    @FXML
-    private Label lbSistemaOperativo;
-    @FXML
-    private Label lbTamanioPantalla;
-    @FXML
-    private Label lbMemoriaRAM;
-    @FXML
-    private Label lbAlmacenamiento;
-    @FXML
     private Label lbUsuario;
     @FXML
     private Label lbContrasenia;
+    @FXML
+    private Button btSolicitarServicio;
+    
     private Dispositivo equipo;
-
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
-
 
     @FXML
     private void clicBack(MouseEvent event) throws IOException {
         String ventana = "vistas/FXMLEquiposCliente.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
         Scene escenaPrincipal = new Scene(vista);
-        Stage escenarioBase = (Stage) lbTamanioPantalla.getScene().getWindow();
-        escenarioBase.setScene(escenaPrincipal);
-        escenarioBase.show();        
+        Stage escenarioBase = (Stage) lbMarca.getScene().getWindow();
+        escenarioBase.close();        
     }
 
     @FXML
@@ -96,13 +75,94 @@ public class FXMLDetallesDelEquipoController implements Initializable {
         String ventana = "vistas/FXMLSolicitarServicio.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
         Scene escenaPrincipal = new Scene(vista);
-        Stage escenarioBase = (Stage) lbTamanioPantalla.getScene().getWindow();
+        Stage escenarioBase = (Stage) lbMarca.getScene().getWindow();
         escenarioBase.setScene(escenaPrincipal);
         escenarioBase.show();        
     }
-    public void prepararEquipo(int idEquipo) throws SQLException{
-        Dispositivo dps=DispositivoDAO.getDispositivo(idEquipo);
-        this.equipo=dps;
+    
+    public void cargarDatosDispositivo(){
+       this.lbMarca.setText(equipo.getMarca());
+       this.lbModelo.setText(equipo.getModelo());
+       this.lbProblemas.setText(equipo.getErrorDispos());
+       this.lbUsuario.setText(equipo.getUsuario());
+       this.lbContrasenia.setText(equipo.getPassword());
+       
+       switch(equipo.getIdEstado()){
+            case 1:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(false);
+                cbValoracion.setSelected(false);
+                cbReparacion.setSelected(false);
+                cbEmpaquetado.setSelected(false);
+                cbEnviadoACliente.setSelected(false);
+                cbRecibidoCliente.setSelected(false);
+               break;
+            case 2:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(false);
+                cbReparacion.setSelected(false);
+                cbEmpaquetado.setSelected(false);
+                cbEnviadoACliente.setSelected(false);
+                cbRecibidoCliente.setSelected(false);
+               break;
+            case 3:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(true);
+                cbReparacion.setSelected(false);
+                cbEmpaquetado.setSelected(false);
+                cbEnviadoACliente.setSelected(false);
+                cbRecibidoCliente.setSelected(false);
+               break;       
+            case 4:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(true);
+                cbReparacion.setSelected(true);
+                cbEmpaquetado.setSelected(false);
+                cbEnviadoACliente.setSelected(false);
+                cbRecibidoCliente.setSelected(false);
+               break;
+            case 5:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(true);
+                cbReparacion.setSelected(true);
+                cbEmpaquetado.setSelected(true);
+                cbEnviadoACliente.setSelected(false);
+                cbRecibidoCliente.setSelected(false);
+               break;
+            case 6:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(true);
+                cbReparacion.setSelected(true);
+                cbEmpaquetado.setSelected(true);
+                cbEnviadoACliente.setSelected(true);
+                cbRecibidoCliente.setSelected(false);
+               break;
+            case 7:
+                cbEnviadoAEmpresa.setSelected(true);
+                cbRecibidoEmpresa.setSelected(true);
+                cbValoracion.setSelected(true);
+                cbReparacion.setSelected(true);
+                cbEmpaquetado.setSelected(true);
+                cbEnviadoACliente.setSelected(true);
+                cbRecibidoCliente.setSelected(true);
+               break;
+       }
+       if(equipo.getIdEstado() > 0){
+           this.btSolicitarServicio.setDisable(true);
+       }else{
+           this.btSolicitarServicio.setDisable(false);
+       }
     }
     
+    public void obtenerEquipo(int idEquipo) throws SQLException{
+        System.out.println("ID EQUIPO EN DetallesDelEquipo - obtenerEquipo: "+idEquipo);
+        Dispositivo equipo = DispositivoDAO.getDispositivo(idEquipo);
+        this.equipo = equipo;
+        cargarDatosDispositivo();
+    }
 }

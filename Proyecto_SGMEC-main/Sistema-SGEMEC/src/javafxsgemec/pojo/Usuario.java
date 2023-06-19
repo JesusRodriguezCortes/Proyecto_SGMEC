@@ -1,101 +1,65 @@
 package javafxsgemec.pojo;
 
-
 public class Usuario {
+    
     private int idUsuario;
-    private String usuario;
-    private String contrasenia;
+    private String username;
+    private String password;
+    private String idRol;
     private String nivelDeAcceso;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
+    
+    public Usuario() {}
 
-
-    public Usuario() {
-    }
-
-
-    public Usuario(int idUsuario, String nombre, String apellidoPaterno, String apellidoMaterno) {
+    public Usuario(int idUsuario, String username, String password, String idRol, String nivelDeAcceso) {
         this.idUsuario = idUsuario;
-        this.nombre = nombre;
-        this.apellidoPaterno = apellidoPaterno;
-        this.apellidoMaterno = apellidoMaterno;
+        this.username = username;
+        this.password = password;
+        this.idRol = idRol;
+        this.nivelDeAcceso = nivelDeAcceso;
     }
-
-
-
-    public Usuario(String usuario, String contrasenia) {
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-    }
-
 
     public int getIdUsuario() {
-        return this.idUsuario;
+        return idUsuario;
     }
-
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-
-    public String getNombre() {
-        return this.nombre;
+    public String getUsername() {
+        return username;
     }
 
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getApellidoPaterno() {
-        return this.apellidoPaterno;
+    public String getPassword() {
+        return password;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getApellidoMaterno() {
-        return this.apellidoMaterno;
+    public String getIdRol() {
+        return idRol;
     }
 
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-
-    @Override
-    public String toString() {
-        return nombre + " "+ apellidoPaterno + " " + apellidoMaterno;
-    }
-
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    public void setNivelDeAcceso(String nivelDeAcceso) {
-        this.nivelDeAcceso = nivelDeAcceso; 
-    }
-
-
-    public String getUsuario() {
-        return usuario;
+    public void setIdRol(String idRol) {
+        this.idRol = idRol;
     }
     
-    public String getContrasenia() {
-        return contrasenia; 
+    public void setNivelDeAcceso(String nivelDeAcceso){
+        this.nivelDeAcceso = nivelDeAcceso;
     }
     
     public String getNivelDeAcceso() {
         return nivelDeAcceso;
+    }
+    
+    @Override
+    public String toString(){
+        return this.nivelDeAcceso;
     }
 }

@@ -1,32 +1,35 @@
 package javafxsgemec.pojo;
 
 public class Dispositivo {
+    
     private int idDispositivo;
     private String marca;
     private String modelo;
-    private String usuarioDisp;
-    private String passwordDisp;
-    private String error;
-    private String estado;
+    private String usuario;
+    private String password;
+    private String errorDispos;
     private byte[] foto;
+    private String caracteristicas;
     private int idCliente;
     private String nombreCliente;
+    private int idEstado;
+    private String estado;
 
-    public Dispositivo(){
-        
-    }
+    public Dispositivo() {}
 
-    public Dispositivo(int idDispositivo, String marca, String modelo, String usuarioDisp, String passwordDisp, String error, String estado, byte[] foto, int idCliente, String nombreCliente) {
+    public Dispositivo(int idDispositivo, String marca, String modelo, String usuario, String password, String errorDispos, byte[] foto, String caracteristicas, int idCliente, String nombreCliente, int idEstado, String estado) {
         this.idDispositivo = idDispositivo;
         this.marca = marca;
         this.modelo = modelo;
-        this.usuarioDisp = usuarioDisp;
-        this.passwordDisp = passwordDisp;
-        this.error = error;
-        this.estado = estado;
+        this.usuario = usuario;
+        this.password = password;
+        this.errorDispos = errorDispos;
         this.foto = foto;
+        this.caracteristicas = caracteristicas;
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
+        this.idEstado = idEstado;
+        this.estado = estado;
     }
 
     public int getIdDispositivo() {
@@ -53,36 +56,28 @@ public class Dispositivo {
         this.modelo = modelo;
     }
 
-    public String getUsuarioDisp() {
-        return usuarioDisp;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioDisp(String usuarioDisp) {
-        this.usuarioDisp = usuarioDisp;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getPasswordDisp() {
-        return passwordDisp;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordDisp(String passwordDisp) {
-        this.passwordDisp = passwordDisp;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorDispos() {
+        return errorDispos;
     }
 
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setErrorDispos(String errorDispos) {
+        this.errorDispos = errorDispos;
     }
 
     public byte[] getFoto() {
@@ -91,6 +86,14 @@ public class Dispositivo {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public String getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(String caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 
     public int getIdCliente() {
@@ -107,6 +110,22 @@ public class Dispositivo {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     @Override
