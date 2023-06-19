@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -75,6 +76,17 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarRadioButtons();
+        llenarComboBox();
+    }
+
+    void llenarComboBox(){
+       try{
+           ArrayList<Dispositivo> dispositivoBD = DispositivoDAO.getDispositivos();
+           listaDispositivos.addAll(dispositivoBD);
+           cbxSeleccionDispositivo.setItems(listaDispositivos);
+        }catch(SQLException e){
+            ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
     
     void iniciarRadioButtons(){
