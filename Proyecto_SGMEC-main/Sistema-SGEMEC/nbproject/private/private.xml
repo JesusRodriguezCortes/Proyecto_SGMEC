@@ -4,12 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLEquiposClienteController.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/connectionBD/ConstantsConnection.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLInicioSesionController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLSolicitudRefaccionesController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLActualizarEstadoAlmacenamientoController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLSolicitarServicioController.java</file>
             <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/pojo/Usuario.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLEncargadoMantenimientoController.java</file>
+            <file>file:/C:/Users/je_zu/Desktop/Procesos/Repositorio/Proyecto_SGMEC/Proyecto_SGMEC-main/Sistema-SGEMEC/src/javafxsgemec/controladores/FXMLDetallesDelEquipoController.java</file>
         </group>
     </open-files>
 </project-private>

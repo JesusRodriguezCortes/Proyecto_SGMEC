@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -77,9 +76,9 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarRadioButtons();
+        llenarComboBox();
         
-        
-        cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
+         cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
         @Override
         public void changed(ObservableValue<? extends Dispositivo> observable, Dispositivo oldValue, Dispositivo newValue){
             if(newValue != null){
@@ -87,11 +86,19 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
                 lbModelo.setText(newValue.getModelo());
                 txaComentariosCliente.setText(newValue.getErrorDispos());
                 lbNombreCliente.setText(newValue.getNombreCliente());
-                
-            }
+                }
         }
-    });       
-        
+        });
+    }
+
+    void llenarComboBox(){
+       try{
+           ArrayList<Dispositivo> dispositivoBD = DispositivoDAO.getDispositivos();
+           listaDispositivos.addAll(dispositivoBD);
+           cbxSeleccionDispositivo.setItems(listaDispositivos);
+        }catch(SQLException e){
+            ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
     
     void iniciarRadioButtons(){
@@ -137,8 +144,9 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
         return ID;
     }
     
-    public void guardarDatosMantenimiento() throws SQLException{
+    public void guardarDatosMantenimiento(){
         if(estado.getSelectedToggle()!=null){
+        try{
             dispositivo.setIdEstado(convertirEstadoAId());
             ResultOperation resultadoEditar = DispositivoDAO.editEstadoDispositivo(dispositivo);
             if(!resultadoEditar.isError()){
@@ -146,6 +154,9 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
             }else{
                 ShowMessage.showAlertSimple("Error al editar", resultadoEditar.getMessage(), Alert.AlertType.ERROR);
             }
+        }catch(SQLException e){
+            ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
+        }
         }else{
             ShowMessage.showAlertSimple("Ningún estado seleccionado", "Debes seleccionar uno de los"
                     + "estados para poder guardar", Alert.AlertType.WARNING);
@@ -161,7 +172,6 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
         lbNombreCliente.setText("");
     }
     
-    @FXML
     private void clicCancelar(ActionEvent event) throws IOException {
         String ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
         Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
@@ -172,19 +182,10 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     }
 
     @FXML
-    private void cbxAccion(ActionEvent event) {
+    private void clicGuardar(ActionEvent event) {
         limpiarDatos();
-        cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
-        @Override
-        public void changed(ObservableValue<? extends Dispositivo> observable, Dispositivo oldValue, Dispositivo newValue){
-            if(newValue != null){
-                lbMarca.setText(newValue.getMarca());
-                lbModelo.setText(newValue.getModelo());
-                txaComentariosCliente.setText(newValue.getErrorDispos());
-                lbNombreCliente.setText(newValue.getNombreCliente());
-                }
-        }
-        }); 
+        guardarDatosMantenimiento();
     }
 
+   
 }

@@ -22,8 +22,8 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="48.0" stroke="BLACK" strokeType="INSIDE" width="738.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#adc8ff" height="27.0" layoutY="48.0" stroke="BLACK" strokeType="INSIDE" width="738.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="345.0" layoutX="281.0" layoutY="91.0" stroke="BLACK" strokeType="INSIDE" width="447.0" />
-      <Button layoutX="545.0" layoutY="448.0" mnemonicParsing="false" text="Aceptar" />
-      <Button layoutX="626.0" layoutY="448.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
+      <Button layoutX="545.0" layoutY="448.0" mnemonicParsing="false" onAction="#clicGuardar" text="Aceptar" />
+      <Button layoutX="626.0" layoutY="448.0" mnemonicParsing="false" text="Cancelar" />
       <Text fill="WHITE" layoutX="623.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SGEMEC">
          <font>
             <Font size="18.0" />
@@ -41,9 +41,9 @@
             <Font name="Comic Sans MS" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="25.0" layoutY="169.0" text="Modelo" />
-      <Label layoutX="23.0" layoutY="194.0" text="Marca" />
-      <Label layoutX="25.0" layoutY="219.0" text="Nombre del cliente" />
+      <Label layoutX="25.0" layoutY="169.0" prefHeight="17.0" prefWidth="180.0" text="Modelo" />
+      <Label layoutX="23.0" layoutY="194.0" prefHeight="17.0" prefWidth="162.0" text="Marca" />
+      <Label layoutX="25.0" layoutY="219.0" prefHeight="17.0" prefWidth="186.0" text="Nombre del cliente" />
       <Label fx:id="lbModelo" layoutX="84.0" layoutY="169.0" prefHeight="17.0" prefWidth="0.0" />
       <Label fx:id="lbMarca" layoutX="66.0" layoutY="194.0" prefHeight="17.0" prefWidth="0.0" />
       <Label fx:id="lbNombreCliente" layoutX="141.0" layoutY="219.0" prefHeight="17.0" prefWidth="0.0" />
@@ -57,6 +57,6 @@
       <RadioButton fx:id="rb2" layoutX="294.0" layoutY="202.0" mnemonicParsing="false" text="2. Recibido por la empresa" toggleGroup="$estado" />
       <RadioButton fx:id="rb1" layoutX="294.0" layoutY="160.0" mnemonicParsing="false" text="1. Enviado por el cliente" toggleGroup="$estado" />
       <RadioButton fx:id="rb3" layoutX="297.0" layoutY="247.0" mnemonicParsing="false" text="3. En valoración" toggleGroup="$estado" />
-      <ComboBox fx:id="cbxSeleccionDispositivo" layoutX="21.0" layoutY="126.0" onAction="#cbxAccion" prefHeight="25.0" prefWidth="238.0" promptText="Seleccione dispositivo" />
+      <ComboBox fx:id="cbxSeleccionDispositivo" layoutX="21.0" layoutY="126.0" prefHeight="25.0" prefWidth="238.0" promptText="Seleccione dispositivo" />
    </children>
 </AnchorPane>
