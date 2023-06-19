@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -75,6 +77,7 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarRadioButtons();
+        
         
         cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
         @Override
