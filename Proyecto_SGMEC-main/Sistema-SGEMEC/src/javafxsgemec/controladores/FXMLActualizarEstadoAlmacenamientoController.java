@@ -4,19 +4,20 @@
  */
 package javafxsgemec.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -26,9 +27,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafxsgemec.connectionBD.ResultOperation;
 import javafxsgemec.dao.DispositivoDAO;
-import javafxsgemec.pojo.Cliente;
+import javafxsgemec.javafxsgemec;
 import javafxsgemec.pojo.Dispositivo;
-import javafxsgemec.pojo.EquipoComputo;
 import javafxsgemec.util.ShowMessage;
 
 /**
@@ -75,20 +75,6 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarRadioButtons();
-        
-        cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
-        @Override
-        public void changed(ObservableValue<? extends Dispositivo> observable, Dispositivo oldValue, Dispositivo newValue){
-            if(newValue != null){
-                lbMarca.setText(newValue.getMarca());
-                lbModelo.setText(newValue.getModelo());
-                txaComentariosCliente.setText(newValue.getError());
-                lbNombreCliente.setText(newValue.getNombreCliente());
-                
-            }
-        }
-    });       
-        
     }
     
     void iniciarRadioButtons(){
@@ -152,10 +138,7 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
                     + "estados para poder guardar", Alert.AlertType.WARNING);
         }            
     }
-    private void cerrarVentana(){
-        Stage escenarioPrincipal = (Stage) txaComentariosCliente.getScene().getWindow();
-        escenarioPrincipal.close();
-    }
+    
     
     private void limpiarDatos(){
         cbxSeleccionDispositivo.getSelectionModel().select(-1);
@@ -165,12 +148,29 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
         lbNombreCliente.setText("");
     }
     
-    private void clicCancelar(ActionEvent event) {
-        cerrarVentana();
+    private void clicCancelar(ActionEvent event) throws IOException {
+        String ventana = "vistas/FXMLEncargadoMantenimiento.fxml";
+        Parent vista = FXMLLoader.load(javafxsgemec.class.getResource(ventana));
+        Scene escenaPrincipal = new Scene(vista);
+        Stage escenarioBase = (Stage) txaComentariosCliente.getScene().getWindow();
+        escenarioBase.setScene(escenaPrincipal);
+        escenarioBase.show();
     }
 
     @FXML
     private void cbxAccion(ActionEvent event) {
+        limpiarDatos();
+        cbxSeleccionDispositivo.valueProperty().addListener(new ChangeListener<Dispositivo>() {
+        @Override
+        public void changed(ObservableValue<? extends Dispositivo> observable, Dispositivo oldValue, Dispositivo newValue){
+            if(newValue != null){
+                lbMarca.setText(newValue.getMarca());
+                lbModelo.setText(newValue.getModelo());
+                txaComentariosCliente.setText(newValue.getError());
+                lbNombreCliente.setText(newValue.getNombreCliente());
+                }
+        }
+        }); 
     }
 
 }

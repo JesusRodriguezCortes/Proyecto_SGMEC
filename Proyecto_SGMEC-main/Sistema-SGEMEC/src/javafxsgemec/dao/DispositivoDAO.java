@@ -139,6 +139,37 @@ public class DispositivoDAO {
         return dispositivosBD;
     }
 
+    public static ResultOperation editEstadoDispositivo(Dispositivo editEstado) throws SQLException{
+        ResultOperation response = new ResultOperation(true, "", -1);
+        Connection conexionBD = OpenConnection.openConnectionBD();
+        
+        if(conexionBD != null){
+            try {
+                String sqlQuery = "UPDATE dispositivo SET idEstadoDispositivo = ? WHERE idDispositivo = ?";
+                PreparedStatement setEstado = conexionBD.prepareStatement(sqlQuery);
+                setEstado.setInt(1, editEstado.getIdEstado());
+                setEstado.setInt(2, editEstado.getIdDispositivo());
+                
+                int rowsAffected = setEstado.executeUpdate();
+                if(rowsAffected > 0){
+                    response.setError(false);
+                    response.setMessage("Estado actualizado correctamente.");
+                    response.setNumberRowsAffected(rowsAffected);
+                }else{
+                    response.setMessage("No se pudo editar la información del estado del dispositivo.");
+                }
+            }catch (SQLException e) {
+                response.setMessage(e.getMessage());
+            } catch(NullPointerException f) {
+                response.setMessage(f.getMessage());
+            }finally{
+                conexionBD.close();
+            }
+        }else{
+            response.setMessage("Por el momento no hay conexión con la base de datos...");
+        }
+        return response;
+    }
     
     public static ResultOperation editDispositivo(Dispositivo editDispositivo) throws SQLException{
         ResultOperation response = new ResultOperation();
