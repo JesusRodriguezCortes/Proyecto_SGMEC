@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class OpenConnection {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String BD = "SGMECDB";
+    private static final String BD = "sgemec";
     private static final String IP = "localhost";
     private static final String PUERTO = "3306";
     
     private static final String URLCONEXION = "jdbc:mysql://"+IP+":"+PUERTO+"/"+BD+"?allowPublicKeyRetrieval=true&useSSL=false"; 
-    private static final String USUARIO = "AdminSGMEC";
+    private static final String USUARIO = "sgmec";
     private static final String PASSWORD = "AdminSGMEC";
     
     public static Connection openConnectionBD(){

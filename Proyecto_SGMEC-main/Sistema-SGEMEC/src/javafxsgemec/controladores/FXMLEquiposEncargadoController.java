@@ -36,7 +36,7 @@ import javafxsgemec.util.ShowMessage;
 
 
 public class FXMLEquiposEncargadoController implements Initializable {
-    ArrayList<Dispositivo> dispositivos;
+    ArrayList<Dispositivo> dispositivos =new ArrayList<Dispositivo>();
     private Button idRealizarDiagnostico;
     @FXML
     private GridPane gpEquipos;
@@ -98,7 +98,7 @@ public class FXMLEquiposEncargadoController implements Initializable {
         centro.setBottom(lbMarca);
         lbModelo.setText(dis.getModelo());
         b1.setPrefHeight(5);
-        b1.setPrefWidth(120);
+        b1.setPrefWidth(100);
         b1.setFont(Font.font(10));
         right.setTop(new Label("Modelo"));
         right.setBottom(lbModelo);
@@ -163,11 +163,20 @@ public class FXMLEquiposEncargadoController implements Initializable {
 
     private void cargarDispositivos() {
         try{
-             dispositivos=DispositivoDAO.getDispositivos();           
+            ArrayList<Dispositivo> dispositivos;
+            dispositivos=DispositivoDAO.getDispositivos();
+            
+            for (int i = 0; i < dispositivos.size(); i++) {
+                if(dispositivos.get(i).getIdEstado()==2){
+                    this.dispositivos.add(dispositivos.get(i));
+                }
+            }
         }catch(SQLException ex){
-            ShowMessage.showAlertSimple("Error de consulta", "Hay un error de consulta", Alert.AlertType.ERROR);
+            ShowMessage.showAlertSimple(
+                "Error de consulta", 
+                "Hay un error de consulta", 
+                Alert.AlertType.ERROR
+            );
         }
-
     }
-    
 }

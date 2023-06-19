@@ -82,7 +82,7 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
             if(newValue != null){
                 lbMarca.setText(newValue.getMarca());
                 lbModelo.setText(newValue.getModelo());
-                txaComentariosCliente.setText(newValue.getError());
+                txaComentariosCliente.setText(newValue.getErrorDispos());
                 lbNombreCliente.setText(newValue.getNombreCliente());
                 
             }
@@ -136,7 +136,6 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
     
     public void guardarDatosMantenimiento(){
         if(estado.getSelectedToggle()!=null){
-        try{
             dispositivo.setIdEstado(convertirEstadoAId());
             ResultOperation resultadoEditar = DispositivoDAO.editEstadoDispositivo(dispositivo);
             if(!resultadoEditar.isError()){
@@ -144,9 +143,6 @@ public class FXMLActualizarEstadoAlmacenamientoController implements Initializab
             }else{
                 ShowMessage.showAlertSimple("Error al editar", resultadoEditar.getMessage(), Alert.AlertType.ERROR);
             }
-        }catch(SQLException e){
-            ShowMessage.showAlertSimple("Error de conexión", e.getMessage(), Alert.AlertType.ERROR);
-        }
         }else{
             ShowMessage.showAlertSimple("Ningún estado seleccionado", "Debes seleccionar uno de los"
                     + "estados para poder guardar", Alert.AlertType.WARNING);
